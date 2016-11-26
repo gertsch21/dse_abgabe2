@@ -12,7 +12,7 @@ public class PruefeLoginJuniTest {
 	Benutzerservices test = new Benutzerservices();
 	
 	/**
-	 * Dise Methode testet den Login des Users "mirzi".
+	 * Dise Methode testet den Login des Users "gertsch".
 	 * Hierbei geben wir den Username und das dazugehörige Passwort an
 	 * und erwarten einen Bool'schen Wert.
 	 * 
@@ -27,7 +27,7 @@ public class PruefeLoginJuniTest {
 	
 	
 	/**
-	 * Dise Methode testet den Login des Users "mirzi".
+	 * Dise Methode testet den Login des Users "gertsch2".
 	 * Hierbei geben wir den Username und das dazugehörige Passwort an
 	 * und erwarten einen Bool'schen Wert.
 	 * 
@@ -57,7 +57,7 @@ public class PruefeLoginJuniTest {
 	
 	
 	/**
-	 * Dise Methode testet den Login des Users "gert".
+	 * Dise Methode testet den Login des Users "mirzi".
 	 * Hierbei geben wir den Username und das falsche Passwort an
 	 * und erwarten einen Bool'schen Wert. In diesem Fall eben False, weil
 	 * es nicht stimmen kann.
