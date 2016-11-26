@@ -15,7 +15,7 @@ public class RestClient implements ClientInterface{
 		    	WebClient loginClient = WebClient.create(REST_URI);
 		        loginClient.path(USER_PATHXML).path(usern + "/" + pwd).accept("text/xml");
 		        s = loginClient.get(String.class);
-		        if(s.equals("Willkommen   " + usern)){
+		        if(s.equals("<title>" + "Willkommen " +  usern + "</title>")){
 		        System.out.println(s);
 		        return true;
 		        }
