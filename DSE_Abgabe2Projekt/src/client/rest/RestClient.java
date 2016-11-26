@@ -10,24 +10,38 @@ public class RestClient implements ClientInterface{
 	    String s;
 	   
 		    @Override
-			public void pruefeLoginXml(String usern, String pwd) {
+			public boolean pruefeLoginXml(String usern, String pwd) {
 		    	WebClient loginClient = WebClient.create(REST_URI);
 		        loginClient.path(ADD_PATH).path(usern + "/" + pwd).accept("text/xml");
 		        s = loginClient.get(String.class);
+		        if(s.equals("Willkommen   " + usern)){
 		        System.out.println(s);
+		        return true;
+		        }
+		        else {
+		        	System.out.println(s);
+		        	return false;
+		        }
 			    
 				
 				
 			}
 
 			@Override
-			public void pruefeLoginPlain(String usern, String pwd) {
+			public boolean pruefeLoginPlain(String usern, String pwd) {
 				WebClient loginClient = WebClient.create(REST_URI);
 		        loginClient.path(ADD_PATH).path(usern + "/" + pwd).accept("text/plain");
 		        s = loginClient.get(String.class);
+		        if(s.equals("Willkommen   " + usern)){
 		        System.out.println(s);
+		        return true;
+		        }
+		        else {
+		        	System.out.println(s);
+		        	return false;
+		        }
 				
-			} 
+			}
 	         
 	   
 

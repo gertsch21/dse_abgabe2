@@ -30,11 +30,11 @@ public class UserService {
 	}
 	
 	@GET
-    @Path("login/{username}/{password}")
+    @Path("login/xml/{username}/{password}")
     @Produces(MediaType.TEXT_XML)
     public String einloggen(@PathParam("username") String usern, @PathParam("password") String pwd) {
-		if(benutzer.pruefeLogin(usern, pwd)==true)    return "<?xml version=\"1.0\"?>" + "Willkommen " +  usern + "</result>";
-		else return "<?xml version=\"1.0\"?>"+ "Bitte ueberpruefen Sie Benutzername und/oder Passwort" +"</result>";
+		if(benutzer.pruefeLogin(usern, pwd)==true)    return "<title>" + "Willkommen " +  usern + "</title>";
+		else return "<title>"+ "Bitte ueberpruefen Sie Benutzername und/oder Passwort" +"</title>";
      
     }
      
