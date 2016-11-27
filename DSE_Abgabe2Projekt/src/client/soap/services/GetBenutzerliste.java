@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getBenutzerliste")
+@XmlType(name = "getBenutzerlisteClient")
 public class GetBenutzerliste {
 
 
