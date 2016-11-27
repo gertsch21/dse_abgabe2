@@ -27,14 +27,14 @@ public class SerializedPersonDAO implements PersonDAO{
 	 */
 	public SerializedPersonDAO(){
 		super();
-		this.filePath="C:\\Users\\Gerhard\\Desktop\\PersonenListe.dat";
-		this.myFile=new File(filePath);
+		this.filePath = "PersonenListe.dat";
+		this.myFile = new File(filePath);
 		checkIfFileExist();
 	}
 	
 	
 	/**
-	 * Prüft ob das File, auf welches myFile zeigt auch existiert, falls nicht,
+	 * Prï¿½ft ob das File, auf welches myFile zeigt auch existiert, falls nicht,
 	 * dann wird eines erzeugt.
 	 */
 	
@@ -52,7 +52,7 @@ public class SerializedPersonDAO implements PersonDAO{
 	
 	/**
 	 *Wenn keine Liste enthalten ist, wird eine leere Liste erstellt und
-	 * diese zurückgegeben!
+	 * diese zurï¿½ckgegeben!
 	 * 
 	 * @return Die Liste der gespeicherten Person.
 	 */
@@ -84,7 +84,7 @@ public class SerializedPersonDAO implements PersonDAO{
 					ois.close();
 					is.close();
 			} catch(Exception e){
-					System.err.println("Fehler beim Schließen: "+e);
+					System.err.println("Fehler beim Schlieï¿½en: "+e);
 			}
 		}
 		return myList;
@@ -92,7 +92,7 @@ public class SerializedPersonDAO implements PersonDAO{
 
 	/**
 	 *Wenn keine Liste enthalten ist,wird eine leere Liste erstellt und
-	 * diese zurückgegeben!
+	 * diese zurï¿½ckgegeben!
 	 * 
 	 * @return Die Liste der gespeicherten Benutzer.
 	 */
@@ -114,7 +114,7 @@ public class SerializedPersonDAO implements PersonDAO{
 	/**
 	 * 
 	 * @param id Anhand der eindeutigen ID wird die Person gesucht.
-	 * @return Die gefundene Person wird zurückgegeben, oder null wird zurückgeliefert.
+	 * @return Die gefundene Person wird zurï¿½ckgegeben, oder null wird zurï¿½ckgeliefert.
 	 */
 	
 	@Override
@@ -157,7 +157,7 @@ public class SerializedPersonDAO implements PersonDAO{
 	/**
 	 * 
 	 * @param username Anhand diesem eindeutigen Parameter wird die Person gesucht.
-	 * @return Die gefundene Person wird zurückgegeben, oder null.
+	 * @return Die gefundene Person wird zurï¿½ckgegeben, oder null.
 	 */
 	
 	@Override
@@ -178,7 +178,7 @@ public class SerializedPersonDAO implements PersonDAO{
 	
 	/**
 	 * 
-	 * @param benutzer Die Id der zu löschenden Person als String.
+	 * @param benutzer Die Id der zu lï¿½schenden Person als String.
 	 * @return true, falls Vorgang erfolgreich, andernfalls false.
 	 */
 	
@@ -271,11 +271,11 @@ public class SerializedPersonDAO implements PersonDAO{
 	
 	
 	/**
-	 * Noch nicht sicher obb das so bleiben kann ? Vielleicht ist diese Methode unnötig
-	 * derzeit noch nicht im Interface vorhanden! Gehört ansonsten entfernt
-	 * Prüft ob ein Person in einer gegebenen Liste enthalten ist.
+	 * Noch nicht sicher obb das so bleiben kann ? Vielleicht ist diese Methode unnï¿½tig
+	 * derzeit noch nicht im Interface vorhanden! Gehï¿½rt ansonsten entfernt
+	 * Prï¿½ft ob ein Person in einer gegebenen Liste enthalten ist.
 	 * 
-	 * @param benutzer Der zu prüfende Person.
+	 * @param benutzer Der zu prï¿½fende Person.
 	 * @param myList Die zu verwendende Liste.
 	 * @return True falls enthalten, False falls nicht enthalten.
 	 */
@@ -290,7 +290,7 @@ public class SerializedPersonDAO implements PersonDAO{
 
 	
 	/**
-	 * Diese Methode schreibt eine übergebene Liste in die Datei.
+	 * Diese Methode schreibt eine ï¿½bergebene Liste in die Datei.
 	 * @param myList Die zu speichernde Liste.
 	 */
 	private void writeListInFile(List<Person> myList){

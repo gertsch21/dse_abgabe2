@@ -15,14 +15,15 @@ public class RestClient implements ClientInterface{
 		    	WebClient loginClient = WebClient.create(REST_URI);
 		        loginClient.path(USER_PATHXML).path(usern + "/" + pwd).accept("text/xml");
 		        s = loginClient.get(String.class);
-		        if(s.equals("<title>" + "Willkommen " +  usern + "</title>")){
-		        System.out.println(s);
-		        return true;
-		        }
-		        else {
-		        	System.out.println(s);
-		        	return false;
-		        }
+
+
+				if(s.equals("Bitte ueberpruefen Sie Benutzername und/oder Passwort")){
+					System.out.println(usern + " 1-");
+					return false;
+				} else {
+					System.out.println(usern + " 2-");
+					return true;
+				}
 			    
 				
 				
@@ -33,14 +34,14 @@ public class RestClient implements ClientInterface{
 				WebClient loginClient = WebClient.create(REST_URI);
 		        loginClient.path(USER_PATH).path(usern + "/" + pwd).accept("text/plain");
 		        s = loginClient.get(String.class);
-		        if(s.equals("Willkommen   " + usern)){
-		        System.out.println(s);
-		        return true;
-		        }
-		        else {
-		        	System.out.println(s);
-		        	return false;
-		        }
+
+				if(s.equals("Bitte ueberpruefen Sie Benutzername und/oder Passwort")){
+					System.out.println(usern + " 1");
+					return false;
+				} else {
+					System.out.println(usern + " 2");
+					return true;
+				}
 				
 			}
 	         
