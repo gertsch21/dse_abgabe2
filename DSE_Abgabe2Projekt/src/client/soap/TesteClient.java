@@ -1,10 +1,21 @@
 package client.soap;
 
 import client.soap.services.Benutzer;
+import soap.services.Benutzerservices;
 
-
+/**
+ * 
+ * Dies ist eine reine Testklasse, sie bleibt extra noch drinnen, um 
+ * zusätzlich zu den JUnit tests immer neue individuelle Tests schnell zu
+ * schreiben. 
+ *
+ */
 public class TesteClient {
 
+	/**
+	 * Diese Methode führt die Tests durch
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 //		Benutzerverwaltung benver = Benutzerverwaltung.getInstance();
@@ -27,6 +38,9 @@ public class TesteClient {
 			System.out.println(" "+b.toString());
 		}
 		
+		
+		Benutzerservices ser = new Benutzerservices();
+		if(ser.pruefeLogin("gertsch", "hallo")) System.out.println("warum");;
 		
 		
 	}

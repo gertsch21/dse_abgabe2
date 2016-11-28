@@ -7,6 +7,11 @@ import javax.jws.WebService;
 import management.Benutzerverwaltung;
 import modell.Benutzer;
 
+/**
+ * 
+ * Diese Klasse realisiert alle Methoden, welche im BenutzerservicesSEI angegeben worden sind
+ *
+ */
 @WebService(targetNamespace = "http://services.soap/", endpointInterface = "soap.services.BenutzerservicesSEI", portName = "BenutzerservicesPort", serviceName = "BenutzerservicesService")
 public class Benutzerservices implements BenutzerservicesSEI {
 	public boolean pruefeLogin(String username, String password){

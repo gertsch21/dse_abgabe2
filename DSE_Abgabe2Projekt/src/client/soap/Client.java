@@ -9,6 +9,13 @@ import client.soap.services.Benutzer;
 import client.soap.services.BenutzerservicesSEI;
 import client.soap.services.BenutzerservicesService;
 
+/**
+ * 
+ * Der Client implementiert alle Methoden des ClientInterface
+ * Diese Klasse wird vom GUI benutzt, um die Services aufzurufen
+ * Dieser Client dient also als SOAP-WebserviceClient
+ *
+ */
 public class Client implements ClientInterface {
 
 	private static final QName SERVICE_NAME = new QName("http://services.soap/", "BenutzerservicesService");

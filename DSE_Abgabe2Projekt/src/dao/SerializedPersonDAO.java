@@ -27,7 +27,7 @@ public class SerializedPersonDAO implements PersonDAO{
 	 */
 	public SerializedPersonDAO(){
 		super();
-		this.filePath = "PersonenListe.dat";
+		this.filePath="C:\\Users\\Gerhard\\Desktop\\PersonenListe.dat";
 		this.myFile = new File(filePath);
 		checkIfFileExist();
 	}
