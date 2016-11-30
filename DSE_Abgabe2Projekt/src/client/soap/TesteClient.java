@@ -1,6 +1,6 @@
 package client.soap;
 
-import client.soap.services.Benutzer;
+import client.soap.services.withoutTomcat.Benutzer;
 import soap.services.Benutzerservices;
 
 /**
@@ -22,6 +22,8 @@ public class TesteClient {
 //		benver.benutzerAnlegen("Gerhard", "Schmidt", "gertsch@gmx.at", "Roseldorf", "Roseldorf", "gertsch", "hallo");
 //		benver.benutzerAnlegen("Mathias", "Newelka", "nessi@nessi", "Roseldorf", "Roseldorf", "nessi", "haha");
 		ClientInterface client = new Client();
+		
+		System.out.println("TesteClient: ");
 		
 		String username = "gertsch";
 		String password = "falsches testpasswort"; 

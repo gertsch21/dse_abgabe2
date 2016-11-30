@@ -38,7 +38,7 @@ public class ControllerLogin {
         } else {
             System.out.println("Login attempt: " + unameinput.getText() + " , " + pwinput.getText().toString());
 
-            if (available(8080)) {
+            if (available(9000)) {
 
                 cl = new Client();
 
@@ -94,7 +94,7 @@ public class ControllerLogin {
     }
 
     public void checkClicked(){
-        if (available(8080)){
+        if (available(9000)){
             System.out.println("System: Online");
             serverstatus.setText("System: Online");
             serverstatus.setTextFill(Color.web("#168500"));

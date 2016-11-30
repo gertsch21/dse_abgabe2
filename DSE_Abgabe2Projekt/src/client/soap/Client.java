@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import client.soap.services.Benutzer;
-import client.soap.services.BenutzerservicesSEI;
-import client.soap.services.BenutzerservicesService;
+import client.soap.services.withoutTomcat.Benutzer;
+import client.soap.services.withoutTomcat.BenutzerservicesSEI;
+import client.soap.services.withoutTomcat.BenutzerservicesService;
 
 /**
  * 
@@ -50,5 +50,8 @@ public class Client implements ClientInterface {
 	}
    
 
+	public static void main(String args[]){
+		System.out.println(new Client().pruefeLogin("gertsch", "hallo"));
+	}
 	
 }

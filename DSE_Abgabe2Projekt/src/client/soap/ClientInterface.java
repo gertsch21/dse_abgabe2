@@ -2,7 +2,7 @@ package client.soap;
 
 import java.util.List;
 
-import client.soap.services.*;
+import client.soap.services.withoutTomcat.*;
 
 /**
  * Dieses Interface ist die direkte Schnittstelle mit dem GUI. 
