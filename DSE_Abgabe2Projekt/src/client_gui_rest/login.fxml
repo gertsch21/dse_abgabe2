@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client_gui_rest.ControllerLogin">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client_gui_soap.ControllerLogin">
    <top>
       <VBox prefHeight="53.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -38,7 +41,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="283.0" prefWidth="166.0" spacing="10.0">
                <children>
-                  <Label text="iBUY" textFill="#ddb67e">
+                  <Label text="ePAY" textFill="#ddb67e">
                      <font>
                         <Font size="48.0" />
                      </font>
