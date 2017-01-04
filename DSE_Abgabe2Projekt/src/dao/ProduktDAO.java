@@ -7,6 +7,7 @@
 package dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import modell.Produkt;
 
@@ -46,4 +47,11 @@ public interface ProduktDAO{
 	 */
 	boolean produktLoeschen(String deleteID);
 	
+	
+	/**
+	 * @param id entspricht dem zu verschiebenden Produkt
+	 * @param kategorie entspricht der Kategorie in die das Produkt verschoben wird
+	 * @return true oder false je nach dem ob das Produkt erfolgreich neu angelegt wird oder nicht.
+	 */
+	public boolean produktVerschieben(UUID id,String kategorie);
 }

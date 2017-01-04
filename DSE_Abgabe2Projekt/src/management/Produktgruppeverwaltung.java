@@ -54,10 +54,9 @@ public class Produktgruppeverwaltung {
 		return dao.produktgruppeAnlegen(neueProduktgruppe);
 	}
 	/**
-	 * 
+	 * ACHTUNG: Produktgruppe MUSS leer sein
 	 * @param name ist der gesuchte Produktgruppename, der geloescht werden soll
-	 * @return true wenn das Loeschen von der Produktgruppe erfolgreich war,
-	 * false falls nicht
+	 * @return true wenn das Loeschen von der Produktgruppe erfolgreich war, false falls nicht
 	 */
 	public boolean produktgruppeLoeschen( String name ){
 	
@@ -73,7 +72,7 @@ public class Produktgruppeverwaltung {
 	
 	
 	/**
-	 * 
+	 * Diese Methode gibt die Produktgruppenliste zurueck
 	 * @return Retourniert die eine Liste aller Produktgruppen
 	 */
 	public List<Produktgruppe> getProduktgruppeList(){
@@ -81,5 +80,25 @@ public class Produktgruppeverwaltung {
 	}
 
 	
+	/**
+	 * Diese Methode gibt die zu suchende Produktgruppe zurueck(oder null)
+	 * @param name
+	 * @return Retourniert die gewuenschte Produktgruppe, falls vorhanden, sonst null
+	 */
+	public Produktgruppe getProduktgruppeByName(String name){
+		return dao.getProduktgruppeByName(name);
+	}
+	
+	
+	/**
+	 * Mit dieser Methode wird die Produktgruppe geaendert(da wir nur den Namen haben, wird dieser geaendert)
+	 * @param alterName bisheriger Name
+	 * @param neuerName zukuenftiger Name
+	 * @return true wenn erfolgreich war, false falls nicht
+	 */
+	public boolean produktgruppeAendern(String alterName, String neuerName){
+		if(neuerName.length() == 0) return false;
+		return dao.produktgruppeAendern(alterName, neuerName);
+	}
 	
 }

@@ -133,7 +133,7 @@ public class Benutzerverwaltung {
 	 * @param username Der Username des Benutzers
 	 * @return Der Benutzer als Person
 	 */
-	public Person getBenByUsername(String username){//Achtung, liefert Personen und nicht Benutzer!!!
+	public Person getPersonByUsername(String username){//Achtung, liefert Personen und nicht Benutzer!!!
 		return dao.getPersonByUsername(username);
 	}
 	

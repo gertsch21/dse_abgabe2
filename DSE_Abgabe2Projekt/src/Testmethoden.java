@@ -12,18 +12,36 @@ public class Testmethoden {
 		Produktverwaltung prodver = Produktverwaltung.getinstance();
 		Produktgruppeverwaltung prodgruver = Produktgruppeverwaltung.getinstance();
 		
-		if(prodgruver.produktgruppeAnlegen("Gitarre"))
-			System.out.println("Produktgruppe Gitarre angelegt");
-		else
-			System.out.println("Produktgruppe Gitarre nicht angelegt");
+
+//		prodver.produktAendern(p1.getProduktID(), "Epiphone Les Pauli", 200, "mirzi", "Gitarre", 20, "geil");
+//	
+//		prodver.produktAnlegen("Fender Strat", 1000, "mirzi", "Klavier", 100, "testbeschreibung");
+//		prodver.produktLoeschen(p1.getProduktID().toString());
 		
-		for(Produkt pg : prodver.sucheProdukt("exnder"))
-			System.out.println(pg);
 		
-		if(prodver.produktAnlegen("Fender Squier Affinity Strat", 199, "gertccccsch", "Gitarre", 20, "eine günstige Gitarre"))
-			System.out.println("Produkt angelegt");
+		
+		
+		
+//		for(Produkt pg : prodver.getProduktListe()){
+//			prodver.produktAendern(pg.getProduktID(), pg.getName(), 20, pg.getOwnerUsername(), "Gitarre", 100, "haha");
+//		}
+		
+		System.out.println("Produkte");
+		for(Produkt pg : prodver.getProduktListe()){
+			System.out.println(" " + pg);
+		}
+		
+		System.out.println("Produktgruppen");
+		for(Produktgruppe pg : prodgruver.getProduktgruppeList()){
+			System.out.println(" " + pg);
+		}
+		
+		if(prodgruver.produktgruppeAendern("Klavier","Gitarre"))
+			System.out.println("Produktgruppe geaendert");
 		else
-			System.out.println("Produkt nicht angelegt");
+			System.out.println("Produktgruppe nicht geaendert");
+		
+		
 	}
 
 }

@@ -15,8 +15,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import management.Produktgruppeverwaltung;
 import modell.Produkt;
+import modell.Produktgruppe;
 
 /**
  * Diese Klasse implementiert die Interface Klasse ProduktDAO 
@@ -108,18 +111,16 @@ public class SerializedProduktDAO implements ProduktDAO {
 		
 		List<Produkt> myList = getProduktList();
 
-		//myList = getProduktList();
+		//pruefen ob Produkt schon vorhanden ist
 		for(Produkt i:myList)
 			if (newProdukt.getProduktID().equals(i.getProduktID())) {
 				System.out.println("Produkt schon enthalten.");
 				return false;
 			}
 		
-		myList.add(newProdukt);
-			
+		myList.add(newProdukt);	
 		writeListInFile(myList);
 		return true;
-		
 	}
 
 	/* (non-Javadoc)
@@ -143,16 +144,46 @@ public class SerializedProduktDAO implements ProduktDAO {
 			writeListInFile(myList);
 			return found;
 		}catch(NullPointerException e){
-			System.out.println("Error: Keine Liste vorhanden!"); //Zur Absicherung, obwohl eig getArtikelList() eine leere erzeugt, wenn keine vorhanden.
+			System.out.println("Error:SerializedProduktDAO:produktLoeschen: Keine Liste vorhanden!"); //Zur Absicherung, obwohl eig getArtikelList() eine leere erzeugt, wenn keine vorhanden.
 			return false;
 		}
 		
 	}
+	
+	
+	@Override
+	public boolean produktVerschieben(UUID id,String kategorie){
+		boolean produktgruppeVorhanden = false;
+		
+		//pruefen ob Kategorie existiert
+		for(Produktgruppe pg : Produktgruppeverwaltung.getinstance().getProduktgruppeList())
+			if(kategorie.equals(pg.getName())){
+				produktgruppeVorhanden = true;
+				break;
+			}
+		if(!produktgruppeVorhanden){
+			System.out.println("Error:SerializedProduktDAO:produktVerschieben: No matching Produktgruppe was found.");
+			return false;
+		}
+		
+		List<Produkt> produktliste = getProduktList();
+		
+		for(Produkt p : produktliste){
+			if(p.getProduktID().equals(id)){
+				p.setKategorie(kategorie);
+			}				
+		}
+		
+		writeListInFile(produktliste);
+		
+		return true;
+	}
+	
+	
 	/**
 	 * In dieser Methode wird ueberprueft ob Bereits ein File angelegt ist,
 	 *  falls nicht wird ein neues File erzeugt 
 	 */
-
 	public void checkIfFileExist() {
 
 		if (!this.myFile.exists())
@@ -167,7 +198,6 @@ public class SerializedProduktDAO implements ProduktDAO {
 	 * In dieser Methode wird eine Liste von Produkten persisten gespeichert
 	 * @param myList ist eine existierende Liste mit neuen Produkten die die alte Liste ueberschreiben wird
 	 */
-	
 	private void writeListInFile(List<Produkt> myList) {
 		OutputStream fo = null;
 		try {
@@ -186,5 +216,6 @@ public class SerializedProduktDAO implements ProduktDAO {
 		}
 
 	}
+	
 
 }

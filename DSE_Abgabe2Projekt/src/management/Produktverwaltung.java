@@ -5,6 +5,7 @@
 package management;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,22 +51,22 @@ public class Produktverwaltung {
 	public boolean produktAnlegen( String name, double startpreis, String Uname, String kategorie, int dauer, String beschreibung){
 		
 		boolean produktgruppeVorhanden = false;
-		
 		PersonDAO daoP = new SerializedPersonDAO();
 		List<Person> personListe = daoP.getPersonList();
 		
+		//pruefen ob Kategorie existiert
 		for(Produktgruppe pg : Produktgruppeverwaltung.getinstance().getProduktgruppeList())
 			if(kategorie.equals(pg.getName())){
 				produktgruppeVorhanden = true;
 				break;
 			}
-		
 		if(!produktgruppeVorhanden){
 			System.out.println("Error: (produktAnlegen()) : No matching Produktgruppe was found.");
-
 			return false;
 		}
+	
 		
+		//pruefen ob Person vorhanden
 		for(Person x:personListe){
 			if(x.getUsername().equals(Uname)){
 				System.out.println("username: " + Uname);
@@ -74,7 +75,6 @@ public class Produktverwaltung {
 				return dao.produktAnlegen(new Produkt(id, name, startpreis, Uname, kategorie, dauer, beschreibung));
 			}
 		}
-		
 		System.out.println("Error: (produktAnlegen()) : No matching Username was found.");
 		return false;
 		
@@ -105,8 +105,8 @@ public class Produktverwaltung {
 	 * @param id ist die aus der Produkt Lise zu löschende ID für das jeweilige Produkt
 	 * @return gibt eine Funktion mit der id als Parameter an das ProduktDAO weiter zum löschen
 	 */
-	public boolean produktLoeschen(String id){//Verbesserungswürdig!!!
-		System.out.println("Delete : " + id);
+	public boolean produktLoeschen(String id){
+		System.out.println("Produktverwaltung: produktLoeschen: Delete : " + id);
 		return this.dao.produktLoeschen(id);
 	}
 	
@@ -115,18 +115,62 @@ public class Produktverwaltung {
 	 * @param kategorie entspricht der Kategorie in die das Produkt verschoben wird
 	 * @return true oder false je nach dem ob das Produkt erfolgreich neu angelegt wird oder nicht.
 	 */
-	public boolean produktverschieben(UUID id,String kategorie){
+	public boolean produktVerschieben(UUID id,String kategorie){
+		return dao.produktVerschieben(id, kategorie);
+	}
 	
-		Produkt p= dao.getProduktByID(id.toString());
-		Produkt a=p;
-		a.setKategorie(kategorie);
+	public boolean produktAendern(UUID id, String name, double startpreis, String Uname, String kategorie, int dauer, String beschreibung){
 		
-		if(dao.produktLoeschen(p.getProduktID().toString())){
+		if(id==null || name==null || Uname==null || kategorie==null || beschreibung==null)
+			return false;
+		
+		Produkt p = dao.getProduktByID( id.toString() );
+		Produkt a = p;
+		
+		if(p == null){
+			System.out.println("Error:produktAendern: mit dieser id gibt es kein Produkt!");
+			return false;
+		}
+		
+		if(Benutzerverwaltung.getInstance().getPersonByUsername(Uname)==null){
+			System.out.println("Error:produktAendern: mit dieser id gibt es kein Produkt!");
+			return false;
+		}
+		
+		if(Produktgruppeverwaltung.getinstance().getProduktgruppeByName(kategorie) == null){
+			System.out.println("Error:produktAendern: mit diesem Namen gibt es keine Produktgruppe!");
+			return false;
+		}
+		
+		
+		a.setName(name);
+		a.setStartpreis(startpreis);
+		a.setOwnerUsername(Uname);
+		a.setKategorie(kategorie);
+		a.setDauer(dauer);
+		a.setBeschreibung(beschreibung);
+		a.setStartdatum(new Date());
+		a.setEnddatum(dauer);
+		a.setHoechstbietender(Uname);
+		a.setAktuellesGebot(startpreis);
+			
+		
+		if( dao.produktLoeschen(p.getProduktID().toString()) ){
 			if(dao.produktAnlegen(a)){
+				System.out.println("Produktverwaltung: ProduktAendern: Produkt geaendert!("+a+")");
 				return true;
 			}
+			System.out.println("Produktverwaltung: ProduktAendern: Produkt nicht geaendert!");
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @return Liefert die komplette Produktliste
+	 */
+	public List<Produkt> getProduktListe(){
+		return dao.getProduktList();
 	}
 }

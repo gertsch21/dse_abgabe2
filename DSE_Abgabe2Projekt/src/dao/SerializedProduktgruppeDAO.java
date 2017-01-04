@@ -17,6 +17,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import management.Produktverwaltung;
+import modell.Produkt;
 import modell.Produktgruppe;
 
 /**
@@ -91,7 +93,7 @@ public class SerializedProduktgruppeDAO implements ProduktgruppeDAO {
 		
 		
 		for(Produktgruppe p:liste){
-			if(p.getName().toString() == name){
+			if(p.getName().equals(name)){
 				return p; //gib gefundenes retour
 			}
 		}
@@ -132,6 +134,8 @@ public class SerializedProduktgruppeDAO implements ProduktgruppeDAO {
 		try{
 			for (Produktgruppe i : myList)
 				if ( i.getName().equals(name) ) {
+					for(Produkt p : Produktverwaltung.getinstance().getProduktListe())
+						if(p.getKategorie().equals(name)) return false; //NICHT loeschbar, falls noch Produkte drinnen sind
 					myList.remove(i);
 					found = true;
 					break;
@@ -145,6 +149,42 @@ public class SerializedProduktgruppeDAO implements ProduktgruppeDAO {
 		}
 		
 	}
+	
+	
+	
+	
+	@Override
+	public boolean produktgruppeAendern(String alterName, String neuerName) {
+		boolean found = false;
+		List<Produktgruppe> myList = this.getProduktgruppeList();
+		
+		try{
+			for (Produktgruppe i : myList)
+				if ( i.getName().equals(alterName) ) {
+					i.setName(neuerName);
+					found = true;
+					break;
+				}
+			
+			writeListInFile(myList);
+			
+			for(Produkt p : Produktverwaltung.getinstance().getProduktListe())
+				if(p.getKategorie().equals(alterName)) 
+					Produktverwaltung.getinstance().produktAendern(p.getProduktID(), p.getName(), p.getStartpreis(), p.getOwnerUsername(), neuerName, p.getDauer(), p.getBeschreibung());
+			
+			return found;
+		}catch(NullPointerException e){
+			System.out.println("Error: Keine Liste vorhanden!"); //Zur Absicherung, obwohl eig getArtikelList() eine leere erzeugt, wenn keine vorhanden.
+			return false;
+		}
+	}
+
+	
+	
+	
+	
+	
+	
 	/**
 	 * In dieser Methode wird ueberprueft ob Bereits ein File angelegt ist,
 	 *  falls nicht wird ein neues File erzeugt 
@@ -180,6 +220,11 @@ public class SerializedProduktgruppeDAO implements ProduktgruppeDAO {
 		}
 
 	}
+
+
+
+
+
 
 }
 

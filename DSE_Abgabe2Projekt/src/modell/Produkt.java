@@ -20,7 +20,7 @@ public class Produkt implements Serializable{
 	@Override
 	public String toString(){
 		return "Produkt [id=" + produktID + ", Name=" + name + ", startpreis="  + startpreis +
-				         ", Produkt-Besitzer=" + ownerUsername  + "]";  
+				         ", Produkt-Besitzer=" + ownerUsername  + ", Kategorie=" + kategorie +"]";  
 						  
 	}
 
