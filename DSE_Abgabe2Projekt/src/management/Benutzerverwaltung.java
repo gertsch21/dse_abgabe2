@@ -76,10 +76,10 @@ public class Benutzerverwaltung {
 	 * @param password Das Passwort des neuen Benutzers
 	 * @return Falls erfolgreich, wird true rückgegeben, bei einem Fehler: false
 	 */
-	public boolean benutzerAnlegen(String vorname, String nachname, String email, String strasse, String wohnort, String username, String password){//Verbesserungswürdig!!!
+	public boolean benutzerAnlegen(String vorname, String nachname, String email, int plz, String strasse, String wohnort, int hausnummer, String username, String password){//Verbesserungswürdig!!!
 		UUID id = UUID.randomUUID();
-	System.out.println("benutzerAnlegen: "+id+" "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
-		return dao.speicherePerson(new Benutzer(id, vorname, nachname, email, strasse, wohnort, username, password));
+		System.out.println("benutzerAnlegen: "+id+" "+vorname+" "+nachname+" "+email+" "+plz+" "+strasse+" "+wohnort+" "+hausnummer+" "+username+" "+password);
+		return dao.speicherePerson(new Benutzer(id, vorname, nachname, email, plz, strasse, wohnort, hausnummer, username, password));
 	}
 	
 	/**
@@ -122,10 +122,10 @@ public class Benutzerverwaltung {
 	 * @param gehalt Das Gehalt des Admins
 	 * @return true falls erfolgreich, sonst false
 	 */
-	public boolean adminAnlegen(String vorname, String nachname, String email, String strasse, String wohnort, String username, String password,double gehalt){//Verbesserungswürdig!!!
+	public boolean adminAnlegen(String vorname, String nachname, String email, int plz, String strasse, String wohnort, int hausnummer, String username, String password,double gehalt){//Verbesserungswürdig!!!
 		UUID id = UUID.randomUUID();
-	System.out.println("AdminAnlegen: "+id+" "+vorname+" "+nachname+" "+email+" "+strasse+" "+wohnort+" "+username+" "+password);
-		return dao.speicherePerson(new Administrator(id, vorname, nachname, email, strasse, wohnort, username, password,gehalt));
+		System.out.println("AdminAnlegen: "+id+" "+vorname+" "+nachname+" "+email+" "+plz+" "+strasse+" "+wohnort+" "+hausnummer+" "+username+" "+password);
+		return dao.speicherePerson(new Administrator(id, vorname, nachname, email, plz, strasse, wohnort, hausnummer, username, password,gehalt));
 	}
 	
 	/**
@@ -146,6 +146,22 @@ public class Benutzerverwaltung {
 		return dao.getBenutzerList();
 	}
 	
+	
+	/**
+	 * Retourniert die Liste mit allen Benutzern
+	 * @return Liste mit allen Benutzern
+	 */
+	public List<Person> getPersonenListe(){
+		return dao.getPersonList();
+	}
+	
+	
+	/**
+	 * 
+	 * @param username Der Username des betreffenden Users
+	 * @param neuesPasswort Das neue Passwort des betreffenden Users
+	 * @return true, falls erfolgreich, false, falls fehler aufgetreten sind
+	 */
 	public boolean passwortAendern(String username, String neuesPasswort){
 		if(neuesPasswort.length() < 8 || neuesPasswort.length() > 32) //keine zu kurzen oder zu langen passwoerter
 			return false;
@@ -153,13 +169,39 @@ public class Benutzerverwaltung {
 			return false;
 		
 		try{
-			dao.passwortAendern(username, neuesPasswort);
-			return true;
+			return dao.passwortAendern(username, neuesPasswort);
 		}catch(exceptions.BenutzerNotFoundException e){
 			System.out.println("Benutzer nicht gefunden(username='"+username+"'): " + e.getMessage());
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * @param username Der Username des betreffenden Users
+	 * @param plz Die neue PLZ des betreffenden Users
+	 * @param strasse Die neueStrasse des betreffenden Users
+	 * @param wohnort Der neue Wohnort des betreffenden Users
+	 * @param hausnummer Die Hausnummer des betreffenden Users
+	 * @return true, falls erfolgreich, false, falls fehlgeschlagen
+	 */
+	public boolean adressdatenAendern(String username, int plz, String strasse, String wohnort, int hausnummer){
+		try{
+			if(username == null) return false;
+			if(strasse == null) strasse = dao.getPersonByUsername(username).getStrasse();
+			if(wohnort == null) wohnort = dao.getPersonByUsername(username).getWohnort();
+			if(plz>99999 || plz<0 || hausnummer<0 || hausnummer > 1000) return false;
+			if(strasse.length()>500 || wohnort.length() >500) return false;
+			
+			return dao.adressdatenAendern(username, plz, strasse, wohnort, hausnummer);
+			
+		}catch(Exception e){
+			//zB bei nullpointer exception, wenn strasse oder wohnort null und auch username nicht vorhanden
+		}
+		return false;
+	}
+	
 	
 
 }

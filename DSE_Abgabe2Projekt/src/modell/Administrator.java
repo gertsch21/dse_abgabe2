@@ -22,10 +22,10 @@ public class Administrator extends Benutzer {
 	 * @param password Das Passwort des jeweiligen Administrators.(min 5 Zeichen) 
 	 * @param gehalt Das Gehalt des Administrators.
 	 */
-	public Administrator(UUID id, String vorname, String nachname,
-			String email, String strasse, String wohnort, String username,
+	public Administrator(UUID id, String vorname, String nachname, String email, 
+			 int plz, String strasse, String wohnort, int hausnummer, String username,
 			String password,double gehalt) {
-		super(id, vorname, nachname, email, strasse, wohnort, username,
+		super(id, vorname, nachname, email, plz, strasse, wohnort, hausnummer, username,
 				password);
 		setGehalt(gehalt);
 		// TODO Auto-generated constructor stub

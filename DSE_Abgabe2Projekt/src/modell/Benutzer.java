@@ -26,9 +26,9 @@ public class Benutzer extends Person{
 	 * @param username Der eindeutige Username des jeweiligen Benutzers.
 	 * @param password Das Passwort des jeweiligen Benutzers.
 	 */
-	public Benutzer(UUID id, String vorname, String nachname, String email,
-			String strasse, String wohnort, String username, String password){
-			super(id,vorname,nachname,email,strasse,wohnort,username,password);
+	public Benutzer(UUID id, String vorname, String nachname, String email, int plz,
+			String strasse, String wohnort, int hausnummer, String username, String password){
+			super(id,vorname,nachname,email,plz,strasse,wohnort,hausnummer,username,password);
 			
 			istEingefroren = false;
 	}

@@ -14,10 +14,15 @@ import java.util.UUID;
  */
 public class Produktgruppe implements Serializable{
 
+	@Override
+	public String toString() {
+		return "Produktgruppe [produktgruppenID=" + produktgruppenID + ", name=" + name + ", liste=" + liste + "]";
+	}
+
 	private static final long serialVersionUID = 1L;
-	UUID produktgruppenID;
-	String name;
-	List<Produkt> liste;
+	private UUID produktgruppenID;
+	private String name;
+	private List<Produkt> liste;
 	
 	
 	public Produktgruppe(String name){
@@ -65,9 +70,5 @@ public class Produktgruppe implements Serializable{
 	 */
 	public void setListe(List<Produkt> liste){
 		this.liste = new ArrayList<Produkt>();
-	}
-
-
-	
-	
+	}	
 }

@@ -12,24 +12,29 @@ import java.util.UUID;
 public abstract class Person implements Serializable {
 	
 	
+
+
+
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", vorname=" + vorname + ", nachname="
-				+ nachname + ", email=" + email + ", strasse=" + strasse
-				+ ", wohnort=" + wohnort + ", username=" + username
-				+ ", password=" + password + "]";
+		return "Person [id=" + id + ", vorname=" + vorname + ", nachname=" + nachname + ", email=" + email + ", plz="
+				+ plz + ", strasse=" + strasse + ", wohnort=" + wohnort + ", hausnummer=" + hausnummer + ", username="
+				+ username + ", password=" + password + "]";
 	}
 
-
 	private static final long serialVersionUID = 1L;
-	UUID id;
-	String vorname;
-	String nachname;
-	String email;
-	String strasse;
-	String wohnort;
-	String username;
-	String password;
+	private UUID id;
+	private String vorname;
+	private String nachname;
+	private String email;
+	
+	private int plz;
+	private String strasse;
+	private String wohnort;
+	private int hausnummer;
+	
+	private String username;
+	private String password;
 	
 	
 	/**
@@ -43,13 +48,15 @@ public abstract class Person implements Serializable {
 	 * @param password Das Passwort der jeweiligen Person.(min 5 Zeichen) 
 	 */
 	public Person(UUID id, String vorname, String nachname, String email,
-			String strasse, String wohnort, String username, String password) {
+			int plz, String strasse, String wohnort, int hausnummer, String username, String password) {
 		setId(id);
 		setVorname(vorname);
 		setNachname(nachname);
 		setEmail(email);
+		setPlz(plz);
 		setStrasse(strasse);
 		setWohnort(wohnort);
+		setHausnummer(hausnummer);
 		setUsername(username);
 		setPassword(password);
 	}
@@ -118,6 +125,21 @@ public abstract class Person implements Serializable {
 	
 	/**
 	 * 
+	 * @return Die Postleitzahl der Person
+	 */
+	public int getPlz() {
+		return plz;
+	}
+	
+	/**
+	 * 
+	 * @param plz Die Postleitzahl der Person
+	 */
+	public void setPlz(int plz) {
+		this.plz = plz;
+	}
+	/**
+	 * 
 	 * @return Die Strasse der jeweiligen Person
 	 */
 	public String getStrasse() {
@@ -148,6 +170,21 @@ public abstract class Person implements Serializable {
 		this.wohnort = wohnort;
 	}
 	
+	/**
+	 * 
+	 * @return Die Hausnummer der Person
+	 */
+	public int getHausnummer() {
+		return hausnummer;
+	}
+	
+	/**
+	 * 
+	 * @param hausnummer Die Hausnummer der Person
+	 */
+	public void setHausnummer(int hausnummer) {
+		this.hausnummer = hausnummer;
+	}
 	/**
 	 * 
 	 * @return Der Username der jeweiligen Person

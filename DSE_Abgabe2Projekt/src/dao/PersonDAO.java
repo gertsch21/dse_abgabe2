@@ -81,4 +81,15 @@ public interface PersonDAO {
 	 * @throws BenutzerNotFoundException geworfen, falls username mit keinem Benutzer zusammenpasst
 	 */
 	public boolean passwortAendern(String username, String neuesPasswort) throws BenutzerNotFoundException;
+	
+	/**
+	 * 
+	 * @param username Der Username des betreffenden Users
+	 * @param plz Die neue PLZ des betreffenden Users
+	 * @param strasse Die neueStrasse des betreffenden Users
+	 * @param wohnort Der neue Wohnort des betreffenden Users
+	 * @param hausnummer Die Hausnummer des betreffenden Users
+	 * @return true, falls erfolgreich, false, falls fehlgeschlagen
+	 */
+	public boolean adressdatenAendern(String username, int plz, String strasse, String wohnort, int hausnummer);
 }

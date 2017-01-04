@@ -259,13 +259,41 @@ public class SerializedPersonDAO implements PersonDAO{
 
 	@Override
 	public boolean passwortAendern(String username, String neuesPasswort) throws BenutzerNotFoundException {
+		boolean erfolgreich = false;
 		
 		List<Person> personenliste = getPersonList();
 		for(Person p : personenliste){
 			if(p.getUsername().equals(username)){
 				p.setPassword(neuesPasswort);
-				return true;
+				erfolgreich = true;
+				break;
 			}
+		}
+		if(erfolgreich){
+			writeListInFile(personenliste);
+			return true;
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean adressdatenAendern(String username, int plz, String strasse, String wohnort, int hausnummer) {
+		boolean erfolgreich = false;
+		List<Person> personenliste = getPersonList();
+		for(Person p : personenliste){
+			if(p.getUsername().equals(username)){
+				p.setPlz(plz);
+				p.setStrasse(strasse);
+				p.setWohnort(wohnort);
+				p.setHausnummer(hausnummer);
+				erfolgreich = true;
+				break;
+			}
+		}
+		if(erfolgreich){
+			writeListInFile(personenliste);
+			return true;
 		}
 		return false;
 	}
