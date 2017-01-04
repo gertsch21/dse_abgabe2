@@ -5,6 +5,9 @@
 package dao;
 
 import java.util.List;
+
+import exceptions.BenutzerNotFoundException;
+import modell.Administrator;
 import modell.Benutzer;
 import modell.Person;
 
@@ -16,7 +19,7 @@ public interface PersonDAO {
 	 * 
 	 * @return Die Liste der gespeicherten Person.
 	 */
-	List<Person> getPersonList();
+	public List<Person> getPersonList();
 
 	/**
 	 *Wenn keine Liste enthalten ist,wird eine leere Liste erstellt und
@@ -24,7 +27,7 @@ public interface PersonDAO {
 	 * 
 	 * @return Die Liste der gespeicherten Benutzer.
 	 */
-	List<Benutzer> getBenutzerList();
+	public List<Benutzer> getBenutzerList();
 
 	
 	/**
@@ -32,41 +35,50 @@ public interface PersonDAO {
 	 * @param id Anhand der eindeutigen ID wird die Person gesucht.
 	 * @return Die gefundene Person wird zurückgegeben, oder null wird zurückgeliefert.
 	 */
-	Person getPersonById(String id);
+	public Person getPersonById(String id);
 	
 	/**
 	 * 
 	 * @param username Anhand diesem eindeutigen Parameter wird die Person gesucht.
 	 * @return Die gefundene Person wird zurückgegeben, oder null.
 	 */
-	Person getPersonByUsername(String username);
+	public Person getPersonByUsername(String username);
 
 	/**
 	 * 
-	 * @param benutzer Die zu speichernde Person.
+	 * @param benutzer Die zu speichernde Person(Abstraktion von Benutzer und Administrator).
 	 * @return true, falls Vorgang erfolgreich, andernfalls false.
 	 */
-	boolean speicherePerson(Person benutzer);
+	public boolean speicherePerson(Person benutzer);
 
+	
 	/**
 	 * 
-	 * @param benutzer Die Id der zu löschenden Person als String.
+	 * @param username Der Username der zu löschenden Person als String.
 	 * @return true, falls Vorgang erfolgreich, andernfalls false.
 	 */
-	boolean loeschePerson(String benutzer);
+	public boolean loeschePerson(String username);
 
 	/**
 	 * 
 	 * @param benutzer Der Username der einzufrierenden Person als String.
 	 * @return true, falls Vorgang erfolgreich, andernfalls false.
 	 */
-	boolean einfrierenPerson(String benutzer);
+	public boolean einfrierenPerson(String benutzer);
 	
 	/**
 	 * 
 	 * @param benutzer Der Username der einzufrierenden Person als String.
 	 * @return true, falls Vorgang erfolgreich, andernfalls false.
 	 */
-	boolean einfrierenAufheben(String benutzer);
-	
+	public boolean einfrierenAufheben(String benutzer);
+
+	/**
+	 * 
+	 * @param username Der Username der Person, dessen Passwort geaendert werden soll
+	 * @param neuesPasswort Das neue Passwort
+	 * @return true, falls erfolgreich, false, falls passwort falsch ist
+	 * @throws BenutzerNotFoundException geworfen, falls username mit keinem Benutzer zusammenpasst
+	 */
+	public boolean passwortAendern(String username, String neuesPasswort) throws BenutzerNotFoundException;
 }

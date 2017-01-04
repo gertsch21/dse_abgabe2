@@ -13,6 +13,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import exceptions.BenutzerNotFoundException;
+import modell.Administrator;
 import modell.Benutzer;
 import modell.Person;
 
@@ -33,11 +36,6 @@ public class SerializedPersonDAO implements PersonDAO{
 	}
 	
 	
-	/**
-	 * Pr�ft ob das File, auf welches myFile zeigt auch existiert, falls nicht,
-	 * dann wird eines erzeugt.
-	 */
-	
 	public void checkIfFileExist(){
 
 		if(!this.myFile.exists())
@@ -47,15 +45,6 @@ public class SerializedPersonDAO implements PersonDAO{
 				System.out.println("Error: File konnte nicht erstellt werden.");
 		}
 	}
-	
-	
-	
-	/**
-	 *Wenn keine Liste enthalten ist, wird eine leere Liste erstellt und
-	 * diese zur�ckgegeben!
-	 * 
-	 * @return Die Liste der gespeicherten Person.
-	 */
 	
 	@Override
 	public List<Person> getPersonList(){
@@ -90,12 +79,6 @@ public class SerializedPersonDAO implements PersonDAO{
 		return myList;
 	}
 
-	/**
-	 *Wenn keine Liste enthalten ist,wird eine leere Liste erstellt und
-	 * diese zur�ckgegeben!
-	 * 
-	 * @return Die Liste der gespeicherten Benutzer.
-	 */
 	
 	@Override
 	public List<Benutzer> getBenutzerList(){
@@ -111,15 +94,8 @@ public class SerializedPersonDAO implements PersonDAO{
 		
 	}
 	
-	/**
-	 * 
-	 * @param id Anhand der eindeutigen ID wird die Person gesucht.
-	 * @return Die gefundene Person wird zur�ckgegeben, oder null wird zur�ckgeliefert.
-	 */
-	
 	@Override
 	public Person getPersonById(String id){
-
 		List<Person> liste=getPersonList();
 		if(liste==null) return null; 
 		for(Person p:liste){
@@ -130,16 +106,9 @@ public class SerializedPersonDAO implements PersonDAO{
 		return null; 
 	}
 
-	/**
-	 * 
-	 * @param benutzer Die zu speichernde Person.
-	 * @return true, falls Vorgang erfolgreich, andernfalls false.
-	 */
 	
 	@Override
 	public boolean speicherePerson(Person benutzer){
-
-
 		List<Person> myList=null;
 		myList = getPersonList();
 		for(Person i:myList)
@@ -151,18 +120,10 @@ public class SerializedPersonDAO implements PersonDAO{
 			myList.add(benutzer);
 			writeListInFile(myList);
 			return true;
-	
 	}
 	
-	/**
-	 * 
-	 * @param username Anhand diesem eindeutigen Parameter wird die Person gesucht.
-	 * @return Die gefundene Person wird zur�ckgegeben, oder null.
-	 */
-	
 	@Override
-	public Person getPersonByUsername(String username){
-		
+	public Person getPersonByUsername(String username){	
 		List<Person> liste=getPersonList();
 		if(liste==null){
 			System.out.println("Keine Liste!"); 
@@ -175,12 +136,6 @@ public class SerializedPersonDAO implements PersonDAO{
 		return null;
 	}
 
-	
-	/**
-	 * 
-	 * @param benutzer Die Id der zu l�schenden Person als String.
-	 * @return true, falls Vorgang erfolgreich, andernfalls false.
-	 */
 	
 	@Override
 	public boolean loeschePerson(String benutzer){
@@ -205,11 +160,6 @@ public class SerializedPersonDAO implements PersonDAO{
 
 	}
 	
-	/**
-	 * 
-	 * @param benutzer Der Username der einzufrierenden Person als String.
-	 * @return true, falls Vorgang erfolgreich, andernfalls false.
-	 */
 	
 	@Override
 	public boolean einfrierenPerson(String username){
@@ -236,12 +186,6 @@ public class SerializedPersonDAO implements PersonDAO{
 			return false;
 		}
 	}
-	
-	/**
-	 * 
-	 * @param benutzer Der Username der einzufrierenden Person als String.
-	 * @return true, falls Vorgang erfolgreich, andernfalls false.
-	 */
 	
 	@Override
 	public boolean einfrierenAufheben(String username){
@@ -313,6 +257,17 @@ public class SerializedPersonDAO implements PersonDAO{
 	}
 
 
+	@Override
+	public boolean passwortAendern(String username, String neuesPasswort) throws BenutzerNotFoundException {
+		
+		List<Person> personenliste = getPersonList();
+		for(Person p : personenliste){
+			if(p.getUsername().equals(username)){
+				p.setPassword(neuesPasswort);
+				return true;
+			}
+		}
+		return false;
+	}
 
-	
 }

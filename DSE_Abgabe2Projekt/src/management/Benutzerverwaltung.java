@@ -50,7 +50,6 @@ public class Benutzerverwaltung {
 			Person p = dao.getPersonByUsername(username);
 		
 			System.out.println("Prüfe login von: "+username+", korrektes pwd: "+p.getPassword());
-		
 			
 			if(p.getPassword().equals(password)){
 				if(p.getClass()==Benutzer.class && !((Benutzer)p).getIstEingefroren()){
@@ -145,6 +144,21 @@ public class Benutzerverwaltung {
 	 */
 	public List<Benutzer> getBenutzerListe(){
 		return dao.getBenutzerList();
+	}
+	
+	public boolean passwortAendern(String username, String neuesPasswort){
+		if(neuesPasswort.length() < 8 || neuesPasswort.length() > 32) //keine zu kurzen oder zu langen passwoerter
+			return false;
+		if(neuesPasswort.length() != neuesPasswort.trim().length()) //keine Leerzeichen erlaubt
+			return false;
+		
+		try{
+			dao.passwortAendern(username, neuesPasswort);
+			return true;
+		}catch(exceptions.BenutzerNotFoundException e){
+			System.out.println("Benutzer nicht gefunden(username='"+username+"'): " + e.getMessage());
+			return false;
+		}
 	}
 	
 
