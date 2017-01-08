@@ -19,9 +19,6 @@ import management.Benutzerverwaltung;
 import modell.Benutzer;
 
 
-
-
-
 public class TCPProducer extends Thread implements MessageListener {
 	
 	
@@ -38,21 +35,22 @@ public class TCPProducer extends Thread implements MessageListener {
 		//Konstruktor
 		public TCPProducer() throws JMSException {
 			
+			// Create the connection
 	        connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_BROKER_URL);
 	        connection = connectionFactory.createConnection();
 	        connection.start();
-
+	        
+	     // Create the session
 	        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-	    
-	    
 	        consumerSubject = session.createQueue("tcpTasksQueue");
+	        
+	        // Create the Consumer
 	        consumer = session.createConsumer(consumerSubject);
 	        consumer.setMessageListener(this);
 	        
 	        subjectQueue = session.createQueue("tcpBenutzerQueue");
 	        producer = session.createProducer(subjectQueue);
-	        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+	        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 	       
 		}
 		
@@ -77,7 +75,7 @@ public class TCPProducer extends Thread implements MessageListener {
 				
 				String user[] = ben.split(";");
 				
-				System.out.println("Recieved Username" + user[0]+ "with" + user[1]+" tha's all folks");
+				System.out.println("Recieved Username " + user[0]+ " with " + user[1]+" tha's all folks");
 				
 				Benutzerverwaltung benVer = Benutzerverwaltung.getInstance();
 				
@@ -88,14 +86,12 @@ public class TCPProducer extends Thread implements MessageListener {
 					 
 					 TextMessage message = session.createTextMessage(text);
 					 message.setJMSCorrelationID(incomingMsg.getJMSCorrelationID());
-			           
+					 System.out.println("das ist die getJMSCorrelationID Wichtigg "+incomingMsg.getJMSCorrelationID() );
 			         producer.send(message);
 			          
 				}
 				else{
-					String text = ((TextMessage) incomingMsg).getText();
-					 
-					 System.out.println("User is registered " + text);
+					 String text = "bad";
 					 TextMessage message = session.createTextMessage(text);
 					 message.setJMSCorrelationID(incomingMsg.getJMSCorrelationID());
 					 producer.send(message); 

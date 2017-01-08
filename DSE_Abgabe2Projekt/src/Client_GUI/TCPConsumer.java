@@ -1,6 +1,9 @@
 package Client_GUI;
 
 import javax.jms.MessageListener;
+
+import java.util.Random;
+
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -49,7 +52,7 @@ public class TCPConsumer extends Thread implements MessageListener{
 	        consumerQueue = session.createQueue("tcpBenutzerQueue");
 
 	        producer = session.createProducer(subjectQueue);
-	        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+	        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
 	        
 	        consumer = session.createConsumer(consumerQueue);
 	        consumer.setMessageListener(this);
@@ -60,10 +63,12 @@ public class TCPConsumer extends Thread implements MessageListener{
 	public void sendMessages() throws JMSException {
 		System.out.println("# The customers send username & passwort ");
 		int x=0;
+		Random rand = new Random();
+		
 		for( int i =0; i < 5 ; i++){
-			x = (int) Math.random();
+			 x = rand.nextInt(10);
 		}
-		System.out.println("izbaci "+ x);
+		System.out.println("correlationID "+ x);
 		
 		String ben = uname+";"+pwort;
 		
@@ -71,7 +76,7 @@ public class TCPConsumer extends Thread implements MessageListener{
 		
 		System.out.println("DAs ist der USername  " + ben);
 		ObjectMessage message = session.createObjectMessage(ben); 
-		message.setJMSCorrelationID(Integer.toString(3));
+		message.setJMSCorrelationID(Integer.toString(x));
 		producer.send(message);	
 			
 			
@@ -87,6 +92,7 @@ public class TCPConsumer extends Thread implements MessageListener{
 	           System.out.println("# The customers get notified about the status of the order");
 	           System.out.println("Customer> " + textMessage.getText());
 	           kontrolle = (String) textMessage.getText();
+	           setKontrolle(kontrolle);
 	           
 	        } else {
 	            
@@ -97,6 +103,16 @@ public class TCPConsumer extends Thread implements MessageListener{
 		
 	}
 	
+	public String getKontrolle() {
+		return kontrolle;
+	}
+
+
+	public void setKontrolle(String kontrolle) {
+		this.kontrolle = kontrolle;
+	}
+
+
 	public boolean MessageConsumer(){
 		boolean test = false;
 	    test = Boolean.valueOf(kontrolle);
