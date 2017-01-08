@@ -111,7 +111,7 @@ public class SerializedProduktgruppeDAO implements ProduktgruppeDAO {
 
 		myList = getProduktgruppeList();
 		for(Produktgruppe i:myList)
-			if (newProduktgruppe.getProduktgruppenID().equals(i.getProduktgruppenID())) {
+			if (newProduktgruppe.getName().equals(i.getName())) {
 				System.out.println("Produktgruppe schon enthalten.");
 				return false;
 			}
