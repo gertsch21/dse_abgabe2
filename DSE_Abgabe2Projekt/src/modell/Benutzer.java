@@ -32,6 +32,9 @@ public class Benutzer extends Person{
 			
 			istEingefroren = false;
 	}
+	
+	
+	
 
 	/**
 	 * @return istEingefroren Ist true, falls der User eingefroren wurde und somit temporaer keine Berechtigung mehr hat. 
