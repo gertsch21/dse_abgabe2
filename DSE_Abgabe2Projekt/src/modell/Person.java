@@ -4,11 +4,16 @@ package modell;
 import java.io.Serializable;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 
 /**
  * 
  *Die Klasse Person ist eine Abstrakte Klasse und dient als Vorlage fuer Benutzer und Administrator
  */
+@Entity
 public abstract class Person implements Serializable {
 	
 	
@@ -23,6 +28,7 @@ public abstract class Person implements Serializable {
 	}
 
 	private static final long serialVersionUID = 1L;
+	@Id
 	private UUID id;
 	private String vorname;
 	private String nachname;
@@ -33,7 +39,9 @@ public abstract class Person implements Serializable {
 	private String wohnort;
 	private int hausnummer;
 	
+	@Column(unique=true)
 	private String username;
+	
 	private String password;
 	
 	
@@ -60,6 +68,12 @@ public abstract class Person implements Serializable {
 		setUsername(username);
 		setPassword(password);
 	}
+	
+	/**
+	 * Standardkonstruktor fuer Hibernate
+	 */
+	public Person(){}
+	
 	/**
 	 * 
 	 * @return Die id der jeweiligen Person.

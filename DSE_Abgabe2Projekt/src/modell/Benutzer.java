@@ -5,13 +5,27 @@ package modell;
 
 import java.util.UUID;
 
+import javax.persistence.Entity;
+
 
 /**
  * Die Klasse Benutzer ist eine Subklasse von der Klasse Person und repräsentiert die Benutzer
  */
+@Entity
 public class Benutzer extends Person{
 	
 	
+	
+	@Override
+	public String toString() {
+		return "Benutzer [istEingefroren=" + istEingefroren + ", toString()=" + super.toString() + ", getId()="
+				+ getId() + ", getVorname()=" + getVorname() + ", getNachname()=" + getNachname() + ", getEmail()="
+				+ getEmail() + ", getPlz()=" + getPlz() + ", getStrasse()=" + getStrasse() + ", getWohnort()="
+				+ getWohnort() + ", getHausnummer()=" + getHausnummer() + ", getUsername()=" + getUsername()
+				+ ", getPassword()=" + getPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ "]";
+	}
+
 	boolean istEingefroren;
 	private static final long serialVersionUID = 1L;
 
@@ -32,9 +46,13 @@ public class Benutzer extends Person{
 			
 			istEingefroren = false;
 	}
-	
-	
-	
+
+	/**
+	 * Standardkonstruktor fuer Hibernate
+	 */
+	public Benutzer() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @return istEingefroren Ist true, falls der User eingefroren wurde und somit temporaer keine Berechtigung mehr hat. 

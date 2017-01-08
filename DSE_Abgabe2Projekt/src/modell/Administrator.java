@@ -2,11 +2,24 @@ package modell;
 
 import java.util.UUID;
 
+import javax.persistence.Entity;
+
 /**
  * Die Klasse Administrator dient zur Verwaltung aller Benutzer und Produkte die registriert sind. 
  */
+@Entity
 public class Administrator extends Benutzer {
 	
+
+	@Override
+	public String toString() {
+		return "Administrator [gehalt=" + gehalt + ", toString()=" + super.toString() + ", getIstEingefroren()="
+				+ getIstEingefroren() + ", getId()=" + getId() + ", getVorname()=" + getVorname() + ", getNachname()="
+				+ getNachname() + ", getEmail()=" + getEmail() + ", getPlz()=" + getPlz() + ", getStrasse()="
+				+ getStrasse() + ", getWohnort()=" + getWohnort() + ", getHausnummer()=" + getHausnummer()
+				+ ", getUsername()=" + getUsername() + ", getPassword()=" + getPassword() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
+	}
 
 	private static final long serialVersionUID = 1L;
 	double gehalt;
@@ -30,6 +43,11 @@ public class Administrator extends Benutzer {
 		setGehalt(gehalt);
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+	 * Standardkonstruktor fuer Hibernate
+	 */
+	public Administrator(){}
 	
 	/**
 	 * 

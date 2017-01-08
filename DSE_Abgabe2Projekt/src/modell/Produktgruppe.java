@@ -6,43 +6,44 @@ package modell;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Die Klasse Produktgruppe dient als Grundlage fuer alle Produkte, um sie in Kategorien zu Verwalten.
  *
  */
+@Entity
+@Table(name="Produktgruppe")
 public class Produktgruppe implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Produktgruppe [produktgruppenID=" + produktgruppenID + ", name=" + name + ", liste=" + liste + "]";
+		return "Produktgruppe [name=" + name + ", liste=" + liste + "]";
 	}
 
-	private static final long serialVersionUID = 1L;
-	private UUID produktgruppenID;
+	
+	@Id
+	@Column(name = "produktgruppenname")
 	private String name;
+	
+	@OneToMany()
 	private List<Produkt> liste;
 	
 	
 	public Produktgruppe(String name){
-		setProduktgruppenID(produktgruppenID);
 		setName(name);
+		setListe(new ArrayList<Produkt>());
 	}
 	
 	/**
-	 * @return gibt die ID der Produktgruppe zurueck
+	 * Fuer Hibernate
 	 */
-	public UUID getProduktgruppenID(){
-		return produktgruppenID;
-	}
-
-	/**
-	 * @param aendert die ID der Produktgruppe auf einen gewuenschten Wert
-	 */
-	public void setProduktgruppenID(UUID produktgruppenID){
-		this.produktgruppenID = UUID.randomUUID();
-	}
+	public Produktgruppe(){}
 
 	/**
 	 * @return gibt den Namen der Produktgruppe zurueck
@@ -71,4 +72,11 @@ public class Produktgruppe implements Serializable{
 	public void setListe(List<Produkt> liste){
 		this.liste = new ArrayList<Produkt>();
 	}	
+	
+	public Produkt getProduct(String id){
+		for(Produkt p : liste)
+			if(p.getProduktID().toString().equals(id))
+				return p;
+		return null;
+	}
 }

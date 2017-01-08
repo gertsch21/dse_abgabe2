@@ -11,36 +11,54 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 /** 
  *  Die Klasse Produkt,dient uns zur Erzeugung von Artikeln, welche zur Auktion benoetigt werden
  */
+@Entity
+@Table(name = "Produkt")
 public class Produkt implements Serializable{
 	
 	
+
 	@Override
 	public String toString(){
 		return "Produkt [id=" + produktID + ", Name=" + name + ", startpreis="  + startpreis +
 				         ", Produkt-Besitzer=" + ownerUsername  + ", Kategorie=" + kategorie +"]";  
 						  
 	}
-
-		
-	
 	
 	private static final long serialVersionUID = 1L;
+	@Id
 	UUID produktID;
 	String name;
 	double startpreis;
 	String ownerUsername;
+	
 	String kategorie;
 	int dauer;
 	String beschreibung;
+	
+	@Temporal(TemporalType.DATE)
 	Date startdatum;
+	
+	@Temporal(TemporalType.DATE)
 	Date enddatum;
+	
 	String hoechstbietender;
 	double aktuellesGebot;
 	boolean verkauft = false;
 
+	@ManyToOne
+	@JoinColumn(name="produktgruppenname")
+	Produktgruppe produktgruppe;
 	
 /**
  * 
@@ -68,6 +86,12 @@ public class Produkt implements Serializable{
 		
 		
 	}
+	
+	/**
+	 * Fuer Hibernate
+	 */
+	public Produkt(){}
+	
 	/**
 	 * @return gibt die Auktionsdauer in Tagen zurueck
 	 */
@@ -256,5 +280,13 @@ public class Produkt implements Serializable{
 
 	}
 	
-	
+	public Produktgruppe getProduktgruppe() {
+		return produktgruppe;
+	}
+	public void setProduktgruppe(Produktgruppe produktgruppe) {
+		this.produktgruppe = produktgruppe;
+	}
+	public void setEnddatum(Date enddatum) {
+		this.enddatum = enddatum;
+	}
 }
