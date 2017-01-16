@@ -127,8 +127,8 @@ public class ServerGui extends Application implements Runnable  {
     public void startServer() throws IOException, JMSException {
         System.out.println("Starting Server..");
         System.out.println("new Thread ..");
-    //    i = new PhysicalServer();
-        i = new TCPProducer();
+        i = new PhysicalServer();
+        
         i.start();
     }
 

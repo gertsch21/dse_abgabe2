@@ -1,7 +1,7 @@
 package Client_GUI;
 
 
-
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -28,7 +28,7 @@ import java.net.Socket;
  * Created by josefweber on 28.10.16.
  */
 public class ClientGui extends Application {
-	boolean x = false;
+
     Stage window;
 
     public static void main(String[] args) {
@@ -49,7 +49,6 @@ public class ClientGui extends Application {
         final TextField txtUserName = new TextField();
         Button checkLogin = new Button("Login");
         Label loginError = new Label("<login error here>");
-        
 
         // Grid for Login
         BorderPane bp = new BorderPane();
@@ -90,63 +89,21 @@ public class ClientGui extends Application {
 
         // Check Login
         checkLogin.setOnAction(e -> {
-        	
             String unameinput = txtUserName.getText().toString();
             String pwinput = passfield.getText().toString();
 
             if (unameinput.length() == 0 || pwinput.length() == 0){
                 System.out.println("userdata empty");
             } else {
-            	if(true){
-            		TCPConsumer tcpC;
-					try {
-						tcpC = new TCPConsumer(unameinput,pwinput);
-						tcpC.run();
-						System.out.println("neue TCPC gestartet");
-						System.out.println("username "+unameinput + " passwort "+pwinput );
-						x = false;
-						
-							System.out.println("Anfrage an den Server geschickt");
-							
-							for(;;){
-								
-									System.out.println("Noch keine Rückmeldung...");
-									System.out.println("Bitte um Geduld...");
-									tcpC.sleep(1000);
-									System.out.println("das ist tcp Kontrolle "+tcpC.getKontrolle());
-									
-								if(tcpC.getKontrolle().equals("true")){
-									System.out.println("Anfrage bestätigt! Dankeschön für die Geduld");
-									x=true;
-									break;
-								}
-								if(tcpC.getKontrolle().equals("bad")){
-									x=false;
-									break;
-								}
-							
-							}
-							
-						
-						
-						
-						
-						 
-					} catch (Exception e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-            		
-               // if (available(1234)) {
-                    //Client sc = new Client(1234, "localhost");
-                   // boolean x = sc.pruefeLogin(unameinput, pwinput);
-					
+                if (available(1234)) {
+                    Client sc = new Client(1234, "localhost");
+                    boolean x = sc.pruefeLogin(unameinput, pwinput);
                     if (x) {
                         System.out.println("TRUE");
                         homeTextArea.setText("Welcome " + unameinput);
                         // Go to Home (Hardcoded)
                         //window.setScene(home);
-                        
+
                         // Go to Home (FXML Notation)
                         Parent root = null;
                         try {
