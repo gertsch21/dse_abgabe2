@@ -37,7 +37,7 @@ public class ControllerLogin {
         } else {
             System.out.println("Login attempt: " + unameinput.getText() + " , " + pwinput.getText().toString());
             
-           
+           if (available(9999)){
                 cl = new RestClient();
               
                 Boolean x = cl.pruefeLoginPlain(name, pass);
@@ -64,17 +64,23 @@ public class ControllerLogin {
                     loginerror.setText("Login failed");
                     loginerror.setTextFill(Color.web("#BF0000"));
                 }
-        }
-  
+
+           } else {
+               System.out.println("System: Offline");
+               serverstatus.setText("System: Offline");
+               serverstatus.setTextFill(Color.web("#BF0000"));
+           }
 
         }
 
-    
+    }
 
     public static boolean available(int port) {
-
+        try (Socket ignored = new Socket("localhost", port)) {
             return true;
-
+        } catch (IOException ignored) {
+            return false;
+        }
     }
 
     public void registerClicked() throws IOException {
