@@ -88,13 +88,14 @@ public class ControllerLogin {
     }
 
     public void checkClicked(){
+        int port = 9999;
         if (available(9999)){
-            System.out.println("System: Online");
-            serverstatus.setText("System: Online");
+            System.out.println("System:  OnREST");
+            serverstatus.setText("System:  OnREST");
             serverstatus.setTextFill(Color.web("#168500"));
         } else {
-            System.out.println("System: Offline");
-            serverstatus.setText("System: Offline");
+            System.out.println("System:  OffREST");
+            serverstatus.setText("System:  OffREST");
             serverstatus.setTextFill(Color.web("#BF0000"));
         }
     }

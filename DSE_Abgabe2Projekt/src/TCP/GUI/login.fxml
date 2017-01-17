@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client_gui_rest.ControllerLogin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TCP.GUI.ControllerLogin">
    <top>
       <VBox prefHeight="53.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <HBox spacing="10.0">
                <children>
-                  <TextField fx:id="unameinput" layoutX="10.0" layoutY="10.0" promptText="username" text="gertsch2" />
+                  <TextField fx:id="unameinput" layoutX="10.0" layoutY="10.0" promptText="username" text="joe" />
                   <TextField fx:id="pwinput" promptText="password" text="hallo" />
                   <Label fx:id="loginerror" prefHeight="17.0" prefWidth="120.0">
                      <HBox.margin>

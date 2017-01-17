@@ -1,4 +1,4 @@
-package Client_GUI;
+package TCP.GUI;
 
 /**
  * Created by josefweber on 28.10.16.

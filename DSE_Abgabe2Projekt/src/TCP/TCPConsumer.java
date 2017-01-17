@@ -1,4 +1,4 @@
-package Client_GUI;
+package TCP;
 
 import javax.jms.MessageListener;
 
@@ -10,7 +10,6 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
@@ -18,9 +17,6 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.codehaus.stax2.ri.typed.ValueEncoderFactory;
-
-import modell.Benutzer;
 
 public class TCPConsumer extends Thread implements MessageListener{
 	
