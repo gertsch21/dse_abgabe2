@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import network.client.Client;
 
 import java.io.IOException;
+import java.net.Socket;
 
 public class ControllerLogin {
 
@@ -36,7 +37,7 @@ public class ControllerLogin {
         } else {
             System.out.println("Login attempt: " + unameinput.getText() + " , " + pwinput.getText().toString());
 
-
+            if (available(1234)) {
 
                 Client sc = new Client(1234, "localhost");
                 boolean x = sc.pruefeLogin(name, pass);
@@ -64,15 +65,23 @@ public class ControllerLogin {
                     loginerror.setText("Login failed");
                     loginerror.setTextFill(Color.web("#BF0000"));
                 }
+
+            } else {
+                //System.out.println("login failed");
+                loginerror.setText("Login failed");
+                loginerror.setTextFill(Color.web("#BF0000"));
             }
         }
-
+    }
 
     
 
     public static boolean available(int port) {
-
+        try (Socket ignored = new Socket("localhost", port)) {
             return true;
+        } catch (IOException ignored) {
+            return false;
+        }
 
     }
 

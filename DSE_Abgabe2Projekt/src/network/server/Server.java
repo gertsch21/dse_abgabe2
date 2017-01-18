@@ -15,7 +15,7 @@ import management.MyException;
 /**
  * 
  * Diese Klasse stellt den eigentlichen Serverprozess dar. Mittels der Generalisierungsbeziehung
- * von Thread wird die Nebenläufigkeit ermöglicht.
+ * von Thread wird die Nebenlï¿½ufigkeit ermï¿½glicht.
  *
  */
 public class Server extends Thread {
@@ -71,12 +71,12 @@ public class Server extends Thread {
 	}
 
 	/**
-	 * Diese Methode ist genau für jeweils eine Anfrage zuständig und verarbeitet die (übers 
+	 * Diese Methode ist genau fï¿½r jeweils eine Anfrage zustï¿½ndig und verarbeitet die (ï¿½bers 
 	 * Netzwerk) einkommenden Operationen(mittels Stringvergleich wird dann das jeweilige 
-	 * Objekt zurück übertragen)
+	 * Objekt zurï¿½ck ï¿½bertragen)
 	 */
 	public void run() {
-		System.out.println("Neuer Thread erfolgreich gestartet(für IP-Adresse: "+this.clientSocket.getInetAddress()+")!");
+		System.out.println("Neuer Thread erfolgreich gestartet(fï¿½r IP-Adresse: "+this.clientSocket.getInetAddress()+")!");
 
 		try {
 		//anlegen der Streams(out und dann in)
@@ -107,13 +107,15 @@ public class Server extends Thread {
 					}
 					
 					
-					//Loginprüfung
+					//Loginprï¿½fung
 					if (anfrage.equals("pruefeLogin")) {
 						try{
 							String username = eingabeGesplittet[1];
 							String password = eingabeGesplittet[2];
-							if(username == null || password == null) throw  new MyException("Ein Parameter ist null"); 
-							if(!benver.pruefeLogin(username, password)) throw new MyException("Userdaten stimmen nicht mit Passwortdaten überein("+username+"/"+password+")");
+							if(username == null || password == null) throw  new MyException("Register: Ein Parameter ist null");
+
+
+							if(!benver.pruefeLogin(username, password)) throw new MyException("Userdaten stimmen nicht mit Passwortdaten ï¿½berein("+username+"/"+password+")");
 							outData.writeBoolean(true);
 						}catch(MyException e){
 							System.err.println("Server:pruefeLogin:"+e.getMessage());
@@ -122,7 +124,22 @@ public class Server extends Thread {
 						continue;
 					}
 					
-					
+					if (anfrage.equals("pruefeRegister")) {
+						//System.out.println("TCP Server: 1 neue -pruefeRegister Anfrage");
+						try {
+							String username = eingabeGesplittet[1];
+							String password = eingabeGesplittet[2];
+							String email = eingabeGesplittet[3];
+							if(username == null || password == null || email == null) throw  new MyException("Register: Ein Parameter ist null");
+
+							if (!benver.benutzerAnlegen(username,"Secondname",email,123,"Street","Ort",4,username,password)) throw new MyException("Register fehlgeschlagen ("+username+"/"+password+"/"+email+")");
+							outData.writeBoolean(true);
+						} catch(MyException e){
+						System.err.println("Server:pruefeRegister:"+e.getMessage());
+						outData.writeBoolean(false);
+					}
+
+					}
 				
 					//Get benutzer nach Usernamen
 					if(anfrage.equals("getBenutzerByUname")){
@@ -132,7 +149,7 @@ public class Server extends Thread {
 					}
 				}
 			}catch(Exception e){
-				//Da Port geschlossen wird, während er noch abhört, wird eine Exception geworfen, welche hiermit abgefangen wird
+				//Da Port geschlossen wird, wï¿½hrend er noch abhï¿½rt, wird eine Exception geworfen, welche hiermit abgefangen wird
 			}
 
 			System.out.println("Server: Beende Connection mit Client("+this.clientSocket.getInetAddress()+")");
