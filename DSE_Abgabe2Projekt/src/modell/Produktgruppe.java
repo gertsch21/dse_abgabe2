@@ -4,11 +4,12 @@
 package modell;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,23 +22,29 @@ import javax.persistence.Table;
 @Table(name="Produktgruppe")
 public class Produktgruppe implements Serializable{
 
-	@Override
-	public String toString() {
-		return "Produktgruppe [name=" + name + ", liste=" + liste + "]";
-	}
-
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "produktgruppenname")
 	private String name;
 	
-	@OneToMany()
-	private List<Produkt> liste;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="produktgruppe")
+	private Set<Produkt> liste;
 	
 	
+
+	@Override
+	public String toString() {
+		return "Produktgruppe [name=" + name + ", listeProdukte=" + liste + "]";
+	}
+
+	
+
 	public Produktgruppe(String name){
 		setName(name);
-		setListe(new ArrayList<Produkt>());
+		setListe(new HashSet<Produkt>());
 	}
 	
 	/**
@@ -62,15 +69,15 @@ public class Produktgruppe implements Serializable{
 	/**
 	 * @return gibt eine Liste mit allen Produkten zurueck
 	 */
-	public List<Produkt> getListe(){
+	public Set<Produkt> getListe(){
 		return liste;
 	}
 
 	/**
 	 * @param aendert eine Liste mit den Produkten
 	 */
-	public void setListe(List<Produkt> liste){
-		this.liste = new ArrayList<Produkt>();
+	public void setListe(Set<Produkt> liste){
+		this.liste = liste;
 	}	
 	
 	public Produkt getProduct(String id){

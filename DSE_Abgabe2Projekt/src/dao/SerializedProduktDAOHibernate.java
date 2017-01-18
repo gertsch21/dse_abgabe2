@@ -6,13 +6,16 @@
 package dao;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import modell.Person;
 import modell.Produkt;
+import modell.Produktgruppe;
 /**
  * Diese Klasse implementiert die Interface Klasse ProduktDAO 
 
@@ -59,6 +62,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	@Override
 	public boolean produktAnlegen(Produkt newProdukt) {
 		try{
+			
 			session.beginTransaction();
 			session.save(newProdukt);
 			session.getTransaction().commit();
@@ -96,8 +100,61 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	
 	@Override
 	public boolean produktVerschieben(UUID id,String kategorie){
+		Produkt produktZuVerschieben = this.getProduktByID(id.toString());
+		Produktgruppe neuePG = new SerializedProduktgruppeDAOHibernate().getProduktgruppeByName(kategorie);
+		
+		if(produktZuVerschieben==null){
+			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Das Produkt mit der id('"+id+") existiert nicht!");
+			return false;
+		}
+		if(neuePG==null){
+			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Die Produktgruppe mit dem Namen '"+kategorie+"' existiert nicht!");
+			return false;
+		}
+		
+		
+		Produktgruppe altePG = produktZuVerschieben.getProduktgruppe();
+		
+		Set<Produkt> produktlisteDerAltenPG = altePG.getListe();
+		produktlisteDerAltenPG.remove(produktZuVerschieben);
+		altePG.setListe(produktlisteDerAltenPG);
+		
+		Set<Produkt> produktlisteDerNeuenPG = neuePG.getListe();
+		produktlisteDerNeuenPG.add(produktZuVerschieben);
+		neuePG.setListe(produktlisteDerNeuenPG);
+		
+		produktZuVerschieben.setProduktgruppe(neuePG);
+		
+		session.beginTransaction();
+		session.update(produktZuVerschieben);
+		session.update(altePG);
+		session.update(neuePG);
+		session.getTransaction().commit();
+		
 		
 		return false;
+	}
+	
+	
+
+	@Override
+	public boolean produktBekommtNeuesGebot(String produktID, String username, double gebot) {
+		this.session = sessionFactory.openSession();
+		Produkt p = this.getProduktByID(produktID);
+		if(p == null){
+			this.session.close();
+			return false; //person nicht in db
+		}
+		
+		p.setHoechstbietender(username);
+		p.setAktuellesGebot(gebot);
+			
+		session.beginTransaction();
+		session.update(p);
+		session.getTransaction().commit();
+		
+		this.session.close();
+		return true;
 	}
 	
 

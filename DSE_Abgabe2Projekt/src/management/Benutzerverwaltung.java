@@ -10,6 +10,7 @@ import modell.Benutzer;
 import modell.Person;
 import dao.PersonDAO;
 import dao.SerializedPersonDAO;
+import dao.SerializedPersonenDAOHibernate;
 
 /**
  * Diese Klasse dient der Verwaltung der einzelnen Benutzer, und greift auf den darunterliegenden Layer zu(DAO)
@@ -24,7 +25,7 @@ public class Benutzerverwaltung {
 	 * 
 	 */
 	private Benutzerverwaltung() {
-		dao = new SerializedPersonDAO();
+		dao = new SerializedPersonenDAOHibernate();
 	}
 	
 	/**

@@ -7,11 +7,11 @@ import java.util.List;
 
 import dao.ProduktgruppeDAO;
 import dao.SerializedProduktgruppeDAO;
+import dao.SerializedProduktgruppeDAOHibernate;
 import modell.Produktgruppe;
 
 
 /**
- * @author Josef
  * 
  * Klasse Produktgruppeverwaltung verwaltet das Anlegen und Loeschen von Produktgruppen
  *
@@ -22,7 +22,7 @@ public class Produktgruppeverwaltung {
 	private ProduktgruppeDAO dao;
 	
 	private Produktgruppeverwaltung(){
-		dao = new SerializedProduktgruppeDAO();
+		dao = new SerializedProduktgruppeDAOHibernate();
 	}
 	
 	/**

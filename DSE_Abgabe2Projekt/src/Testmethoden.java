@@ -1,3 +1,12 @@
+import java.util.UUID;
+
+import dao.PersonDAO;
+import dao.ProduktDAO;
+import dao.ProduktgruppeDAO;
+import dao.SerializedPersonenDAOHibernate;
+import dao.SerializedProduktDAOHibernate;
+import dao.SerializedProduktgruppeDAOHibernate;
+import management.Auktionsverwaltung;
 import management.Benutzerverwaltung;
 import management.Produktgruppeverwaltung;
 import management.Produktverwaltung;
@@ -11,8 +20,34 @@ public class Testmethoden {
 
 		Produktverwaltung prodver = Produktverwaltung.getinstance();
 		Produktgruppeverwaltung prodgruver = Produktgruppeverwaltung.getinstance();
+		Benutzerverwaltung benver = Benutzerverwaltung.getInstance();
+		Auktionsverwaltung aukver = Auktionsverwaltung.getInstance();
 		
+/*		
+		personDao.speicherePerson(new Benutzer(UUID.randomUUID(), "Gerhard", "Schmidt", "gertsch@coconut.de", 3714, "Roseldorf", "Roseldorf", 122, "gertsch", "hallo"));
+		personDao.speicherePerson(new Benutzer(UUID.randomUUID(), "Mirza", "Talic", "mirza@coconut.de",1100, "Wien", "Wien", 122, "mirzi", "hallo"));
+		personDao.speicherePerson(new Benutzer(UUID.randomUUID(), "Snezana", "Milutinovic", "sneza@coconut.de", 1100, "Wien", "Wien", 122, "snezi", "hallo"));
+		personDao.speicherePerson(new Benutzer(UUID.randomUUID(), "Josef", "Weber", "jose@coconut.de", 1230, "Wien", "Wien", 122, "josi", "hallo"));
 
+		prodgruDao.produktgruppeAnlegen(new Produktgruppe("Fernseher"));
+		prodgruDao.produktgruppeAnlegen(new Produktgruppe("Computer"));
+		prodgruDao.produktgruppeAnlegen(new Produktgruppe("Rollstuhl"));
+		
+		prodDao.produktAnlegen(new Produkt(UUID.randomUUID(), "Samsung Lt 200", 1200, "gertsch", "Fernseher", 100, "Ein 200 Zoll Fernseher!"));
+		prodDao.produktAnlegen(new Produkt(UUID.randomUUID(), "Samsung Lt 50", 120, "gertsch", "Fernseher", 100, "Ein 10 Zoll Fernseher!"));
+		prodDao.produktAnlegen(new Produkt(UUID.randomUUID(), "Omas Rollstuhl", 25, "mirzi", "Rollstuhl", 100, "Ein alter Rollstuhl!"));
+*/
+		
+		
+		
+		
+		
+		
+//		if(prodDao.produktAnlegen(new Produkt(UUID.randomUUID(),"name",20,"gertschi","Tisch",200,"beschreibung")) )
+//			System.out.println("ohoh");
+//		if(prodDao.produktAnlegen(new Produkt(UUID.randomUUID(),"name",20,"gertsch","Tischi",200,"beschreibung")) )
+//			System.out.println("ohoh");
+	
 //		prodver.produktAendern(p1.getProduktID(), "Epiphone Les Pauli", 200, "mirzi", "Gitarre", 20, "geil");
 //	
 //		prodver.produktAnlegen("Fender Strat", 1000, "mirzi", "Klavier", 100, "testbeschreibung");
@@ -26,9 +61,14 @@ public class Testmethoden {
 //			prodver.produktAendern(pg.getProduktID(), pg.getName(), 20, pg.getOwnerUsername(), "Gitarre", 100, "haha");
 //		}
 		
+		//aukver.gebotAbgeben("snezi", 30, "9995348e-88df-4a86-958f-5595d95a91a8");
+		//aukver.gebotLoeschen("9995348e-88df-4a86-958f-5595d95a91a8");
+		
+		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
+		
 		System.out.println("Produkte");
-		for(Produkt pg : prodver.getProduktListe()){
-			System.out.println(" " + pg);
+		for(Produkt p : prodver.getProduktListe()){
+			System.out.println(" " + p);
 		}
 		
 		System.out.println("Produktgruppen");
@@ -36,11 +76,12 @@ public class Testmethoden {
 			System.out.println(" " + pg);
 		}
 		
-		if(prodgruver.produktgruppeAendern("Klavier","Gitarre"))
-			System.out.println("Produktgruppe geaendert");
-		else
-			System.out.println("Produktgruppe nicht geaendert");
+		System.out.println("Personen");
+		for(Person p : benver.getBenutzerListe()){
+			System.out.println(" " + p);
+		}
 		
+		System.exit(0);
 		
 	}
 

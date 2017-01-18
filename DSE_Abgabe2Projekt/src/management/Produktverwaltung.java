@@ -14,11 +14,11 @@ import modell.Produkt;
 import modell.Produktgruppe;
 import dao.ProduktDAO;
 import dao.SerializedProduktDAO;
+import dao.SerializedProduktDAOHibernate;
 import dao.PersonDAO;
 import dao.SerializedPersonDAO;
 
 /**
- * @author Josef
  * 
  * Klasse Produktverwaltung verwaltet alle Methoden mit dem Produkt in Verbindung stehen.
  *
@@ -29,7 +29,7 @@ public class Produktverwaltung {
 	private ProduktDAO dao;
 	
 	private Produktverwaltung(){
-		dao = new SerializedProduktDAO();
+		dao = new SerializedProduktDAOHibernate();
 	}
 	
 	/**
@@ -41,6 +41,17 @@ public class Produktverwaltung {
 		return produktverwaltungInstance;
 		
 	}
+	
+	
+	/**
+	 * Diese Methode retourniert das Produkt mit der gegebenen ProduktID
+	 * @param produktID ID des zu suchenden Produktes
+	 * @return Das Produkt falls vorhanden, falls nicht, dann null
+	 */
+	public Produkt getProduktByID(String produktID){
+		return dao.getProduktByID(produktID);
+	}
+	
 	
 	/**
 	 * @param name ist der Name des Produkt
@@ -146,7 +157,7 @@ public class Produktverwaltung {
 		a.setName(name);
 		a.setStartpreis(startpreis);
 		a.setOwnerUsername(Uname);
-		a.setKategorie(kategorie);
+		
 		a.setDauer(dauer);
 		a.setBeschreibung(beschreibung);
 		a.setStartdatum(new Date());

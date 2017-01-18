@@ -54,4 +54,14 @@ public interface ProduktDAO{
 	 * @return true oder false je nach dem ob das Produkt erfolgreich neu angelegt wird oder nicht.
 	 */
 	public boolean produktVerschieben(UUID id,String kategorie);
+	
+	/**
+	 * Diese Methode ist dafuer da, dass es bei einem neuen Gebot den Bieter aktualisiert, sowie
+	 * das Gebot
+	 * @param produktID Die ID des zu aendernden Produktes
+	 * @param username Der neue Hoechstbietende
+	 * @param gebot Das neue Gebot
+	 * @return
+	 */
+	boolean produktBekommtNeuesGebot(String produktID, String username, double gebot);
 }

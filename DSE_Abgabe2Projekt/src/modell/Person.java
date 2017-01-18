@@ -2,11 +2,14 @@
 package modell;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -24,7 +27,7 @@ public abstract class Person implements Serializable {
 	public String toString() {
 		return "Person [id=" + id + ", vorname=" + vorname + ", nachname=" + nachname + ", email=" + email + ", plz="
 				+ plz + ", strasse=" + strasse + ", wohnort=" + wohnort + ", hausnummer=" + hausnummer + ", username="
-				+ username + ", password=" + password + "]";
+				+ username + ", password=" + password + ", listeWoBesitzer: "+liste+"]";
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -43,6 +46,9 @@ public abstract class Person implements Serializable {
 	private String username;
 	
 	private String password;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="besitzer")
+	private Set<Produkt> liste;
 	
 	
 	/**
@@ -176,6 +182,14 @@ public abstract class Person implements Serializable {
 		return wohnort;
 	}
 	
+	public Set<Produkt> getListe() {
+		return liste;
+	}
+
+	public void setListe(Set<Produkt> liste) {
+		this.liste = liste;
+	}
+
 	/**
 	 * 
 	 * @param wohnort Der neue Wohnort der jeweiligen Person

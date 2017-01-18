@@ -11,14 +11,18 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
+import dao.SerializedPersonenDAOHibernate;
+import dao.SerializedProduktgruppeDAOHibernate;
 /** 
  *  Die Klasse Produkt,dient uns zur Erzeugung von Artikeln, welche zur Auktion benoetigt werden
  */
@@ -30,35 +34,37 @@ public class Produkt implements Serializable{
 
 	@Override
 	public String toString(){
-		return "Produkt [id=" + produktID + ", Name=" + name + ", startpreis="  + startpreis +
-				         ", Produkt-Besitzer=" + ownerUsername  + ", Kategorie=" + kategorie +"]";  
+		return "Produkt [Name=" + name + ", startpreis="  + startpreis + ", Produkt-Besitzer=" + ownerUsername  +
+				", Produktgruppe: "+ produktgruppe.getName() +", Hoechstb.: "+hoechstbietender+", Gebot: "+aktuellesGebot+"]";  
 						  
 	}
 	
 	private static final long serialVersionUID = 1L;
 	@Id
-	UUID produktID;
-	String name;
-	double startpreis;
-	String ownerUsername;
+	@GeneratedValue
+	private UUID produktID;
+	private String name;
+	private double startpreis;
+	private String ownerUsername;
 	
-	String kategorie;
-	int dauer;
-	String beschreibung;
-	
-	@Temporal(TemporalType.DATE)
-	Date startdatum;
+	private int dauer;
+	private String beschreibung;
 	
 	@Temporal(TemporalType.DATE)
-	Date enddatum;
+	private Date startdatum;
 	
-	String hoechstbietender;
-	double aktuellesGebot;
-	boolean verkauft = false;
-
+	@Temporal(TemporalType.DATE)
+	private Date enddatum;
+	
+	private String hoechstbietender;
+	private double aktuellesGebot;
+	private boolean verkauft = false;
+	
 	@ManyToOne
-	@JoinColumn(name="produktgruppenname")
-	Produktgruppe produktgruppe;
+	private Produktgruppe produktgruppe;
+	
+	@ManyToOne
+	private Person besitzer;
 	
 /**
  * 
@@ -71,20 +77,19 @@ public class Produkt implements Serializable{
  * @param beschreibung Die genau Beschreibung des Produktes
  */
 	
-	public Produkt(UUID id, String name, double startpreis, String Uname, String kategorie, int dauer, String beschreibung){
+	public Produkt(UUID id, String name, double startpreis, String Uname, String produktgruppename, int dauer, String beschreibung){
 		setProduktID(id);
 		setName(name);
 		setStartpreis(startpreis);
 		setOwnerUsername(Uname);
-		setKategorie(kategorie);
 		setDauer(dauer);
 		setBeschreibung(beschreibung);
 		setStartdatum(new Date());
 		setEnddatum(dauer);
 		setHoechstbietender(Uname);
 		setAktuellesGebot(startpreis);
-		
-		
+		setProduktgruppe(new SerializedProduktgruppeDAOHibernate().getProduktgruppeByName(produktgruppename));
+		setBesitzer(new SerializedPersonenDAOHibernate().getPersonByUsername(Uname));
 	}
 	
 	/**
@@ -120,19 +125,7 @@ public class Produkt implements Serializable{
 		this.beschreibung = beschreibung;
 	}
 
-	/**
-	 * @return gibt den Namen der Kategorie zurueck
-	 */
-	public String getKategorie(){
-		return kategorie;
-	}
 
-	/**
-	 * @param kategorie aendert den Namen der Kategorie
-	 */
-	public void setKategorie(String kategorie){
-		this.kategorie = kategorie;
-	}
 
 	/**
 	 * @return gibt die ID des Produktes zurueck
@@ -203,6 +196,14 @@ public class Produkt implements Serializable{
 		return verkauft;
 	}
 
+
+	public Person getBesitzer() {
+		return besitzer;
+	}
+
+	public void setBesitzer(Person besitzer) {
+		this.besitzer = besitzer;
+	}
 
 	/**
 	 * @param verkauft aendert den Status der Produktes 
