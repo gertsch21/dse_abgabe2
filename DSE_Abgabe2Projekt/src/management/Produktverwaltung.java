@@ -13,10 +13,9 @@ import modell.Person;
 import modell.Produkt;
 import modell.Produktgruppe;
 import dao.ProduktDAO;
-import dao.SerializedProduktDAO;
 import dao.SerializedProduktDAOHibernate;
 import dao.PersonDAO;
-import dao.SerializedPersonDAO;
+import dao.SerializedPersonenDAOHibernate;
 
 /**
  * 
@@ -62,7 +61,7 @@ public class Produktverwaltung {
 	public boolean produktAnlegen( String name, double startpreis, String Uname, String kategorie, int dauer, String beschreibung){
 		
 		boolean produktgruppeVorhanden = false;
-		PersonDAO daoP = new SerializedPersonDAO();
+		PersonDAO daoP = new SerializedPersonenDAOHibernate();
 		List<Person> personListe = daoP.getPersonList();
 		
 		//pruefen ob Kategorie existiert

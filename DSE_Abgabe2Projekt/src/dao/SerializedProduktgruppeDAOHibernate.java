@@ -7,12 +7,13 @@
 package dao;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
+import modell.Produkt;
 import modell.Produktgruppe;
 
 /**
@@ -23,18 +24,18 @@ import modell.Produktgruppe;
 public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 
 	SessionFactory sessionFactory;
-	Session session;
 	
 	public SerializedProduktgruppeDAOHibernate() {
 		this.sessionFactory = new Configuration().configure().buildSessionFactory();
-		this.session = sessionFactory.openSession();
 	}
 	
 	/* (non-Javadoc)
 	 * @see dao.ProduktgruppeDAO#getProduktgruppeList()
 	 */
 	public List<Produktgruppe> getProduktgruppeList() {
+		Session session = sessionFactory.openSession();
 		List<Produktgruppe> retour = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();
+		session.close();
 		return retour;
 	}
 
@@ -42,7 +43,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	 * @see dao.ProduktgruppeDAO#getProduktgruppeByName(java.lang.String)
 	 */
 	public Produktgruppe getProduktgruppeByName(String name) { 
-		
+		Session session = sessionFactory.openSession();
 		List<Produktgruppe> produktgruppeliste = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();
 		Produktgruppe retour = null;
 		
@@ -63,26 +64,70 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	 * @see dao.ProduktgruppeDAO#produktgruppeAnlegen(modell.Produktgruppe)
 	 */
 	public boolean produktgruppeAnlegen(Produktgruppe newProduktgruppe) {
+		Session session = sessionFactory.openSession();
 		try{
 			session.beginTransaction();
 			session.save(newProduktgruppe);
 			session.getTransaction().commit();
+			session.close();
 			return true;
 		}catch(Exception e){
+			session.close();
 			return false;
 		}
 	}
 
 
 	public boolean produktgruppeLoeschen(String name) { // löschen  mit  ProduktID - Verbesserung ?
-		return false;
+		Session session = this.sessionFactory.openSession();
+		Produktgruppe pg = this.getProduktgruppeByName(name);
+		
+		session.beginTransaction();
+		
+		session.delete(pg);
+		
+		session.getTransaction().commit();
+		session.close();
+		return true;	
 	}
 	
 	
 	
 	@Override
 	public boolean produktgruppeAendern(String alterName, String neuerName) {
-		return false;
+		Session session = this.sessionFactory.openSession();
+		Produktgruppe pg = this.getProduktgruppeByName(alterName);
+		if(pg == null){
+			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Produktgruppe mit dem Namen '"+alterName+"' nicht vorhanden!");
+			return false;
+		}
+		if(neuerName.trim().length() == 0 || neuerName.trim().length()!=neuerName.length()){
+			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Der neue Name ist nicht korrekt(leer, oder enthaelt Leerzeichen)!");
+			return false;
+		}
+		if(this.getProduktgruppeByName(neuerName)!=null){
+			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Der Name('"+neuerName+"') ist schon vergeben!");
+			return false;
+		}
+		
+		if(!session.isOpen()) session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		Produktgruppe neu = new Produktgruppe(neuerName);
+		
+		session.save(neu);
+		
+		Set<Produkt> liste = pg.getListe();
+		for(Produkt p : liste){
+			p.setProduktgruppe(neu);
+			session.update(p);
+		}
+		
+		session.delete(pg);
+		
+		session.getTransaction().commit();
+		session.close();
+		return true;
 	}
 }
 

@@ -30,7 +30,7 @@ public class Produktgruppe implements Serializable{
 	@Column(name = "produktgruppenname")
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="produktgruppe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="produktgruppe")
 	private Set<Produkt> liste;
 	
 	

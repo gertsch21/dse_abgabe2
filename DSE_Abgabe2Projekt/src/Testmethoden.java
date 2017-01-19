@@ -65,7 +65,10 @@ public class Testmethoden {
 		//aukver.gebotAbgeben("snezi", 30, "9995348e-88df-4a86-958f-5595d95a91a8");
 		//aukver.gebotLoeschen("9995348e-88df-4a86-958f-5595d95a91a8");
 		
-		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
+//		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
+
+		
+		prodgruver.produktgruppeLoeschen("Rollstuhl");
 		
 		try {
 			System.out.println("getZumVerkaufStehendeProdukteVonBenutzer");

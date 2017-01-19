@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date; 
 import dao.*;
-import modell.Benutzer;
 import modell.Person;
 import modell.Produkt;
 /**

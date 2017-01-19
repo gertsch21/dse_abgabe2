@@ -11,7 +11,6 @@ import modell.Benutzer;
 import modell.Person;
 import modell.Produkt;
 import dao.PersonDAO;
-import dao.SerializedPersonDAO;
 import dao.SerializedPersonenDAOHibernate;
 import exceptions.BenutzerNotFoundException;
 

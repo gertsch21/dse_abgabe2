@@ -6,7 +6,6 @@ package management;
 import java.util.List;
 
 import dao.ProduktgruppeDAO;
-import dao.SerializedProduktgruppeDAO;
 import dao.SerializedProduktgruppeDAOHibernate;
 import modell.Produktgruppe;
 
@@ -59,15 +58,20 @@ public class Produktgruppeverwaltung {
 	 * @return true wenn das Loeschen von der Produktgruppe erfolgreich war, false falls nicht
 	 */
 	public boolean produktgruppeLoeschen( String name ){
-	
-		List<Produktgruppe> liste = dao.getProduktgruppeList();
-
-		for(Produktgruppe x: liste){
-			if(x.getName().equals(name)){
-				return dao.produktgruppeLoeschen(name);
-			}
+		if(name.trim().length()==0 || name.trim().length()!=name.length()){
+			System.err.println("Produktgruppeverwaltung:produktgruppeLoeschen: Der Name('"+name+"') ist leer oder enthaelt Leerzeichen!");
+			return false;
 		}
-		return false;	
+		if(dao.getProduktgruppeByName(name)==null){
+			System.err.println("Produktgruppeverwaltung:produktgruppeLoeschen: Die Produktgruppe('"+name+"') existiert nicht!");			
+			return false;
+		}
+		if(dao.getProduktgruppeByName(name).getListe().size() != 0){
+			System.err.println("Produktgruppeverwaltung:produktgruppeLoeschen: Die Produktgruppe('"+name+"') muss LEER sein, ist es aber nicht, enthaltene Produkte: "+dao.getProduktgruppeByName(name).getListe()+"!");			
+			return false;
+		}
+		
+		return dao.produktgruppeLoeschen(name);	
 	}
 	
 	

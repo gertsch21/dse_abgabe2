@@ -13,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import modell.Person;
 import modell.Produkt;
 import modell.Produktgruppe;
 /**
@@ -37,12 +36,15 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	 */
 	@Override
 	public List<Produkt> getProduktList() { 
+		this.session = sessionFactory.openSession();
 		List<Produkt> retour = (List<Produkt>) session.createQuery( "from Produkt" ).list();
+		this.session.close();
 		return retour;		
 	}
 
 	@Override
 	public Produkt getProduktByID(String id) { 
+		this.session = sessionFactory.openSession();
 		List<Produkt> produktliste = (List<Produkt>) session.createQuery( "from Produkt" ).list();
 		Produkt retour = null;
 		
@@ -52,6 +54,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 				break;
 			}
 		}
+		this.session.close();
 		return retour;
 	}
 	
@@ -61,13 +64,16 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	 */
 	@Override
 	public boolean produktAnlegen(Produkt newProdukt) {
+		this.session = sessionFactory.openSession();
 		try{
 			
 			session.beginTransaction();
 			session.save(newProdukt);
 			session.getTransaction().commit();
+			this.session.close();
 			return true;
 		}catch(Exception e){
+			this.session.close();
 			return false;
 		}
 	}
@@ -77,6 +83,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	 */
 	@Override
 	public boolean produktLoeschen(String deleteID) { // löschen  mit  ProduktID - Verbesserung ?
+		this.session = sessionFactory.openSession();
 		List<Produkt> produktliste = (List<Produkt>) session.createQuery( "from Produkt" ).list();
 		Produkt zuLoeschen = null;
 		
@@ -88,11 +95,15 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 			}
 		}
 		System.out.println("Es wird gelöscht: "+deleteID + ", " + zuLoeschen);
-		if(zuLoeschen == null) return false;//keine Person
+		if(zuLoeschen == null){
+			this.session.close();
+			return false;//keine Person
+		}
 		System.out.println("Es wird gelöscht: "+deleteID);
 		session.beginTransaction();
 		session.delete(zuLoeschen);
 		session.getTransaction().commit();
+		this.session.close();
 		return false;
 		
 	}
@@ -100,15 +111,18 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	
 	@Override
 	public boolean produktVerschieben(UUID id,String kategorie){
+		this.session = sessionFactory.openSession();
 		Produkt produktZuVerschieben = this.getProduktByID(id.toString());
 		Produktgruppe neuePG = new SerializedProduktgruppeDAOHibernate().getProduktgruppeByName(kategorie);
 		
 		if(produktZuVerschieben==null){
 			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Das Produkt mit der id('"+id+") existiert nicht!");
+			this.session.close();
 			return false;
 		}
 		if(neuePG==null){
 			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Die Produktgruppe mit dem Namen '"+kategorie+"' existiert nicht!");
+			this.session.close();
 			return false;
 		}
 		
@@ -131,7 +145,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		session.update(neuePG);
 		session.getTransaction().commit();
 		
-		
+		this.session.close();
 		return false;
 	}
 	
