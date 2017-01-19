@@ -246,7 +246,7 @@ public class Benutzerverwaltung {
 		List<Produkt> alleProdukte = Produktverwaltung.getinstance().getProduktListe();
 		
 		for(Produkt p : alleProdukte){
-			if(p.getBesitzer().equals(username) && p.isVerkauft())
+			if(p.getBesitzer().getUsername().equals(username) && p.isVerkauft())
 				alleProdukteVonUser.add(p);
 		}
 		
@@ -269,10 +269,9 @@ public class Benutzerverwaltung {
 		List<Produkt> alleProdukte = Produktverwaltung.getinstance().getProduktListe();
 		
 		for(Produkt p : alleProdukte){
-			if(p.getBesitzer().equals(username) && !p.isVerkauft())
+			if(p.getBesitzer().getUsername().equals(username) && !p.isVerkauft())
 				alleProdukteVonUser.add(p);
 		}
-		
 		return alleProdukteVonUser;
 	}
 

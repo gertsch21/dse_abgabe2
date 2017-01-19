@@ -6,6 +6,7 @@ import dao.ProduktgruppeDAO;
 import dao.SerializedPersonenDAOHibernate;
 import dao.SerializedProduktDAOHibernate;
 import dao.SerializedProduktgruppeDAOHibernate;
+import exceptions.BenutzerNotFoundException;
 import management.Auktionsverwaltung;
 import management.Benutzerverwaltung;
 import management.Produktgruppeverwaltung;
@@ -65,6 +66,18 @@ public class Testmethoden {
 		//aukver.gebotLoeschen("9995348e-88df-4a86-958f-5595d95a91a8");
 		
 		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
+		
+		try {
+			System.out.println("getZumVerkaufStehendeProdukteVonBenutzer");
+			System.out.println(benver.getZumVerkaufStehendeProdukteVonBenutzer("gertsch"));
+//			System.out.println("\ngetVerkaufteProdukteVonBenutzer");
+//			System.out.println(benver.getVerkaufteProdukteVonBenutzer("mirzi"));
+//			System.out.println("\ngetGebotshistorieVonBenutzer");
+//			System.out.println(benver.getGebotshistorieVonBenutzer("mirzi"));
+		} catch (BenutzerNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("Produkte");
 		for(Produkt p : prodver.getProduktListe()){
