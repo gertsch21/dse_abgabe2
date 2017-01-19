@@ -146,7 +146,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		session.getTransaction().commit();
 		
 		this.session.close();
-		return false;
+		return true;
 	}
 	
 	
