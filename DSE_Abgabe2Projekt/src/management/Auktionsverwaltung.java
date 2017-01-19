@@ -80,7 +80,7 @@ public class Auktionsverwaltung {
 		
 		return dao.produktBekommtNeuesGebot(produktID, p.getOwnerUsername(), p.getStartpreis());
 		
-}
+	}
 	
 	
 	/**

@@ -1,6 +1,7 @@
 package management;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,9 +9,11 @@ import java.util.UUID;
 import modell.Administrator;
 import modell.Benutzer;
 import modell.Person;
+import modell.Produkt;
 import dao.PersonDAO;
 import dao.SerializedPersonDAO;
 import dao.SerializedPersonenDAOHibernate;
+import exceptions.BenutzerNotFoundException;
 
 /**
  * Diese Klasse dient der Verwaltung der einzelnen Benutzer, und greift auf den darunterliegenden Layer zu(DAO)
@@ -202,7 +205,75 @@ public class Benutzerverwaltung {
 		}
 		return false;
 	}
+
+	/**
+	 * 
+	 *  Retourniert eine Liste mit allen Produkten, welche der User gekauft hat
+	 * @param username Der Username des betreffenden Benutzers
+	 * @return Liste der gekauften Produkte, auch wenn evtl. leer
+	 * @throws BenutzerNotFoundException
+	 */
+	public List<Produkt> getGebotshistorieVonBenutzer(String username) throws BenutzerNotFoundException{
+		if(this.getPersonByUsername(username)==null){
+			System.err.println("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+			throw new BenutzerNotFoundException("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+		}
+		List<Produkt> alleProdukteVonUser = new ArrayList<Produkt>();
+		
+		List<Produkt> alleProdukte = Produktverwaltung.getinstance().getProduktListe();
+		
+		for(Produkt p : alleProdukte){
+			if(p.getHoechstbietender().equals(username) && p.isVerkauft())
+				alleProdukteVonUser.add(p);
+		}
+		
+		return alleProdukteVonUser;
+	}
 	
+	/**
+	 * Retourniert alle Produkte, welche ein Benutzer jemals verkauft hat
+	 * @param username Username des betreffenden Benutzers
+	 * @return Die Liste der verkauften Produkte
+	 * @throws BenutzerNotFoundException
+	 */
+	public List<Produkt> getVerkaufteProdukteVonBenutzer(String username) throws BenutzerNotFoundException{
+		if(this.getPersonByUsername(username)==null){
+			System.err.println("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+			throw new BenutzerNotFoundException("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+		}
+		List<Produkt> alleProdukteVonUser = new ArrayList<Produkt>();
+		
+		List<Produkt> alleProdukte = Produktverwaltung.getinstance().getProduktListe();
+		
+		for(Produkt p : alleProdukte){
+			if(p.getBesitzer().equals(username) && p.isVerkauft())
+				alleProdukteVonUser.add(p);
+		}
+		
+		return alleProdukteVonUser;
+	}
 	
+	/**
+	 * Retourniert alle Produkte im Produktsortiment des Benutzers
+	 * @param username Username des betreffenden Benutzers
+	 * @return Die Liste der Produkte, welche ein Benutzer zum Verkauf angeboten hat
+	 * @throws BenutzerNotFoundException
+	 */
+	public List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String username) throws BenutzerNotFoundException{
+		if(this.getPersonByUsername(username)==null){
+			System.err.println("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+			throw new BenutzerNotFoundException("Benutzerverwaltung:getGebotshistorieVonBenutzer: Der Benutzer('"+username+"') existiert nicht!");
+		}
+		List<Produkt> alleProdukteVonUser = new ArrayList<Produkt>();
+		
+		List<Produkt> alleProdukte = Produktverwaltung.getinstance().getProduktListe();
+		
+		for(Produkt p : alleProdukte){
+			if(p.getBesitzer().equals(username) && !p.isVerkauft())
+				alleProdukteVonUser.add(p);
+		}
+		
+		return alleProdukteVonUser;
+	}
 
 }
