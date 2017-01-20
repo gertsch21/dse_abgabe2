@@ -149,6 +149,7 @@ public class Server extends Thread {
 							String category = eingabeGesplittet[2];
 							String price = eingabeGesplittet[3];
 							Double pprice = Double.parseDouble(price);
+
 							String description = eingabeGesplittet[4];
 							String username = eingabeGesplittet[5];
 
@@ -156,6 +157,10 @@ public class Server extends Thread {
 
 							if (name == null || category == null || pprice == null || description == null)
 								throw new MyException("Register: Ein Parameter ist null");
+
+
+							System.out.println("Server:neuesProdukt: " + name + " - " + pprice + " - " + username + " - " + category + " - " +  description);
+
 
 							if (!prodver.produktAnlegen(name,pprice,username,category,10,description)) throw new MyException("Add Produkt fehlgeschlagen ("+username+"/"+name+"/"+category+")");
 							outData.writeBoolean(true);

@@ -51,14 +51,14 @@ public class ControllerProdukt {
 
         //System.out.println("addnewProdukt: " + name + name );
 
-        String name = pname.getText();
+        String productname = pname.getText();
         String category = pcategory.getText();
         String price = pprice.getText();
         String detail= pdetail.getText();
 
         errMain.setTextFill(Color.web("#999"));
 
-        if (name.length() == 0){
+        if (productname.length() == 0){
             err1.setText("!");
             System.out.println("Name = 0");
         } else {
@@ -82,19 +82,18 @@ public class ControllerProdukt {
             parsedPrice = Double.parseDouble(price);
         } catch(NumberFormatException e)
         {
-            System.out.println("controllerProdukt: Price is not a Double");
+            System.out.println("GUI controllerProdukt: Price is not a Double");
             errMain.setText("Price is not a Double!");
         }
 
 
-        if(name.length() == 0 || category.length() == 0 || parsedPrice == 0){
+        if(productname.length() == 0 || category.length() == 0 || parsedPrice == 0){
             errMain.setText("Fill in all the Fields!");
         }  else {
             errMain.setText(name + " " + category + " " + parsedPrice + " " + detail + " .");
 
-
-            List<Benutzer> benlist = cl.getBenutzerListe();
-            System.out.println(benlist.size());
+            System.out.println("GUI controllerProdukt: the user: " + name + "wants to add a new Product");
+            cl.addProdukt(productname,category,parsedPrice,detail,name);
 
         }
 
