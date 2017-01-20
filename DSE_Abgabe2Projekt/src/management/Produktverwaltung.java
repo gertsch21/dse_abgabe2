@@ -64,14 +64,16 @@ public class Produktverwaltung {
 		PersonDAO daoP = new SerializedPersonenDAOHibernate();
 		List<Person> personListe = daoP.getPersonList();
 		
+		
 		//pruefen ob Kategorie existiert
 		for(Produktgruppe pg : Produktgruppeverwaltung.getinstance().getProduktgruppeList())
 			if(kategorie.equals(pg.getName())){
 				produktgruppeVorhanden = true;
 				break;
 			}
+		
 		if(!produktgruppeVorhanden){
-			System.out.println("Error: (produktAnlegen()) : No matching Produktgruppe was found.");
+			System.err.println("Produktverwaltung:produktAnlegen: No matching Produktgruppe was found.");
 			return false;
 		}
 	
@@ -79,13 +81,12 @@ public class Produktverwaltung {
 		//pruefen ob Person vorhanden
 		for(Person x:personListe){
 			if(x.getUsername().equals(Uname)){
-				System.out.println("username: " + Uname);
 				
 				UUID id=UUID.randomUUID();
 				return dao.produktAnlegen(new Produkt(id, name, startpreis, Uname, kategorie, dauer, beschreibung));
 			}
 		}
-		System.out.println("Error: (produktAnlegen()) : No matching Username was found.");
+		System.err.println("Produktverwaltung:produktAnlegen: No matching Username was found.");
 		return false;
 		
 	}

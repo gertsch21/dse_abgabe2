@@ -104,7 +104,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		session.delete(zuLoeschen);
 		session.getTransaction().commit();
 		this.session.close();
-		return false;
+		return true;
 		
 	}
 	
@@ -153,7 +153,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 
 	@Override
 	public boolean produktBekommtNeuesGebot(String produktID, String username, double gebot) {
-		this.session = sessionFactory.openSession();
+		
 		Produkt p = this.getProduktByID(produktID);
 		if(p == null){
 			this.session.close();
@@ -162,7 +162,8 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		
 		p.setHoechstbietender(username);
 		p.setAktuellesGebot(gebot);
-			
+		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(p);
 		session.getTransaction().commit();

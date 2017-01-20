@@ -68,7 +68,12 @@ public class Testmethoden {
 //		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
 
 		
-		prodgruver.produktgruppeLoeschen("Rollstuhl");
+//		prodgruver.produktgruppeLoeschen("Rollstuhl");
+
+//		prodgruver.produktgruppeAendern("Handy", "Smartphone");
+		
+		aukver.gebotAbgeben("gertsch", 1000, "9995348e-88df-4a86-958f-5595d95a91a8");
+		
 		
 		try {
 			System.out.println("getZumVerkaufStehendeProdukteVonBenutzer");
