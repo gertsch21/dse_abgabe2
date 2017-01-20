@@ -1,4 +1,4 @@
-package network.client;
+package TCP.network.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,12 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 import modell.*;
 
 /**
- * Diese Klasse stellt alle Funktionalitäten dar, welche ein Clientprogramm braucht(bei uns)
+ * Diese Klasse stellt alle Funktionalitï¿½ten dar, welche ein Clientprogramm braucht(bei uns)
  * Mithilfe dieser Klasse, kann vom GUI auf den Server zugegriffen werden
 */
 public class Client {
@@ -34,7 +35,7 @@ public class Client {
 	}
 	/**
 	 * Mit diesem Konstruktor kann auf einen bestimmten Serverport eines Client zugegriffen werden
-	 * @param port Der zu benützende Port des Client
+	 * @param port Der zu benï¿½tzende Port des Client
 	 */
 	public Client(int port){
 		this(port,"localhost");
@@ -42,7 +43,7 @@ public class Client {
 	/**
 	 * Mit diesem Konstruktor kann auf einen bestimmten Serverport eines Client zugegriffen werden 
 	 * und auch noch die Serverlokation eingegeben werden
-	 * @param port Der zu benützende Port des Client
+	 * @param port Der zu benï¿½tzende Port des Client
 	 * @param host Der bestimmte Server, mit welchem kommuniziert werden soll
 	 */
 	public Client(int port, String host){
@@ -96,6 +97,31 @@ public class Client {
 			return false;
 		}
 	}
+
+	public boolean pruefeRegister(String username, String password, String email){
+		try{
+			this.getOut().writeUTF("pruefeRegister-"+username+"-"+password+"-"+email);
+			return (boolean)this.dataIn.readBoolean();
+
+		}catch(IOException e){
+			System.err.println("SimpleClient:pruefeRegister: "+e.getMessage());
+			return false;
+		}
+	}
+
+	public boolean addProdukt(String name, String category, Double price, String description, String username){
+		try{
+			this.getOut().writeUTF("neuesProdukt-"+name+"-"+category+"-"+price+"-"+description+"-"+username);
+			return (boolean)this.dataIn.readBoolean();
+
+		}catch(IOException e){
+			System.err.println("SimpleClient:pruefeRegister: "+e.getMessage());
+			return false;
+		}
+	}
+
+
+
 	
 	/**
 	 * 

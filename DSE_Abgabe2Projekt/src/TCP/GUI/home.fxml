@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TCP.GUI.ControllerHome">
    <top>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Add Product" />
+            <Button fx:id="addPBtn" mnemonicParsing="false" onAction="#gotoprodukt" text="Add Product" />
             <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="96.0" text="My Products" />
             <Region prefHeight="27.0" prefWidth="436.0" />
             <Button fx:id="logoutbtn" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="69.0" text="Logout" />

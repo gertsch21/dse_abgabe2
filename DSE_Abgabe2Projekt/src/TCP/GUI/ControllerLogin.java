@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import network.client.Client;
+import TCP.network.client.Client;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -49,11 +49,11 @@ public class ControllerLogin {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
                     Parent root = fxmlLoader.load();
 
-                    /*
+
                     ControllerHome ch = fxmlLoader.<ControllerHome>getController();
                     ch.setUsername(name);
                     ch.setCl(sc);
-                    */
+
                     Scene scene = new Scene(root);
                     Stage homeStage = (Stage) loginbtn.getScene().getWindow();
 

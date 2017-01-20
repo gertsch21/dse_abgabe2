@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import network.client.Client;
+import TCP.network.client.Client;
 
 import java.io.IOException;
 import java.net.Socket;

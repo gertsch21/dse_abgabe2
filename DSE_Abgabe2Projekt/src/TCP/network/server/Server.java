@@ -1,4 +1,4 @@
-package network.server;
+package TCP.network.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,9 +8,12 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.DoubleSummaryStatistics;
 
 import management.Benutzerverwaltung;
 import management.MyException;
+import management.Produktgruppeverwaltung;
+import management.Produktverwaltung;
 
 /**
  * 
@@ -139,6 +142,26 @@ public class Server extends Thread {
 						outData.writeBoolean(false);
 					}
 
+					if (anfrage.equals("neuesProdukt")) {
+						try {
+							String name = eingabeGesplittet[1];
+							String category = eingabeGesplittet[2];
+							String price = eingabeGesplittet[3];
+							Double pprice = Double.parseDouble(price);
+							String description = eingabeGesplittet[4];
+							String username = eingabeGesplittet[5];
+
+							Produktverwaltung prodver = Produktverwaltung.getinstance();
+
+							if(name == null || category == null || pprice == null || description == null) throw  new MyException("Register: Ein Parameter ist null");
+
+							if (!prodver.produktAnlegen(name,pprice,username,category,10,description)) throw new MyException("Add Produkt fehlgeschlagen ("+username+"/"+name+"/"+category+")");
+							outData.writeBoolean(true);
+						} catch(MyException e){
+							System.err.println("Server:neuesProdukt:"+e.getMessage());
+							outData.writeBoolean(false);
+						}
+
 					}
 				
 					//Get benutzer nach Usernamen
@@ -148,8 +171,6 @@ public class Server extends Thread {
 						continue;
 					}
 				}
-			}catch(Exception e){
-				//Da Port geschlossen wird, w�hrend er noch abh�rt, wird eine Exception geworfen, welche hiermit abgefangen wird
 			}
 
 			System.out.println("Server: Beende Connection mit Client("+this.clientSocket.getInetAddress()+")");
@@ -166,6 +187,10 @@ public class Server extends Thread {
 			e.printStackTrace();
 			System.exit(1);
 		}
+	} catch (IOException x){
+		System.out.println(x);
+	}
+
 	}
 
 }
