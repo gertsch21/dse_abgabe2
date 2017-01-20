@@ -140,6 +140,7 @@ public class Server extends Thread {
 						} catch(MyException e){
 						System.err.println("Server:pruefeRegister:"+e.getMessage());
 						outData.writeBoolean(false);
+						}
 					}
 
 					if (anfrage.equals("neuesProdukt")) {
@@ -153,15 +154,15 @@ public class Server extends Thread {
 
 							Produktverwaltung prodver = Produktverwaltung.getinstance();
 
-							if(name == null || category == null || pprice == null || description == null) throw  new MyException("Register: Ein Parameter ist null");
+							if (name == null || category == null || pprice == null || description == null)
+								throw new MyException("Register: Ein Parameter ist null");
 
 							if (!prodver.produktAnlegen(name,pprice,username,category,10,description)) throw new MyException("Add Produkt fehlgeschlagen ("+username+"/"+name+"/"+category+")");
 							outData.writeBoolean(true);
-						} catch(MyException e){
-							System.err.println("Server:neuesProdukt:"+e.getMessage());
+						} catch (MyException e) {
+							System.err.println("Server:neuesProdukt:" + e.getMessage());
 							outData.writeBoolean(false);
 						}
-
 					}
 				
 					//Get benutzer nach Usernamen
@@ -171,6 +172,8 @@ public class Server extends Thread {
 						continue;
 					}
 				}
+			}catch(Exception e){
+				//Da Port geschlossen wird, w�hrend er noch abh�rt, wird eine Exception geworfen, welche hiermit abgefangen wird
 			}
 
 			System.out.println("Server: Beende Connection mit Client("+this.clientSocket.getInetAddress()+")");
@@ -187,10 +190,6 @@ public class Server extends Thread {
 			e.printStackTrace();
 			System.exit(1);
 		}
-	} catch (IOException x){
-		System.out.println(x);
-	}
-
 	}
 
 }
