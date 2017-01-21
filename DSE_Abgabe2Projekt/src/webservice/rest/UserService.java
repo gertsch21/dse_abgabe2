@@ -54,6 +54,15 @@ public class UserService {
 	        ben = (Benutzer) benutzer.getPersonByUsername(id);
 	        return ben;
 	    }
+		
+		@POST
+		@Path("getBenutzer/{name}")
+		@Produces(MediaType.APPLICATION_XML)
+		public Benutzer getBenutzer(@PathParam("name") String id) {
+        Benutzer ben = new Benutzer();
+        ben = (Benutzer) ben_ver.getPersonByUsername(id);
+        return ben;
+		}
 	 	
 	 	@GET
 	    @Path("getBenutzerListe/")
@@ -62,6 +71,16 @@ public class UserService {
 	       List<Benutzer> liste = benutzer.getBenutzerListe();
 	        return liste;
 	    }
+		
+		@GET
+		@Path("getProdukte/")
+		@Produces(MediaType.APPLICATION_XML)
+		
+		public List<Produkt> getProduktListe(){
+			List<Produkt> mylist = pr_ver.getProduktListe();
+			
+			return mylist;
+		}
 	 	
 	 
 	 	
