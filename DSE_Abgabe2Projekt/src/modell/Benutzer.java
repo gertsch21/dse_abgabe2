@@ -6,12 +6,14 @@ package modell;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  * Die Klasse Benutzer ist eine Subklasse von der Klasse Person und repräsentiert die Benutzer
  */
 @Entity
+@XmlRootElement(name = "Benutzer")
 public class Benutzer extends Person{
 	
 	
