@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AlleServicesService WSDL service -->
+
+  <service name="AlleServices" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://services.soap"/>
+      <parameter name="wsdlServiceElement" value="AlleServicesService"/>
+      <parameter name="schemaQualified" value="http://modell,http://services.soap"/>
+      <parameter name="wsdlServicePort" value="AlleServices"/>
+      <parameter name="className" value="soap.services.AlleServices"/>
+      <parameter name="wsdlPortType" value="AlleServices"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://services.soap" xmlns:tns="http://services.soap" name="getZumVerkaufStehendeProdukteVonBenutzer" qname="operNS:getZumVerkaufStehendeProdukteVonBenutzer" returnQName="retNS:getZumVerkaufStehendeProdukteVonBenutzerReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://services.soap" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="pruefeLogin" qname="operNS:pruefeLogin" returnQName="retNS:pruefeLoginReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="benutzerAnlegen" qname="operNS:benutzerAnlegen" returnQName="retNS:benutzerAnlegenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vorname" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nachname" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:plz" type="tns:int"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strasse" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:wohnort" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:hausnummer" type="tns:int"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://services.soap" xmlns:tns="http://services.soap" name="getBenutzerliste" qname="operNS:getBenutzerliste" returnQName="retNS:getBenutzerlisteReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="benutzerloeschen" qname="operNS:benutzerloeschen" returnQName="retNS:benutzerloeschenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="adminAnlegen" qname="operNS:adminAnlegen" returnQName="retNS:adminAnlegenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vorname" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nachname" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:plz" type="tns:int"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strasse" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:wohnort" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:hausnummer" type="tns:int"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:gehalt" type="tns:double"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="passwortAendern" qname="operNS:passwortAendern" returnQName="retNS:passwortAendernReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:neuesPasswort" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="benutzerEinfrieren" qname="operNS:benutzerEinfrieren" returnQName="retNS:benutzerEinfrierenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="benutzerEinfAufheben" qname="operNS:benutzerEinfAufheben" returnQName="retNS:benutzerEinfAufhebenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://modell" name="getPersonByUsername" qname="operNS:getPersonByUsername" returnQName="retNS:getPersonByUsernameReturn" returnType="rtns:Person" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="adressdatenAendern" qname="operNS:adressdatenAendern" returnQName="retNS:adressdatenAendernReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:plz" type="tns:int"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strasse" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:wohnort" type="tns:string"/>
+        <parameter xmlns:pns="http://services.soap" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:hausnummer" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://services.soap" xmlns:tns="http://services.soap" name="getGebotshistorieVonBenutzer" qname="operNS:getGebotshistorieVonBenutzer" returnQName="retNS:getGebotshistorieVonBenutzerReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://services.soap" qname="pns:username" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services.soap" xmlns:retNS="http://services.soap" xmlns:rtns="http://services.soap" xmlns:tns="http://services.soap" name="getVerkaufteProdukteVonBenutzer" qname="operNS:getVerkaufteProdukteVonBenutzer" returnQName="retNS:getVerkaufteProdukteVonBenutzerReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://services.soap" qname="pns:username" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="pruefeLogin benutzerAnlegen benutzerloeschen getPersonByUsername benutzerEinfAufheben benutzerEinfrieren getBenutzerliste adminAnlegen passwortAendern adressdatenAendern getZumVerkaufStehendeProdukteVonBenutzer getVerkaufteProdukteVonBenutzer getGebotshistorieVonBenutzer"/>
+
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerEinfrierenResponse" type="java:soap.services.BenutzerEinfrierenResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerAnlegenResponse" type="java:soap.services.BenutzerAnlegenResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerEinfrieren" type="java:soap.services.BenutzerEinfrieren" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getGebotshistorieVonBenutzer" type="java:soap.services.GetGebotshistorieVonBenutzer" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;pruefeLogin" type="java:soap.services.PruefeLogin" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getZumVerkaufStehendeProdukteVonBenutzerResponse" type="java:soap.services.GetZumVerkaufStehendeProdukteVonBenutzerResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;adminAnlegenResponse" type="java:soap.services.AdminAnlegenResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;adminAnlegen" type="java:soap.services.AdminAnlegen" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getPersonByUsername" type="java:soap.services.GetPersonByUsername" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getBenutzerliste" type="java:soap.services.GetBenutzerliste" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerloeschenResponse" type="java:soap.services.BenutzerloeschenResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;passwortAendernResponse" type="java:soap.services.PasswortAendernResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getVerkaufteProdukteVonBenutzer" type="java:soap.services.GetVerkaufteProdukteVonBenutzer" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;adressdatenAendern" type="java:soap.services.AdressdatenAendern" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerEinfAufhebenResponse" type="java:soap.services.BenutzerEinfAufhebenResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerAnlegen" type="java:soap.services.BenutzerAnlegen" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://services.soap" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;passwortAendern" type="java:soap.services.PasswortAendern" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getVerkaufteProdukteVonBenutzerResponse" type="java:soap.services.GetVerkaufteProdukteVonBenutzerResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;pruefeLoginResponse" type="java:soap.services.PruefeLoginResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://modell" qname="ns:Person" type="java:modell.Person" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getBenutzerlisteResponse" type="java:soap.services.GetBenutzerlisteResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerloeschen" type="java:soap.services.Benutzerloeschen" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;adressdatenAendernResponse" type="java:soap.services.AdressdatenAendernResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;benutzerEinfAufheben" type="java:soap.services.BenutzerEinfAufheben" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getZumVerkaufStehendeProdukteVonBenutzer" type="java:soap.services.GetZumVerkaufStehendeProdukteVonBenutzer" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getPersonByUsernameResponse" type="java:soap.services.GetPersonByUsernameResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://services.soap" qname="ns:&gt;getGebotshistorieVonBenutzerResponse" type="java:soap.services.GetGebotshistorieVonBenutzerResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

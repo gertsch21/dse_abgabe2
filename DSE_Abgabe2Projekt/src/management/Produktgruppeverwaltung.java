@@ -39,7 +39,7 @@ public class Produktgruppeverwaltung {
 	 * @return true wenn die neue Produktgruppe angelegt ist,
 	 * @return false wenn die neue Produktgruppe einen Fehler hat
 	 */
-	public boolean produktgruppeAnlegen( String name ){
+	public boolean produktgruppeAnlegen(String name){
 		
 		List<Produktgruppe> liste = dao.getProduktgruppeList();
 
@@ -57,7 +57,7 @@ public class Produktgruppeverwaltung {
 	 * @param name ist der gesuchte Produktgruppename, der geloescht werden soll
 	 * @return true wenn das Loeschen von der Produktgruppe erfolgreich war, false falls nicht
 	 */
-	public boolean produktgruppeLoeschen( String name ){
+	public boolean produktgruppeLoeschen(String name){
 		if(name.trim().length()==0 || name.trim().length()!=name.length()){
 			System.err.println("Produktgruppeverwaltung:produktgruppeLoeschen: Der Name('"+name+"') ist leer oder enthaelt Leerzeichen!");
 			return false;

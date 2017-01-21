@@ -13,4 +13,12 @@
 			<bean class="org.apache.cxf.feature.LoggingFeature" />
 		</jaxws:features>
 	</jaxws:endpoint>
+	<jaxws:endpoint xmlns:tns="http://services.soap/" id="alleservices"
+		implementor="soap.services.AlleServices" wsdlLocation="wsdl/alleservices.wsdl"
+		endpointName="tns:AlleServicesPort" serviceName="tns:AlleServicesService"
+		address="/AlleServicesPort">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+	</jaxws:endpoint>
 </beans>

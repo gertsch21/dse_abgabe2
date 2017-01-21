@@ -9,10 +9,10 @@ import soap.services.*;
 public class SoapServer {
 	protected SoapServer() throws Exception {
 		System.out.println("Starting Server");
-		Benutzerservices serviceImpl = new Benutzerservices();
+		AlleServicesSEI serviceImpl = new AlleServices();
 		JaxWsServerFactoryBean svrFactory = new JaxWsServerFactoryBean();
-		svrFactory.setServiceClass(Benutzerservices.class);
-		svrFactory.setAddress("http://localhost:9000/Benutzerservice");
+		svrFactory.setServiceClass(AlleServices.class);
+		svrFactory.setAddress("http://localhost:9000/AlleServices");
 		svrFactory.setServiceBean(serviceImpl);
 		Server server =  svrFactory.create();
 		Service service = server.getEndpoint().getService();

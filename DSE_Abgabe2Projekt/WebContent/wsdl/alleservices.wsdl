@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AlleServicesService" targetNamespace="http://services.soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://services.soap/" schemaLocation="alleservices_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="pruefeLogin">
+    <wsdl:part name="parameters" element="tns:pruefeLogin">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerAnlegen">
+    <wsdl:part name="parameters" element="tns:benutzerAnlegen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeLoeschenResponse">
+    <wsdl:part name="parameters" element="tns:produktgruppeLoeschenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerloeschenResponse">
+    <wsdl:part name="parameters" element="tns:benutzerloeschenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerEinfAufheben">
+    <wsdl:part name="parameters" element="tns:benutzerEinfAufheben">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeAendernResponse">
+    <wsdl:part name="parameters" element="tns:produktgruppeAendernResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktAnlegenResponse">
+    <wsdl:part name="parameters" element="tns:produktAnlegenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktLoeschenResponse">
+    <wsdl:part name="parameters" element="tns:produktLoeschenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adminAnlegen">
+    <wsdl:part name="parameters" element="tns:adminAnlegen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getZumVerkaufStehendeProdukteVonBenutzerResponse">
+    <wsdl:part name="parameters" element="tns:getZumVerkaufStehendeProdukteVonBenutzerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adressdatenAendern">
+    <wsdl:part name="parameters" element="tns:adressdatenAendern">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktListe">
+    <wsdl:part name="parameters" element="tns:getProduktListe">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="gebotLoeschenResponse">
+    <wsdl:part name="parameters" element="tns:gebotLoeschenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adressdatenAendernResponse">
+    <wsdl:part name="parameters" element="tns:adressdatenAendernResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getVerkaufteProdukteVonBenutzer">
+    <wsdl:part name="parameters" element="tns:getVerkaufteProdukteVonBenutzer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPersonByUsernameResponse">
+    <wsdl:part name="parameters" element="tns:getPersonByUsernameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeAnlegen">
+    <wsdl:part name="parameters" element="tns:produktgruppeAnlegen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="pruefeLoginResponse">
+    <wsdl:part name="parameters" element="tns:pruefeLoginResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktVerschieben">
+    <wsdl:part name="parameters" element="tns:produktVerschieben">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getVerkaufteProdukteVonBenutzerResponse">
+    <wsdl:part name="parameters" element="tns:getVerkaufteProdukteVonBenutzerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktgruppeListResponse">
+    <wsdl:part name="parameters" element="tns:getProduktgruppeListResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeAendern">
+    <wsdl:part name="parameters" element="tns:produktgruppeAendern">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeAnlegenResponse">
+    <wsdl:part name="parameters" element="tns:produktgruppeAnlegenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="passwortAendern">
+    <wsdl:part name="parameters" element="tns:passwortAendern">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktgruppeByNameResponse">
+    <wsdl:part name="parameters" element="tns:getProduktgruppeByNameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerEinfAufhebenResponse">
+    <wsdl:part name="parameters" element="tns:benutzerEinfAufhebenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktListeResponse">
+    <wsdl:part name="parameters" element="tns:getProduktListeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktLoeschen">
+    <wsdl:part name="parameters" element="tns:produktLoeschen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGebotshistorieVonBenutzer">
+    <wsdl:part name="parameters" element="tns:getGebotshistorieVonBenutzer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktAnlegen">
+    <wsdl:part name="parameters" element="tns:produktAnlegen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerloeschen">
+    <wsdl:part name="parameters" element="tns:benutzerloeschen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktgruppeByName">
+    <wsdl:part name="parameters" element="tns:getProduktgruppeByName">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPersonByUsername">
+    <wsdl:part name="parameters" element="tns:getPersonByUsername">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sucheProduktResponse">
+    <wsdl:part name="parameters" element="tns:sucheProduktResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerEinfrieren">
+    <wsdl:part name="parameters" element="tns:benutzerEinfrieren">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktByID">
+    <wsdl:part name="parameters" element="tns:getProduktByID">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="adminAnlegenResponse">
+    <wsdl:part name="parameters" element="tns:adminAnlegenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGebotshistorieVonBenutzerResponse">
+    <wsdl:part name="parameters" element="tns:getGebotshistorieVonBenutzerResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="gebotAbgeben">
+    <wsdl:part name="parameters" element="tns:gebotAbgeben">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktgruppeList">
+    <wsdl:part name="parameters" element="tns:getProduktgruppeList">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktAendern">
+    <wsdl:part name="parameters" element="tns:produktAendern">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktgruppeLoeschen">
+    <wsdl:part name="parameters" element="tns:produktgruppeLoeschen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerEinfrierenResponse">
+    <wsdl:part name="parameters" element="tns:benutzerEinfrierenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProduktByIDResponse">
+    <wsdl:part name="parameters" element="tns:getProduktByIDResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sucheProdukt">
+    <wsdl:part name="parameters" element="tns:sucheProdukt">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBenutzerlisteResponse">
+    <wsdl:part name="parameters" element="tns:getBenutzerlisteResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktAendernResponse">
+    <wsdl:part name="parameters" element="tns:produktAendernResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBenutzerliste">
+    <wsdl:part name="parameters" element="tns:getBenutzerliste">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="gebotLoeschen">
+    <wsdl:part name="parameters" element="tns:gebotLoeschen">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="benutzerAnlegenResponse">
+    <wsdl:part name="parameters" element="tns:benutzerAnlegenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="produktVerschiebenResponse">
+    <wsdl:part name="parameters" element="tns:produktVerschiebenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="passwortAendernResponse">
+    <wsdl:part name="parameters" element="tns:passwortAendernResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getZumVerkaufStehendeProdukteVonBenutzer">
+    <wsdl:part name="parameters" element="tns:getZumVerkaufStehendeProdukteVonBenutzer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="gebotAbgebenResponse">
+    <wsdl:part name="parameters" element="tns:gebotAbgebenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AlleServicesSEI">
+    <wsdl:operation name="pruefeLogin">
+      <wsdl:input name="pruefeLogin" message="tns:pruefeLogin">
+    </wsdl:input>
+      <wsdl:output name="pruefeLoginResponse" message="tns:pruefeLoginResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerAnlegen">
+      <wsdl:input name="benutzerAnlegen" message="tns:benutzerAnlegen">
+    </wsdl:input>
+      <wsdl:output name="benutzerAnlegenResponse" message="tns:benutzerAnlegenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerloeschen">
+      <wsdl:input name="benutzerloeschen" message="tns:benutzerloeschen">
+    </wsdl:input>
+      <wsdl:output name="benutzerloeschenResponse" message="tns:benutzerloeschenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktgruppeByName">
+      <wsdl:input name="getProduktgruppeByName" message="tns:getProduktgruppeByName">
+    </wsdl:input>
+      <wsdl:output name="getProduktgruppeByNameResponse" message="tns:getProduktgruppeByNameResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonByUsername">
+      <wsdl:input name="getPersonByUsername" message="tns:getPersonByUsername">
+    </wsdl:input>
+      <wsdl:output name="getPersonByUsernameResponse" message="tns:getPersonByUsernameResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerEinfAufheben">
+      <wsdl:input name="benutzerEinfAufheben" message="tns:benutzerEinfAufheben">
+    </wsdl:input>
+      <wsdl:output name="benutzerEinfAufhebenResponse" message="tns:benutzerEinfAufhebenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerEinfrieren">
+      <wsdl:input name="benutzerEinfrieren" message="tns:benutzerEinfrieren">
+    </wsdl:input>
+      <wsdl:output name="benutzerEinfrierenResponse" message="tns:benutzerEinfrierenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktByID">
+      <wsdl:input name="getProduktByID" message="tns:getProduktByID">
+    </wsdl:input>
+      <wsdl:output name="getProduktByIDResponse" message="tns:getProduktByIDResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminAnlegen">
+      <wsdl:input name="adminAnlegen" message="tns:adminAnlegen">
+    </wsdl:input>
+      <wsdl:output name="adminAnlegenResponse" message="tns:adminAnlegenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="gebotAbgeben">
+      <wsdl:input name="gebotAbgeben" message="tns:gebotAbgeben">
+    </wsdl:input>
+      <wsdl:output name="gebotAbgebenResponse" message="tns:gebotAbgebenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktgruppeList">
+      <wsdl:input name="getProduktgruppeList" message="tns:getProduktgruppeList">
+    </wsdl:input>
+      <wsdl:output name="getProduktgruppeListResponse" message="tns:getProduktgruppeListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adressdatenAendern">
+      <wsdl:input name="adressdatenAendern" message="tns:adressdatenAendern">
+    </wsdl:input>
+      <wsdl:output name="adressdatenAendernResponse" message="tns:adressdatenAendernResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktListe">
+      <wsdl:input name="getProduktListe" message="tns:getProduktListe">
+    </wsdl:input>
+      <wsdl:output name="getProduktListeResponse" message="tns:getProduktListeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVerkaufteProdukteVonBenutzer">
+      <wsdl:input name="getVerkaufteProdukteVonBenutzer" message="tns:getVerkaufteProdukteVonBenutzer">
+    </wsdl:input>
+      <wsdl:output name="getVerkaufteProdukteVonBenutzerResponse" message="tns:getVerkaufteProdukteVonBenutzerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktAendern">
+      <wsdl:input name="produktAendern" message="tns:produktAendern">
+    </wsdl:input>
+      <wsdl:output name="produktAendernResponse" message="tns:produktAendernResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeAnlegen">
+      <wsdl:input name="produktgruppeAnlegen" message="tns:produktgruppeAnlegen">
+    </wsdl:input>
+      <wsdl:output name="produktgruppeAnlegenResponse" message="tns:produktgruppeAnlegenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeLoeschen">
+      <wsdl:input name="produktgruppeLoeschen" message="tns:produktgruppeLoeschen">
+    </wsdl:input>
+      <wsdl:output name="produktgruppeLoeschenResponse" message="tns:produktgruppeLoeschenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktVerschieben">
+      <wsdl:input name="produktVerschieben" message="tns:produktVerschieben">
+    </wsdl:input>
+      <wsdl:output name="produktVerschiebenResponse" message="tns:produktVerschiebenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sucheProdukt">
+      <wsdl:input name="sucheProdukt" message="tns:sucheProdukt">
+    </wsdl:input>
+      <wsdl:output name="sucheProduktResponse" message="tns:sucheProduktResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeAendern">
+      <wsdl:input name="produktgruppeAendern" message="tns:produktgruppeAendern">
+    </wsdl:input>
+      <wsdl:output name="produktgruppeAendernResponse" message="tns:produktgruppeAendernResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBenutzerliste">
+      <wsdl:input name="getBenutzerliste" message="tns:getBenutzerliste">
+    </wsdl:input>
+      <wsdl:output name="getBenutzerlisteResponse" message="tns:getBenutzerlisteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="gebotLoeschen">
+      <wsdl:input name="gebotLoeschen" message="tns:gebotLoeschen">
+    </wsdl:input>
+      <wsdl:output name="gebotLoeschenResponse" message="tns:gebotLoeschenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="passwortAendern">
+      <wsdl:input name="passwortAendern" message="tns:passwortAendern">
+    </wsdl:input>
+      <wsdl:output name="passwortAendernResponse" message="tns:passwortAendernResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZumVerkaufStehendeProdukteVonBenutzer">
+      <wsdl:input name="getZumVerkaufStehendeProdukteVonBenutzer" message="tns:getZumVerkaufStehendeProdukteVonBenutzer">
+    </wsdl:input>
+      <wsdl:output name="getZumVerkaufStehendeProdukteVonBenutzerResponse" message="tns:getZumVerkaufStehendeProdukteVonBenutzerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktLoeschen">
+      <wsdl:input name="produktLoeschen" message="tns:produktLoeschen">
+    </wsdl:input>
+      <wsdl:output name="produktLoeschenResponse" message="tns:produktLoeschenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGebotshistorieVonBenutzer">
+      <wsdl:input name="getGebotshistorieVonBenutzer" message="tns:getGebotshistorieVonBenutzer">
+    </wsdl:input>
+      <wsdl:output name="getGebotshistorieVonBenutzerResponse" message="tns:getGebotshistorieVonBenutzerResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktAnlegen">
+      <wsdl:input name="produktAnlegen" message="tns:produktAnlegen">
+    </wsdl:input>
+      <wsdl:output name="produktAnlegenResponse" message="tns:produktAnlegenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AlleServicesServiceSoapBinding" type="tns:AlleServicesSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="pruefeLogin">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="pruefeLogin">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="pruefeLoginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerAnlegen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="benutzerAnlegen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="benutzerAnlegenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerloeschen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="benutzerloeschen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="benutzerloeschenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktgruppeByName">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProduktgruppeByName">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProduktgruppeByNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPersonByUsername">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPersonByUsername">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPersonByUsernameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerEinfAufheben">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="benutzerEinfAufheben">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="benutzerEinfAufhebenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="benutzerEinfrieren">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="benutzerEinfrieren">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="benutzerEinfrierenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktByID">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProduktByID">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProduktByIDResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adminAnlegen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="adminAnlegen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="adminAnlegenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="gebotAbgeben">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="gebotAbgeben">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="gebotAbgebenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktgruppeList">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProduktgruppeList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProduktgruppeListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="adressdatenAendern">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="adressdatenAendern">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="adressdatenAendernResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktListe">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProduktListe">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProduktListeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVerkaufteProdukteVonBenutzer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getVerkaufteProdukteVonBenutzer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getVerkaufteProdukteVonBenutzerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktAendern">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktAendern">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktAendernResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeAnlegen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktgruppeAnlegen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktgruppeAnlegenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeLoeschen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktgruppeLoeschen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktgruppeLoeschenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktVerschieben">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktVerschieben">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktVerschiebenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sucheProdukt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sucheProdukt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sucheProduktResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktgruppeAendern">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktgruppeAendern">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktgruppeAendernResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBenutzerliste">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBenutzerliste">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBenutzerlisteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="gebotLoeschen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="gebotLoeschen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="gebotLoeschenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="passwortAendern">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="passwortAendern">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="passwortAendernResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZumVerkaufStehendeProdukteVonBenutzer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getZumVerkaufStehendeProdukteVonBenutzer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getZumVerkaufStehendeProdukteVonBenutzerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktLoeschen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktLoeschen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktLoeschenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGebotshistorieVonBenutzer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getGebotshistorieVonBenutzer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getGebotshistorieVonBenutzerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="produktAnlegen">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="produktAnlegen">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="produktAnlegenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AlleServicesService">
+    <wsdl:port name="AlleServicesPort" binding="tns:AlleServicesServiceSoapBinding">
+      <soap:address location="http://localhost:8080/DSE_Abgabe2Projekt/services"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
