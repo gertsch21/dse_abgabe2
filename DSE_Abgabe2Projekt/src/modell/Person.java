@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -17,6 +18,7 @@ import javax.persistence.OneToMany;
  *Die Klasse Person ist eine Abstrakte Klasse und dient als Vorlage fuer Benutzer und Administrator
  */
 @Entity
+@XmlRootElement(name = "Person")
 public abstract class Person implements Serializable {
 	
 	

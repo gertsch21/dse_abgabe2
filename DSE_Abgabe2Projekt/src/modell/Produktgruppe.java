@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Die Klasse Produktgruppe dient als Grundlage fuer alle Produkte, um sie in Kategorien zu Verwalten.
@@ -20,6 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Produktgruppe")
+@XmlRootElement(name = "Produktgruppe")
 public class Produktgruppe implements Serializable{
 
 	/**

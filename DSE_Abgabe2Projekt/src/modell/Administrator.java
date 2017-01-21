@@ -3,11 +3,13 @@ package modell;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Die Klasse Administrator dient zur Verwaltung aller Benutzer und Produkte die registriert sind. 
  */
 @Entity
+@XmlRootElement(name = "Administrator")
 public class Administrator extends Benutzer {
 	
 
