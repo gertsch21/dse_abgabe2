@@ -1,4 +1,4 @@
-package testWithoutTomcat;
+package webservices.soap;
 
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
