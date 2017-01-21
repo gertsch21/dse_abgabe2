@@ -15,7 +15,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import modell.Produkt;
-import modell.ProduktOhneGruppe;
 import modell.Produktgruppe;
 /**
  * Diese Klasse implementiert die Interface Klasse ProduktDAO 
@@ -33,21 +32,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	}
 	
  
-	/* (non-Javadoc)
-	 * @see dao.ProduktDAO#getProduktList()
-	 */
-	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<ProduktOhneGruppe> getProduktListOhne() { 
-		this.session = sessionFactory.openSession();
-		List<Produkt> retour = (List<Produkt>) session.createQuery( "from Produkt" ).list();
-		List<ProduktOhneGruppe> retour2 = new ArrayList<ProduktOhneGruppe>();;
-		for(Produkt p : retour){
-			retour2.add(new ProduktOhneGruppe(p.getProduktID(), p.getName(), p.getStartpreis(), p.getOwnerUsername(), p.getDauer(), p.getBeschreibung(), p.getStartdatum(), p.getEnddatum(), p.getHoechstbietender(), p.getAktuellesGebot(), p.isVerkauft(), p.getProduktgruppe().getName(), p.getBesitzer().getUsername()));
-		}
-		
-		this.session.close();
-		return retour2;		
-	}
+
 
 	/* (non-Javadoc)
 	 * @see dao.ProduktDAO#getProduktList()

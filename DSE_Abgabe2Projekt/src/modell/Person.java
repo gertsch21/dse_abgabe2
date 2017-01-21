@@ -10,7 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 /**
@@ -19,6 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement(name = "Person")
+@XmlAccessorType( XmlAccessType.FIELD)
 public abstract class Person implements Serializable {
 	
 	
@@ -50,6 +54,7 @@ public abstract class Person implements Serializable {
 	private String password;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="besitzer")
+	@XmlTransient
 	private Set<Produkt> liste;
 	
 	

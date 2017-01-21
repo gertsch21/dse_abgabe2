@@ -20,7 +20,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import dao.SerializedPersonenDAOHibernate;
 import dao.SerializedProduktgruppeDAOHibernate;
@@ -30,6 +33,7 @@ import dao.SerializedProduktgruppeDAOHibernate;
 @Entity
 @Table(name = "Produkt")
 @XmlRootElement(name = "Produkt")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Produkt implements Serializable{
 	
 	
@@ -62,9 +66,11 @@ public class Produkt implements Serializable{
 	private double aktuellesGebot;
 	private boolean verkauft = false;
 	
+	@XmlTransient
 	@ManyToOne
 	private Produktgruppe produktgruppe;
 	
+	@XmlTransient
 	@ManyToOne
 	private Person besitzer;
 	

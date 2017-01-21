@@ -13,7 +13,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Die Klasse Produktgruppe dient als Grundlage fuer alle Produkte, um sie in Kategorien zu Verwalten.
@@ -22,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name="Produktgruppe")
 @XmlRootElement(name = "Produktgruppe")
+@XmlAccessorType( XmlAccessType.FIELD)
 public class Produktgruppe implements Serializable{
 
 	/**
@@ -32,7 +36,9 @@ public class Produktgruppe implements Serializable{
 	@Column(name = "produktgruppenname")
 	private String name;
 	
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="produktgruppe")
+	@XmlTransient
 	private Set<Produkt> liste;
 	
 	

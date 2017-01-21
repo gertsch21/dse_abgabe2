@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 
 import modell.Produkt;
-import modell.ProduktOhneGruppe;
 
 /**
  *Dieses Interface definiert Methoden des Entwurfsmusters DAO zur Erstellung persistenter Produktobjekte 
@@ -66,6 +65,4 @@ public interface ProduktDAO{
 	 */
 	boolean produktBekommtNeuesGebot(String produktID, String username, double gebot);
 	
-	
-	List<ProduktOhneGruppe> getProduktListOhne();
 }
