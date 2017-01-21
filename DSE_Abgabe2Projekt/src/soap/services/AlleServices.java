@@ -13,6 +13,7 @@ import management.Produktverwaltung;
 import modell.Benutzer;
 import modell.Person;
 import modell.Produkt;
+import modell.ProduktOhneGruppe;
 import modell.Produktgruppe;
 
 /**
@@ -20,8 +21,8 @@ import modell.Produktgruppe;
  * Diese Klasse realisiert alle Methoden, welche nach aussen verfuegbar sein sollen
  *
  */
-@WebService(targetNamespace = "http://services.soap/", endpointInterface = "soap.services.AlleServicesSEI", portName = "AlleServicesPort", serviceName = "AlleServicesService")
-public class AlleServices implements AlleServicesSEI {
+@WebService(targetNamespace = "http://services.soap/", endpointInterface = "soap.services.AlleServicesSEI2", portName = "AlleServicesPort", serviceName = "AlleServicesService")
+public class AlleServices implements AlleServicesSEI, AlleServicesSEI2 {
 	
 	
 //Benutzerverwaltung
@@ -134,6 +135,10 @@ public class AlleServices implements AlleServicesSEI {
 	
 	public boolean gebotLoeschen(String produktID){
 		return Auktionsverwaltung.getInstance().gebotLoeschen(produktID);
+	}
+	
+	public List<ProduktOhneGruppe> getProduktListeOhne(){
+		return Produktverwaltung.getinstance().getProduktListeOhne();
 	}
 	
 }

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://services.soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://services.soap/" version="1.0">
+<xs:element name="Benutzer" type="tns:benutzer"/>
+<xs:element name="Person" type="tns:person"/>
+<xs:element name="Produkt" type="tns:produkt"/>
+<xs:element name="Produktgruppe" type="tns:produktgruppe"/>
 <xs:element name="adminAnlegen" type="tns:adminAnlegen"/>
 <xs:element name="adminAnlegenResponse" type="tns:adminAnlegenResponse"/>
 <xs:element name="adressdatenAendern" type="tns:adressdatenAendern"/>
@@ -24,6 +28,8 @@
 <xs:element name="getProduktByID" type="tns:getProduktByID"/>
 <xs:element name="getProduktByIDResponse" type="tns:getProduktByIDResponse"/>
 <xs:element name="getProduktListe" type="tns:getProduktListe"/>
+<xs:element name="getProduktListeOhne" type="tns:getProduktListeOhne"/>
+<xs:element name="getProduktListeOhneResponse" type="tns:getProduktListeOhneResponse"/>
 <xs:element name="getProduktListeResponse" type="tns:getProduktListeResponse"/>
 <xs:element name="getProduktgruppeByName" type="tns:getProduktgruppeByName"/>
 <xs:element name="getProduktgruppeByNameResponse" type="tns:getProduktgruppeByNameResponse"/>
@@ -53,6 +59,31 @@
 <xs:element name="pruefeLoginResponse" type="tns:pruefeLoginResponse"/>
 <xs:element name="sucheProdukt" type="tns:sucheProdukt"/>
 <xs:element name="sucheProduktResponse" type="tns:sucheProduktResponse"/>
+<xs:complexType name="getProduktListeOhne">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getProduktListeOhneResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:produktOhneGruppe"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="produktOhneGruppe">
+    <xs:sequence>
+      <xs:element name="aktuellesGebot" type="xs:double"/>
+      <xs:element minOccurs="0" name="beschreibung" type="xs:string"/>
+      <xs:element minOccurs="0" name="besitzer" type="xs:string"/>
+      <xs:element name="dauer" type="xs:int"/>
+      <xs:element minOccurs="0" name="enddatum" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="hoechstbietender" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="ownerUsername" type="xs:string"/>
+      <xs:element minOccurs="0" name="produktID" type="xs:string"/>
+      <xs:element minOccurs="0" name="produktgruppe" type="xs:string"/>
+      <xs:element minOccurs="0" name="startdatum" type="xs:dateTime"/>
+      <xs:element name="startpreis" type="xs:double"/>
+      <xs:element name="verkauft" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
 <xs:complexType name="pruefeLogin">
     <xs:sequence>
       <xs:element minOccurs="0" name="arg0" type="xs:string"/>

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import modell.Person;
 import modell.Produkt;
+import modell.ProduktOhneGruppe;
 import modell.Produktgruppe;
 import dao.ProduktDAO;
 import dao.SerializedProduktDAOHibernate;
@@ -185,5 +186,13 @@ public class Produktverwaltung {
 	 */
 	public List<Produkt> getProduktListe(){
 		return dao.getProduktList();
+	}
+	
+	/**
+	 * 
+	 * @return Liefert die komplette Produktliste
+	 */
+	public List<ProduktOhneGruppe> getProduktListeOhne(){
+		return dao.getProduktListOhne();
 	}
 }

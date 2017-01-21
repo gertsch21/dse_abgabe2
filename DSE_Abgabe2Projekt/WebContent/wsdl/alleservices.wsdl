@@ -5,6 +5,10 @@
   <import namespace="http://services.soap/" schemaLocation="alleservices_schema1.xsd"/>
 </schema>
   </wsdl:types>
+  <wsdl:message name="getProduktListeOhne">
+    <wsdl:part name="parameters" element="tns:getProduktListeOhne">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="pruefeLogin">
     <wsdl:part name="parameters" element="tns:pruefeLogin">
     </wsdl:part>
@@ -161,6 +165,10 @@
     <wsdl:part name="parameters" element="tns:gebotAbgeben">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getProduktListeOhneResponse">
+    <wsdl:part name="parameters" element="tns:getProduktListeOhneResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getProduktgruppeList">
     <wsdl:part name="parameters" element="tns:getProduktgruppeList">
     </wsdl:part>
@@ -221,7 +229,13 @@
     <wsdl:part name="parameters" element="tns:gebotAbgebenResponse">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:portType name="AlleServicesSEI">
+  <wsdl:portType name="AlleServicesSEI2">
+    <wsdl:operation name="getProduktListeOhne">
+      <wsdl:input name="getProduktListeOhne" message="tns:getProduktListeOhne">
+    </wsdl:input>
+      <wsdl:output name="getProduktListeOhneResponse" message="tns:getProduktListeOhneResponse">
+    </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="pruefeLogin">
       <wsdl:input name="pruefeLogin" message="tns:pruefeLogin">
     </wsdl:input>
@@ -385,7 +399,7 @@
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="AlleServicesServiceSoapBinding" type="tns:AlleServicesSEI">
+  <wsdl:binding name="AlleServicesServiceSoapBinding" type="tns:AlleServicesSEI2">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="pruefeLogin">
       <soap:operation soapAction="" style="document"/>
@@ -393,6 +407,15 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="pruefeLoginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduktListeOhne">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProduktListeOhne">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProduktListeOhneResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
