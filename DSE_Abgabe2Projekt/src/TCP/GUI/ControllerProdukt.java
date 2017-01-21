@@ -93,8 +93,14 @@ public class ControllerProdukt {
             errMain.setText(name + " " + category + " " + parsedPrice + " " + detail + " .");
 
             System.out.println("GUI controllerProdukt: the user: " + name + "wants to add a new Product");
-            cl.addProdukt(productname,category,parsedPrice,detail,name);
 
+            if (cl.addProdukt(productname,category,parsedPrice,detail,name)){
+                errMain.setText("Success");
+                errMain.setTextFill(Color.web("green"));
+            } else {
+                errMain.setText("Failed adding a new Product");
+                errMain.setTextFill(Color.web("#BF0000"));
+            }
         }
 
 
@@ -103,12 +109,30 @@ public class ControllerProdukt {
     public void clickHomeBack() throws IOException {
         System.out.println("Home Button was clicked..");
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
+        Parent root = fxmlLoader.load();
+
+
+        ControllerHome ch = fxmlLoader.<ControllerHome>getController();
+        System.out.println(name + name + name + " --- - - - - - -");
+        ch.setUsername(name);
+        ch.setCl(cl);
+
+        Scene scene = new Scene(root);
+        Stage homeStage = (Stage) backHomeBtn.getScene().getWindow();
+
+        homeStage.setScene(scene);
+        homeStage.show();
+
+
+
+        /*
         Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene home = new Scene(root);
         Stage homeStage = (Stage) backHomeBtn.getScene().getWindow();
         homeStage.setScene(home);
         homeStage.show();
-
+        */
     }
 
 
