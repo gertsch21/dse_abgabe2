@@ -4,6 +4,8 @@
  package webservice.rest;
  
  
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import management.Benutzerverwaltung;
+import modell.Benutzer;
 /**
  * 
  * In dieser Klasse wird Root Path erstellt. Die Methode überprüft die übergebene Paramater mit Hilfe 
@@ -18,7 +21,7 @@ import management.Benutzerverwaltung;
  *
  */
 
-@Path("/user")
+@Path("/userservice")
 public class UserService {
 	
 	Benutzerverwaltung benutzer = Benutzerverwaltung.getInstance();
@@ -43,7 +46,29 @@ public class UserService {
      
     }
      
+	 	@GET
+	    @Path("getBenutzer/{name}")
+	    @Produces(MediaType.APPLICATION_XML)
+	    public Benutzer getBenutzer(@PathParam("name") String id) {
+	        Benutzer ben = new Benutzer();
+	        ben = (Benutzer) benutzer.getPersonByUsername(id);
+	        return ben;
+	    }
+	 	
+	 	@GET
+	    @Path("getBenutzerListe/")
+	    @Produces(MediaType.APPLICATION_XML)
+	    public List<Benutzer> getBenutzerListe() {
+	       List<Benutzer> liste = benutzer.getBenutzerListe();
+	        return liste;
+	    }
+	 	
+	 
+	 	
+	 	
+	 	
+	 	
+	}
+	
     
      
-    
-}
