@@ -58,7 +58,7 @@
   </wsdl:binding>
   <wsdl:service name="BenutzerservicesService">
     <wsdl:port name="BenutzerservicesPort" binding="tns:BenutzerservicesServiceSoapBinding">
-      <soap:address location="http://localhost:8080/DSE_Abgabe2Projekt/services/BenutzerservicesPort"/>
+      <soap:address location="http://localhost:8080/DSE_Abgabe2Projekt/services"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
