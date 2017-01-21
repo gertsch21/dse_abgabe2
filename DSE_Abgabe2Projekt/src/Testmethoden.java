@@ -60,7 +60,7 @@ public class Testmethoden {
 //			prodver.produktAendern(pg.getProduktID(), pg.getName(), 20, pg.getOwnerUsername(), "Gitarre", 100, "haha");
 //		}
 		
-		//aukver.gebotAbgeben("snezi", 30, "9995348e-88df-4a86-958f-5595d95a91a8");
+		//aukver.gebotAbgeben("snezi", 30000, "05e04c9c-c4ae-457a-a929-945821c78d38");
 		//aukver.gebotLoeschen("9995348e-88df-4a86-958f-5595d95a91a8");
 		
 //		prodver.produktVerschieben(UUID.fromString("9995348e-88df-4a86-958f-5595d95a91a8"), "Rolla");
