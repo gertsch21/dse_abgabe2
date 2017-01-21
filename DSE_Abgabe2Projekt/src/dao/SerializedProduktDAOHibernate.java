@@ -66,6 +66,12 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	 */
 	@Override
 	public boolean produktAnlegen(Produkt newProdukt) {
+		
+		if(newProdukt.getName().length()<=5){
+			System.err.println("SerializedProduktDAOHibernate:produktAnlegen:Name fuer die Produktgruppe war zu kurz eingegeben worden!");
+			return false;
+		}
+		
 		this.session = sessionFactory.openSession();
 		try{
 			

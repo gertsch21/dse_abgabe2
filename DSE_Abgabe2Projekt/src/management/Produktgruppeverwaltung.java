@@ -40,7 +40,7 @@ public class Produktgruppeverwaltung {
 	 * @return false wenn die neue Produktgruppe einen Fehler hat
 	 */
 	public boolean produktgruppeAnlegen(String name){
-		
+				
 		List<Produktgruppe> liste = dao.getProduktgruppeList();
 
 		for(Produktgruppe x: liste){

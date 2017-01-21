@@ -23,7 +23,7 @@ public class SoapServer {
 	public static void main(String args[]) throws Exception {
 		new SoapServer();
 		System.out.println("Server ready...");
-		Thread.sleep(20 * 60 * 1000); //20 min online
+		Thread.sleep(200 * 60 * 1000); //20 min online
 		System.out.println("Server exiting");
 		System.exit(0);
 	}

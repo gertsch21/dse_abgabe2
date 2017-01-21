@@ -72,6 +72,13 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 
 	@Override
 	public boolean speicherePerson(Person benutzer) {
+		
+		if(benutzer.getUsername().length()<=5 || benutzer.getPassword().length()<=5){
+			System.err.println("SerializedPersonenDAOHibernate:speicherePerson:Username oder Passwort zu kurz('"+benutzer.getUsername()+", "+benutzer.getPassword()+"')");
+			return false;
+		}
+
+		
 		try{
 			this.session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -162,6 +169,11 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		if(p == null) {
 			this.session.close();
 			return false; //person nicht in db
+		}
+		
+		if(neuesPasswort.length()<=5){
+			System.err.println("SerializedPersonenDAOHibernate:passwortAendern:neuesPasswort zu kurz");
+			return false;
 		}
 		
 		p.setPassword(neuesPasswort);

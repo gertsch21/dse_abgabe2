@@ -135,6 +135,8 @@ public class Produktverwaltung {
 		if(id==null || name==null || Uname==null || kategorie==null || beschreibung==null)
 			return false;
 		
+		
+		
 		Produkt p = dao.getProduktByID( id.toString() );
 		Produkt a = p;
 		

@@ -66,6 +66,12 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	 * @see dao.ProduktgruppeDAO#produktgruppeAnlegen(modell.Produktgruppe)
 	 */
 	public boolean produktgruppeAnlegen(Produktgruppe newProduktgruppe) {
+		
+		if(newProduktgruppe.getName().length()<=5){
+			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAnlegen:Name fuer die Produktgruppe war zu kurz eingegeben worden!");
+			return false;
+		}
+		
 		Session session = sessionFactory.openSession();
 		try{
 			session.beginTransaction();
@@ -103,7 +109,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Produktgruppe mit dem Namen '"+alterName+"' nicht vorhanden!");
 			return false;
 		}
-		if(neuerName.trim().length() == 0 || neuerName.trim().length()!=neuerName.length()){
+		if(neuerName.trim().length() == 0 || neuerName.trim().length()!=neuerName.length() || neuerName.length()<=5){
 			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Der neue Name ist nicht korrekt(leer, oder enthaelt Leerzeichen)!");
 			return false;
 		}
