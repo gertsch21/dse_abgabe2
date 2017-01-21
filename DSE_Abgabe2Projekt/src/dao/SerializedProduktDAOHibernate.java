@@ -34,6 +34,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	/* (non-Javadoc)
 	 * @see dao.ProduktDAO#getProduktList()
 	 */
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<Produkt> getProduktList() { 
 		this.session = sessionFactory.openSession();
@@ -42,6 +43,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		return retour;		
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public Produkt getProduktByID(String id) { 
 		this.session = sessionFactory.openSession();
@@ -81,6 +83,7 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	/* (non-Javadoc)
 	 * @see dao.ProduktDAO#produktLoeschen(java.lang.String)
 	 */
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public boolean produktLoeschen(String deleteID) { // löschen  mit  ProduktID - Verbesserung ?
 		this.session = sessionFactory.openSession();

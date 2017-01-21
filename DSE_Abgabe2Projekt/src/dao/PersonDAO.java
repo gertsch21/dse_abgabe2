@@ -7,7 +7,6 @@ package dao;
 import java.util.List;
 
 import exceptions.BenutzerNotFoundException;
-import modell.Administrator;
 import modell.Benutzer;
 import modell.Person;
 

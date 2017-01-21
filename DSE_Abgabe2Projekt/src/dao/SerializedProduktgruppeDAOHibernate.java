@@ -32,6 +32,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	/* (non-Javadoc)
 	 * @see dao.ProduktgruppeDAO#getProduktgruppeList()
 	 */
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Produktgruppe> getProduktgruppeList() {
 		Session session = sessionFactory.openSession();
 		List<Produktgruppe> retour = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();
@@ -42,6 +43,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	/* (non-Javadoc)
 	 * @see dao.ProduktgruppeDAO#getProduktgruppeByName(java.lang.String)
 	 */
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public Produktgruppe getProduktgruppeByName(String name) { 
 		Session session = sessionFactory.openSession();
 		List<Produktgruppe> produktgruppeliste = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();

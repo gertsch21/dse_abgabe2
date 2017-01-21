@@ -18,6 +18,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		this.sessionFactory = new Configuration().configure().buildSessionFactory();
 	}
 	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<Person> getPersonList() {
 		this.session = sessionFactory.openSession();
@@ -26,6 +27,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		return retour;
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<Benutzer> getBenutzerList() {
 		this.session = sessionFactory.openSession();
@@ -35,6 +37,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		return retour;
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public Person getPersonById(String id) {
 		this.session = sessionFactory.openSession();
@@ -51,6 +54,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		return retour;
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public Person getPersonByUsername(String username) {
 		this.session = sessionFactory.openSession();
@@ -81,6 +85,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public boolean loeschePerson(String username) {
 		this.session = sessionFactory.openSession();
