@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://services.soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://services.soap/" version="1.0">
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://services.soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://services.soap/" version="1.0">
 <xs:element name="Benutzer" type="tns:benutzer"/>
 <xs:element name="Person" type="tns:person"/>
 <xs:element name="Produkt" type="tns:produkt"/>
