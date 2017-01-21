@@ -1,4 +1,4 @@
-package Admin_GUI;
+package TCP.server_gui;
 
 import org.apache.activemq.broker.*;
 

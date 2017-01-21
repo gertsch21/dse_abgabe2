@@ -1,4 +1,4 @@
-package TCP.GUI;
+package TCP.client_gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package Admin_GUI;
+package TCP.server_gui;
 
 import javafx.geometry.*;
 import javafx.scene.*;

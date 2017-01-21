@@ -15,7 +15,7 @@ import modell.*;
 
 /**
  * Diese Klasse stellt alle Funktionalit�ten dar, welche ein Clientprogramm braucht(bei uns)
- * Mithilfe dieser Klasse, kann vom GUI auf den Server zugegriffen werden
+ * Mithilfe dieser Klasse, kann vom client_gui auf den Server zugegriffen werden
 */
 public class Client {
 

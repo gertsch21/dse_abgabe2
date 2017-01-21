@@ -1,6 +1,7 @@
-package Admin_GUI;
+package TCP.server_gui;
 
-import TCP.network.server.*;
+import TCP.network.server.Server;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 

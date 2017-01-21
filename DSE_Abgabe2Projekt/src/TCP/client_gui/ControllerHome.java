@@ -1,8 +1,6 @@
-package TCP.GUI;
+package TCP.client_gui;
 
-import TCP.MyDataModel;
-import TCP.testprodukt;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,11 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import TCP.network.client.Client;
 import javafx.util.Callback;
@@ -24,8 +18,6 @@ import modell.Produkt;
 
 import java.io.IOException;
 import java.util.*;
-
-import static java.awt.SystemColor.window;
 
 /**
  * Created by josefweber on 29.10.16.
@@ -38,21 +30,13 @@ public class ControllerHome {
     @FXML private TextField searchRequest;
     @FXML private Label searchError;
 
-
+    // Bieten
+    @FXML private Label gebottag;
+    @FXML private TextField neuesGebot;
+    @FXML private Button gotoBtn;
 
     // Bucky
     @FXML private TableView tableview;
-
-    public ObservableList<testprodukt> getProduct(){
-        ObservableList<testprodukt> produkts = FXCollections.observableArrayList();
-
-        produkts.add(new testprodukt("Produkt1",1));
-        produkts.add(new testprodukt("Produkt2",2));
-        produkts.add(new testprodukt("Produkt3",3));
-        produkts.add(new testprodukt("Produkt4",4));
-        return produkts;
-    }
-    // BUcky
 
     Client cl;
     private String name;
@@ -152,38 +136,54 @@ public class ControllerHome {
              */
 
 
+            if (pd.size() == 0){
 
+            } else {
+                for (int i = 0; i < pd.size(); i++) {
+                    ObservableList<String> row = FXCollections.observableArrayList();
+                    String ppname = pd.get(i).getName();
+                    double ppreis = pd.get(i).getAktuellesGebot();
+                    String parsedprice = String.valueOf(ppreis);
 
-
-
-            for (int i = 0; i<pd.size(); i++){
-                ObservableList<String> row = FXCollections.observableArrayList();
-                String ppname = pd.get(i).getName();
-                double ppreis = pd.get(i).getAktuellesGebot();
-                String parsedprice = String.valueOf(ppreis);
-
-                String ppuuid = pd.get(i).getProduktID().toString();
-                row.addAll(ppname);
-                row.addAll(parsedprice);
-                row.addAll(ppuuid);
-                tableview.getItems().add(row);
+                    String ppuuid = pd.get(i).getProduktID().toString();
+                    row.addAll(ppname);
+                    row.addAll(parsedprice);
+                    row.addAll(ppuuid);
+                    tableview.getItems().add(row);
+                }
+                tableview.setEditable(true);
             }
-            tableview.setEditable(true);
-
         }
 
     }
 
-    private List<MyDataModel> getItemsToAdd(){
-        MyDataModel md1 = new MyDataModel("11");
-        MyDataModel md2 = new MyDataModel("2");
+    public void printselection(){
+        System.out.println();
 
-        List<MyDataModel> md = new ArrayList<MyDataModel>();
-        md.add(1,md1);
-        md.add(2,md1);
 
-        return md;
-// this method would fetch the necessary items from database.
+        ObservableList<String> selected, all;
+
+
+
+        all = tableview.getItems();
+        selected = tableview.getSelectionModel().getSelectedItems();
+
+        if (selected.size() == 0){
+            gebottag.setText("No selection..");
+        } else {
+
+            String x1 = selected.toString();
+            String[] parts = x1.split(",");
+
+
+            neuesGebot.setText(parts[1]);
+            gebottag.setText("Gebot abgeben f?r: ");
+            gebottag.setText(parts[0] );
+        }
+
     }
+
+
+
 
 }

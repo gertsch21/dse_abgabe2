@@ -1,4 +1,4 @@
-package TCP.GUI;
+package TCP.client_gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import modell.Benutzer;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by josefweber on 19.01.17.
@@ -82,7 +80,7 @@ public class ControllerProdukt {
             parsedPrice = Double.parseDouble(price);
         } catch(NumberFormatException e)
         {
-            System.out.println("GUI controllerProdukt: Price is not a Double");
+            System.out.println("client_gui controllerProdukt: Price is not a Double");
             errMain.setText("Price is not a Double!");
         }
 
@@ -92,7 +90,7 @@ public class ControllerProdukt {
         }  else {
             errMain.setText(name + " " + category + " " + parsedPrice + " " + detail + " .");
 
-            System.out.println("GUI controllerProdukt: the user: " + name + "wants to add a new Product");
+            System.out.println("client_gui controllerProdukt: the user: " + name + "wants to add a new Product");
 
             if (cl.addProdukt(productname,category,parsedPrice,detail,name)){
                 errMain.setText("Success");

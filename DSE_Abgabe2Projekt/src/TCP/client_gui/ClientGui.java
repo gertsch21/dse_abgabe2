@@ -1,4 +1,4 @@
-package TCP.GUI;
+package TCP.client_gui;
 
 
 import javafx.application.Application;
