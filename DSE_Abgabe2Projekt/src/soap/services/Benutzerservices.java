@@ -1,15 +1,11 @@
 package soap.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.jws.WebService;
 
-import exceptions.BenutzerNotFoundException;
 import management.Benutzerverwaltung;
-import management.Produktverwaltung;
-import modell.Administrator;
+
 import modell.Benutzer;
 import modell.Person;
 import modell.Produkt;
@@ -20,7 +16,7 @@ import modell.Produkt;
  *
  */
 @WebService(targetNamespace = "http://services.soap/", endpointInterface = "soap.services.BenutzerservicesSEI2", portName = "BenutzerservicesPort", serviceName = "BenutzerservicesService")
-public class Benutzerservices implements BenutzerservicesSEI, BenutzerservicesSEI2 {
+public class Benutzerservices implements BenutzerservicesSEI2 {
 	public boolean pruefeLogin(String username, String password){
 		return Benutzerverwaltung.getInstance().pruefeLogin(username, password);
 	}
@@ -58,15 +54,15 @@ public class Benutzerservices implements BenutzerservicesSEI, BenutzerservicesSE
 		return Benutzerverwaltung.getInstance().adressdatenAendern(username, plz, strasse, wohnort, hausnummer);
 	}
 
-	public List<Produkt> getGebotshistorieVonBenutzer(String username) throws BenutzerNotFoundException{
+	public List<Produkt> getGebotshistorieVonBenutzer(String username) {
 		return Benutzerverwaltung.getInstance().getGebotshistorieVonBenutzer(username);
 	}
 	
-	public List<Produkt> getVerkaufteProdukteVonBenutzer(String username) throws BenutzerNotFoundException{
+	public List<Produkt> getVerkaufteProdukteVonBenutzer(String username) {
 		return Benutzerverwaltung.getInstance().getVerkaufteProdukteVonBenutzer(username);
 	}
 	
-	public List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String username) throws BenutzerNotFoundException{
+	public List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String username){
 		return Benutzerverwaltung.getInstance().getZumVerkaufStehendeProdukteVonBenutzer(username);
 	}
 

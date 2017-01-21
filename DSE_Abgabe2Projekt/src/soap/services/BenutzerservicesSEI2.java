@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.jws.WebService;
 
-import exceptions.BenutzerNotFoundException;
 import modell.Benutzer;
 import modell.Person;
 import modell.Produkt;
@@ -34,10 +33,10 @@ public interface BenutzerservicesSEI2 {
 
 	boolean adressdatenAendern(String username, int plz, String strasse, String wohnort, int hausnummer);
 
-	List<Produkt> getGebotshistorieVonBenutzer(String username) throws BenutzerNotFoundException;
+	List<Produkt> getGebotshistorieVonBenutzer(String username);
 
-	List<Produkt> getVerkaufteProdukteVonBenutzer(String username) throws BenutzerNotFoundException;
+	List<Produkt> getVerkaufteProdukteVonBenutzer(String username);
 
-	List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String username) throws BenutzerNotFoundException;
+	List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String username);
 
 }
