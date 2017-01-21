@@ -157,15 +157,16 @@ public class ControllerHome {
 
     }
 
-    public void printselection(){
-        System.out.println();
+    private Double aktgebot;
+    private String produktId;
 
+    public void printselection(){
+
+        aktgebot = null;
+        produktId = null;
 
         ObservableList<String> selected, all;
-
-
-
-        all = tableview.getItems();
+        //all = tableview.getItems();
         selected = tableview.getSelectionModel().getSelectedItems();
 
         if (selected.size() == 0){
@@ -175,15 +176,54 @@ public class ControllerHome {
             String x1 = selected.toString();
             String[] parts = x1.split(",");
 
+            parts[1].replaceAll("\\s+","");
+            parts[2].replaceAll("\\s+","");
+            Double parsedPrice = Double.parseDouble(parts[1]);
+            aktgebot = parsedPrice;
+
+            parsedPrice = parsedPrice + 5;
+            // trim schneided whitespace vorn und hinten weg
+            String pid = parts[2].replaceAll("]","").trim();
+
+            produktId = pid;
 
             neuesGebot.setText(parts[1]);
             gebottag.setText("Gebot abgeben f?r: ");
-            gebottag.setText(parts[0] );
+            gebottag.setText(parts[0] + " ->min: " + parsedPrice);
+            gebottag.setTextFill(Color.web("green"));
         }
 
     }
 
+    public void doBet(){
+        System.out.println("DO BET");
+
+        if (aktgebot == null){
+            gebottag.setText("Not possible without selection");
+            gebottag.setTextFill(Color.web("#BF0000"));
+        } else {
+
+            String newgebot = neuesGebot.getText();
+            Double newgebotparsed = Double.parseDouble(newgebot);
+
+            if (newgebotparsed <= aktgebot + 5) {
+                gebottag.setText("Bet is too small");
+                gebottag.setTextFill(Color.web("#BF0000"));
+            } else {
+
+                if(cl.bieteProdukt(name,produktId,newgebotparsed)){
+                    gebottag.setText("Bet was successful");
+                    gebottag.setTextFill(Color.web("green"));
+                } else {
+                    gebottag.setText("Bet was not successful");
+                    gebottag.setTextFill(Color.web("red"));
+                }
 
 
+            }
+
+        }
+
+    }
 
 }

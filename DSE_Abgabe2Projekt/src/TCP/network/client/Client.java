@@ -115,11 +115,24 @@ public class Client {
 			return (boolean)this.dataIn.readBoolean();
 
 		}catch(IOException e){
-			System.err.println("SimpleClient:pruefeRegister: "+e.getMessage());
+			System.err.println("SimpleClient:addProdukt: "+e.getMessage());
 			return false;
 		}
 	}
 
+	public boolean bieteProdukt(String username, String produktId, Double price){
+		System.out.println(username + "--" + produktId + "--" + price);
+
+		try{
+			this.getOut().writeUTF("bieteProdukt-"+username+"-"+price+"-"+produktId);
+			return (boolean)this.dataIn.readBoolean();
+
+		}catch(IOException e){
+			System.err.println("SimpleClient:bieteProdukt: "+e.getMessage());
+			return false;
+		}
+
+	}
 
 
 	

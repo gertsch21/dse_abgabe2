@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.DoubleSummaryStatistics;
+
+import management.Auktionsverwaltung;
 import management.Benutzerverwaltung;
 import exceptions.ServerException;
 import management.Produktgruppeverwaltung;
@@ -182,6 +184,31 @@ public class Server extends Thread {
 						outObj.writeObject(prodver.getProduktListe());
 						continue;
 					}
+
+					if (anfrage.equals(("bieteProdukt"))){
+
+
+						System.out.println("Server:: bieteProdukt");
+						String username = eingabeGesplittet[1];
+						String gebot = eingabeGesplittet[2];
+						Double gebotparsed = Double.parseDouble(gebot);
+						String produktID = eingabeGesplittet[3];
+
+						String merge = eingabeGesplittet[3]+"-"+eingabeGesplittet[4]+"-"+eingabeGesplittet[5]+"-"+eingabeGesplittet[6]+"-"+eingabeGesplittet[7];
+
+						System.out.println("Server: " + merge);
+
+						if (username == null || gebotparsed == null || produktID == null)
+							throw new ServerException("biete: Ein Parameter ist null");
+
+						Auktionsverwaltung av = Auktionsverwaltung.getInstance();
+
+						if (!av.gebotAbgeben(username, gebotparsed, merge)) throw new ServerException("Neues Gebot fehlgeschlagen ("+username+"/"+produktID+"/"+gebotparsed+")");
+						outData.writeBoolean(true);
+					}
+
+
+
 
 				}
 			}catch(Exception e){
