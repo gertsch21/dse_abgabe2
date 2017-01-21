@@ -1,4 +1,4 @@
-package webservices.soap;
+package webservice.soap;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import client.soap.*;

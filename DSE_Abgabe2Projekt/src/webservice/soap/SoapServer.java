@@ -1,4 +1,4 @@
-package webservices.soap;
+package webservice.soap;
 
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
