@@ -9,9 +9,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.DoubleSummaryStatistics;
-
 import management.Benutzerverwaltung;
-import management.MyException;
+import exceptions.ServerException;
 import management.Produktgruppeverwaltung;
 import management.Produktverwaltung;
 
@@ -115,12 +114,12 @@ public class Server extends Thread {
 						try{
 							String username = eingabeGesplittet[1];
 							String password = eingabeGesplittet[2];
-							if(username == null || password == null) throw  new MyException("Register: Ein Parameter ist null");
+							if(username == null || password == null) throw  new ServerException("Register: Ein Parameter ist null");
 
 
-							if(!benver.pruefeLogin(username, password)) throw new MyException("Userdaten stimmen nicht mit Passwortdaten �berein("+username+"/"+password+")");
+							if(!benver.pruefeLogin(username, password)) throw new ServerException("Userdaten stimmen nicht mit Passwortdaten �berein("+username+"/"+password+")");
 							outData.writeBoolean(true);
-						}catch(MyException e){
+						}catch(ServerException e){
 							System.err.println("Server:pruefeLogin:"+e.getMessage());
 							outData.writeBoolean(false);
 						}
@@ -133,11 +132,11 @@ public class Server extends Thread {
 							String username = eingabeGesplittet[1];
 							String password = eingabeGesplittet[2];
 							String email = eingabeGesplittet[3];
-							if(username == null || password == null || email == null) throw  new MyException("Register: Ein Parameter ist null");
+							if(username == null || password == null || email == null) throw  new ServerException("Register: Ein Parameter ist null");
 
-							if (!benver.benutzerAnlegen(username,"Secondname",email,123,"Street","Ort",4,username,password)) throw new MyException("Register fehlgeschlagen ("+username+"/"+password+"/"+email+")");
+							if (!benver.benutzerAnlegen(username,"Secondname",email,123,"Street","Ort",4,username,password)) throw new ServerException("Register fehlgeschlagen ("+username+"/"+password+"/"+email+")");
 							outData.writeBoolean(true);
-						} catch(MyException e){
+						} catch(ServerException e){
 						System.err.println("Server:pruefeRegister:"+e.getMessage());
 						outData.writeBoolean(false);
 						}
@@ -156,15 +155,15 @@ public class Server extends Thread {
 							Produktverwaltung prodver = Produktverwaltung.getinstance();
 
 							if (name == null || category == null || pprice == null || description == null)
-								throw new MyException("Register: Ein Parameter ist null");
+								throw new ServerException("Register: Ein Parameter ist null");
 
 
 							System.out.println("Server:neuesProdukt: " + name + " - " + pprice + " - " + username + " - " + category + " - " +  description);
 
 
-							if (!prodver.produktAnlegen(name,pprice,username,category,10,description)) throw new MyException("Add Produkt fehlgeschlagen ("+username+"/"+name+"/"+category+")");
+							if (!prodver.produktAnlegen(name,pprice,username,category,10,description)) throw new ServerException("Add Produkt fehlgeschlagen ("+username+"/"+name+"/"+category+")");
 							outData.writeBoolean(true);
-						} catch (MyException e) {
+						} catch (ServerException e) {
 							System.err.println("Server:neuesProdukt:" + e.getMessage());
 							outData.writeBoolean(false);
 						}
