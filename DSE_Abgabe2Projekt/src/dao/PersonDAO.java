@@ -6,7 +6,6 @@ package dao;
 
 import java.util.List;
 
-import exceptions.BenutzerNotFoundException;
 import modell.Benutzer;
 import modell.Person;
 
@@ -79,7 +78,7 @@ public interface PersonDAO {
 	 * @return true, falls erfolgreich, false, falls passwort falsch ist
 	 * @throws BenutzerNotFoundException geworfen, falls username mit keinem Benutzer zusammenpasst
 	 */
-	public boolean passwortAendern(String username, String neuesPasswort) throws BenutzerNotFoundException;
+	public boolean passwortAendern(String username, String neuesPasswort);
 	
 	/**
 	 * 
