@@ -1,12 +1,8 @@
 package Admin_GUI;
 
-import network.server.Server;
-import network.server.Server;
-
+import TCP.network.server.*;
 import java.io.IOException;
 import java.net.ServerSocket;
-
-import javax.jms.JMSException;
 
 /**
  * Created by josefweber on 27.10.16.
