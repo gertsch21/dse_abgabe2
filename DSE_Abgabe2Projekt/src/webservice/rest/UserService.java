@@ -31,7 +31,19 @@ import modell.Produktgruppe;
 
 @Path("/userservice/")
 
-public class UserService {
+public class UserService  implements MessageListener{
+	
+	
+	// ActiveMQ Consumer/Producer
+		private ActiveMQConnectionFactory connectionFactory;
+		private Connection connection;
+		private Session session;
+		private Destination subjectQueue;
+		private Destination consumerSubject;
+		private MessageConsumer consumer;
+		private MessageProducer producer;
+		private Broker br = new Broker();
+		// ActiveMQ Consumer/Producer	
 	
 	Benutzerverwaltung ben_ver = Benutzerverwaltung.getInstance();
 	Produktverwaltung pr_ver = Produktverwaltung.getinstance();
@@ -47,8 +59,9 @@ public class UserService {
 		@PUT
 		@Path("/benutzerReg")
 		@Produces(MediaType.TEXT_HTML)
-		public Response benutzerRegistrieren(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd) {
+		public Response benutzerRegistrieren(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd)throws JMSException  {
 		if(ben_ver.benutzerAnlegen(usern, "Nachname1", email, 1110, "Holbein", "Wien", 7, usern, pwd)){
+			messaging();
 			String page="<html><body><a href=\"/Benutzer erfolgreich registriert!\">back to list</a></body></html>";
 			return Response.ok(page).build();
 		}
@@ -60,7 +73,7 @@ public class UserService {
 		@Produces(MediaType.APPLICATION_XML)
 		public String benutzerRegistrieren1(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd) {
 		if(ben_ver.benutzerAnlegen(usern, "Nachname1", email, 1110, "Holbein", "Wien", 7, usern, pwd)){
-			
+			messaging();
 			return SUCCESS_RESULT;
 		}
 		    return  FAILURE_RESULT;
@@ -82,6 +95,7 @@ public class UserService {
 		boolean benutzerAn = false;
 		benutzerAn = ben_ver.benutzerAnlegen(vorn, nachn, email, plz, strasse, wohnort, hausn, usern, pwd);
 		if(benutzerAn==true){
+			messaging();
 			return SUCCESS_RESULT;
 		}
 		    return  FAILURE_RESULT;
@@ -104,6 +118,7 @@ public class UserService {
 		boolean adminAn = false;
 		adminAn = ben_ver.adminAnlegen(vorn, nachn, email, plz, strasse, wohnort, hausn, usern, pwd,gehalt);
 		if(adminAn==true){
+			messaging();
 			return SUCCESS_RESULT;
 		}
 		    return  FAILURE_RESULT;
@@ -175,6 +190,7 @@ public class UserService {
 		
 				
 			if (ben_ver.benutzerloeschen(usern)) {
+				messaging();
 				return SUCCESS_RESULT;
 			}
 			else {
@@ -449,6 +465,72 @@ public class UserService {
 	      
 	        return "<h1>Hallo</h1>";
 	    }
+		
+		public void messaging()throws JMSException{
+			
+			try{	
+				// Create the connection
+		        connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_BROKER_URL);
+		        connection = connectionFactory.createConnection();
+		        connection.start();
+		        
+		     // Create the session
+		        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		        consumerSubject = session.createQueue("tcpTasksQueue");
+		        
+		        // Create the Consumer
+		        consumer = session.createConsumer(consumerSubject);
+		        consumer.setMessageListener(this);
+		        
+		        subjectQueue = session.createQueue("ServerQueue");
+		        producer = session.createProducer(subjectQueue);
+		        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+		        //Message sending
+		        TextMessage message = session.createTextMessage("Hallo Bitte Listen aktuallisieren");
+		        System.out.println("[ Sending Message "+ message.getText());
+		        producer.send(message);
+		        
+			} catch (Exception e) {
+					System.out.println("[ Caught: " + e);
+					e.printStackTrace();
+				} finally {
+					try {
+						connection.close();
+					} catch (Throwable ignore) {
+				}
+			}
+		       
+		}
+
+		@Override
+		public void onMessage(Message incomingMsg) {
+			System.out.println("Bin im Incoming Message");
+			if(incomingMsg instanceof TextMessage) {
+				TextMessage txtMsg =(TextMessage) incomingMsg;
+				try {
+					System.out.println("[ Received: '“" + txtMsg.getText() + "");
+				} catch (JMSException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(update()){
+					System.out.println("Alles Upgedates TCP bin fertig");
+				}
+				
+				}
+			}
+
+			
+				public boolean update(){
+					Produktverwaltung prodver = Produktverwaltung.getinstance();
+					Benutzerverwaltung benver = Benutzerverwaltung.getInstance();
+					benver.getBenutzerListe();
+					benver.getPersonenListe();
+					prodver.getProduktListe();
+									
+					return true;
+				}
+			
 		
 		
 		
