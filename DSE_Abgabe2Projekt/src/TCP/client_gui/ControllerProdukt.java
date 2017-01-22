@@ -36,7 +36,7 @@ public class ControllerProdukt {
 
     public void setUsername(String name){
         this.name = name;
-        errMain.setText("The User: " + name + " wants to add a new product..");
+        errMain.setText("User: " + name + " wants to add a new product..");
         errMain.setTextFill(Color.web("green"));
     }
     public void setCl(TCP.network.client.Client cl) {
@@ -47,8 +47,7 @@ public class ControllerProdukt {
     @FXML
     void addnewproduct(){
 
-        //System.out.println("addnewProdukt: " + name + name );
-
+        errMain.setText("");
         String productname = pname.getText();
         String category = pcategory.getText();
         String price = pprice.getText();
@@ -75,32 +74,40 @@ public class ControllerProdukt {
         }  else {
             err3.setText("");
         }
+
         double parsedPrice = 0;
+        boolean parse = true;
+
         try {
             parsedPrice = Double.parseDouble(price);
         } catch(NumberFormatException e)
         {
             System.out.println("client_gui controllerProdukt: Price is not a Double");
             errMain.setText("Price is not a Double!");
+            errMain.setTextFill(Color.web("#BF0000"));
+            parse = false;
         }
 
-
-        if(productname.length() == 0 || category.length() == 0 || parsedPrice == 0){
-            errMain.setText("Fill in all the Fields!");
-        }  else {
-            errMain.setText(name + " " + category + " " + parsedPrice + " " + detail + " .");
-
-            System.out.println("client_gui controllerProdukt: the user: " + name + "wants to add a new Product");
-
-            if (cl.addProdukt(productname,category,parsedPrice,detail,name)){
-                errMain.setText("Success");
-                errMain.setTextFill(Color.web("green"));
+        if (parse) {
+            if (productname.length() == 0 || category.length() == 0 || parsedPrice == 0) {
+                errMain.setText("Fill in all the Fields!");
             } else {
-                errMain.setText("Failed adding a new Product");
-                errMain.setTextFill(Color.web("#BF0000"));
-            }
-        }
+                errMain.setText(name + " " + category + " " + parsedPrice + " " + detail + " .");
 
+                System.out.println("client_gui controllerProdukt: the user: " + name + "wants to add a new Product");
+
+                errMain.setText("Please wait..");
+                if (cl.addProdukt(productname, category, parsedPrice, detail, name)) {
+                    errMain.setText("Success");
+                    errMain.setTextFill(Color.web("green"));
+                } else {
+                    errMain.setText("Failed adding a new Product");
+                    errMain.setTextFill(Color.web("#BF0000"));
+                }
+
+            }
+
+        }
 
     }
 
@@ -112,7 +119,7 @@ public class ControllerProdukt {
 
 
         ControllerHome ch = fxmlLoader.<ControllerHome>getController();
-        System.out.println(name + name + name + " --- - - - - - -");
+        System.out.println("- username to product scene: " + name);
         ch.setUsername(name);
         ch.setCl(cl);
 
@@ -122,17 +129,7 @@ public class ControllerProdukt {
         homeStage.setScene(scene);
         homeStage.show();
 
-
-
-        /*
-        Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
-        Scene home = new Scene(root);
-        Stage homeStage = (Stage) backHomeBtn.getScene().getWindow();
-        homeStage.setScene(home);
-        homeStage.show();
-        */
     }
-
 
 
 }

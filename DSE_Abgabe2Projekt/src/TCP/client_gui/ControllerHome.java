@@ -30,12 +30,10 @@ public class ControllerHome {
     @FXML private TextField searchRequest;
     @FXML private Label searchError;
 
-    // Bieten
     @FXML private Label gebottag;
     @FXML private TextField neuesGebot;
     @FXML private Button gotoBtn;
 
-    // Bucky
     @FXML private TableView tableview;
 
     Client cl;
@@ -49,27 +47,19 @@ public class ControllerHome {
         List<String> columns = new ArrayList<String>();
         columns.add("Name");
         columns.add("Price");
-        columns.add("Owner");
-        int columnIndex = 0;
+        columns.add("ProduktID");
 
         for(int i=0 ; i<3; i++) {
-
             final int j = i;
             TableColumn col = new TableColumn(columns.get(i));
             col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList,String>,ObservableValue<String>>(){
 
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    }
-                });
-                tableview.getColumns().addAll(col);
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                    return new SimpleStringProperty(param.getValue().get(j).toString());
+                }
+            });
+            tableview.getColumns().addAll(col);
         }
-        // bis da hin
-
-
-
-
-
     }
 
     public void setCl(Client cl) {
@@ -97,7 +87,6 @@ public class ControllerHome {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("produkt.fxml"));
         Parent root = fxmlLoader.load();
 
-
         ControllerProdukt ch = fxmlLoader.<ControllerProdukt>getController();
         System.out.println(name + name + name + " --- - - - - - -");
         ch.setUsername(name);
@@ -118,43 +107,68 @@ public class ControllerHome {
             searchError.setText("Enter Value");
             searchError.setTextFill(Color.web("#BF0000"));
         } else {
-            System.out.println("Home: " + searchrequest);
-            searchError.setText("Request: " + searchrequest);
+            //System.out.println("Home: " + searchrequest);
+            //searchError.setText("Request: " + searchrequest);
+
+            clearSearch();
 
             List<Produkt> pd = cl.getProduktListe();
-            /*
-            Produkt p1 = pd.get(0);
-            System.out.println(p1.getName());
-            int i = 0;
 
-
-
-            List<String> list = new ArrayList<String>();
-            //list.add(1,"Test1");
-            //list.add(2,"Test2");
-            list.add("Teststring");
-             */
-
-
-            if (pd.size() == 0){
-
-            } else {
+            if (searchrequest.equals("all")) {
                 for (int i = 0; i < pd.size(); i++) {
                     ObservableList<String> row = FXCollections.observableArrayList();
+
                     String ppname = pd.get(i).getName();
                     double ppreis = pd.get(i).getAktuellesGebot();
                     String parsedprice = String.valueOf(ppreis);
-
                     String ppuuid = pd.get(i).getProduktID().toString();
+
                     row.addAll(ppname);
                     row.addAll(parsedprice);
                     row.addAll(ppuuid);
                     tableview.getItems().add(row);
                 }
                 tableview.setEditable(true);
-            }
-        }
 
+            } else {
+                List<Produkt> pdselect = new ArrayList<Produkt>();
+
+                for (int i = 0; i < pd.size(); i++) {
+                    if (pd.get(i).getName().contains(searchrequest)) {
+                        pdselect.add(pd.get(i));
+                    }
+                }
+                if (pd.size() == 0 || pdselect.size() == 0){
+                    searchError.setText("No Products found");
+                    searchError.setTextFill(Color.web("#BF0000"));
+                } else {
+                    for (int i = 0; i < pd.size(); i++) {
+                        ObservableList<String> row = FXCollections.observableArrayList();
+
+                        String ppname = pdselect.get(i).getName();
+                        double ppreis = pdselect.get(i).getAktuellesGebot();
+                        String parsedprice = String.valueOf(ppreis);
+                        String ppuuid = pdselect.get(i).getProduktID().toString();
+
+                        row.addAll(ppname);
+                        row.addAll(parsedprice);
+                        row.addAll(ppuuid);
+                        tableview.getItems().add(row);
+                    }
+                    tableview.setEditable(true);
+                }
+            }
+
+        }
+    }
+
+    public void clearSearch(){
+        ObservableList<Produkt>  alle;
+        alle = tableview.getItems();
+        System.out.println("So v? san in do:" + alle.size());
+        if (alle.size() != 0) {
+            tableview.getItems().clear();
+        }
     }
 
     private Double aktgebot;
@@ -162,11 +176,12 @@ public class ControllerHome {
 
     public void printselection(){
 
+        gebottag.setText("");
         aktgebot = null;
         produktId = null;
 
-        ObservableList<String> selected, all;
-        //all = tableview.getItems();
+        ObservableList<String> selected;
+
         selected = tableview.getSelectionModel().getSelectedItems();
 
         if (selected.size() == 0){
@@ -189,14 +204,14 @@ public class ControllerHome {
 
             neuesGebot.setText(parts[1]);
             gebottag.setText("Gebot abgeben f?r: ");
-            gebottag.setText(parts[0] + " ->min: " + parsedPrice);
+            gebottag.setText("Mindestgebotot: " + parsedPrice);
             gebottag.setTextFill(Color.web("green"));
         }
 
     }
 
     public void doBet(){
-        System.out.println("DO BET");
+        System.out.println("Client does Bet..");
 
         if (aktgebot == null){
             gebottag.setText("Not possible without selection");
@@ -218,7 +233,6 @@ public class ControllerHome {
                     gebottag.setText("Bet was not successful");
                     gebottag.setTextFill(Color.web("red"));
                 }
-
 
             }
 

@@ -76,7 +76,6 @@ public class ControllerRegistration {
 
             if (available(1234)){
 
-
                 Client sc = new Client(1234, "localhost");
                 boolean registr = sc.pruefeRegister(name, pw, mail);
 
@@ -88,17 +87,13 @@ public class ControllerRegistration {
                     errMain.setTextFill(Color.web("#789"));
                 }
 
-
-
             } else {
-                //System.out.println("login failed");
                 errMain.setText("TCP Offline :(");
                 errMain.setTextFill(Color.web("#BF0000"));
             }
         }
 
     }
-
 
     public static boolean available(int port) {
         try (Socket ignored = new Socket("localhost", port)) {
@@ -108,6 +103,5 @@ public class ControllerRegistration {
         }
 
     }
-
 
 }
