@@ -1,4 +1,4 @@
-package client_gui_soap;
+package soap.services.client_gui_soap;
 
 
 import javafx.application.Application;

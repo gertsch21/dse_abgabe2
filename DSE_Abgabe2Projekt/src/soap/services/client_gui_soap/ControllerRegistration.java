@@ -1,4 +1,4 @@
-package client_gui_soap;
+package soap.services.client_gui_soap;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import webservice.soap.SoapClient;
 
 import java.io.IOException;
+import java.net.Socket;
 
 /**
  * Created by josefweber on 29.10.16.
@@ -45,6 +48,8 @@ public class ControllerRegistration {
         String pw = pwinput.getText();
         String pw2= pwinput2.getText();
 
+        errMain.setTextFill(Color.web("#999"));
+
         if (name.length() == 0){
             err1.setText("!");
             System.out.println("Name = 0");
@@ -65,15 +70,41 @@ public class ControllerRegistration {
             err3.setText("");
         }
 
-        if(pw.length() == 0 || pw.length() == 0 || pw.length() == 0){
+        if(name.length() == 0 || pw.length() == 0 || mail.length() == 0){
             errMain.setText("Fill in all the Fields!");
         }  else {
-            errMain.setText("");
-        }
 
+            if (available(9000)){
+
+                SoapClient si = SoapClient.getInstance();
+
+                client.soap.AlleServicesSEI as = si.getClient();
+
+                boolean registr = as.benutzerAnlegen(name, "Musterfrau", mail,99,"Grove","plz",123,name , pw);
+
+                if (registr){
+                    errMain.setText("Registration was a success "+ name + ". Return to login!");
+                    errMain.setTextFill(Color.web("#ff9966"));
+                } else {
+                    errMain.setText("TCP Register Failed!!");
+                    errMain.setTextFill(Color.web("#789"));
+                }
+
+            } else {
+                errMain.setText("TCP Offline :(");
+                errMain.setTextFill(Color.web("#BF0000"));
+            }
+        }
 
     }
 
+    public static boolean available(int port) {
+        try (Socket ignored = new Socket("localhost", port)) {
+            return true;
+        } catch (IOException ignored) {
+            return false;
+        }
 
+    }
 
 }

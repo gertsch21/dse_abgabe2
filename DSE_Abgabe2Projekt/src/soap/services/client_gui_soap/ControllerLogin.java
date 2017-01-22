@@ -1,8 +1,6 @@
-package client_gui_soap;
+package soap.services.client_gui_soap;
 
-import client.rest.RestClient;
-import client.soap.Client;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+import webservice.soap.SoapClient;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -26,7 +24,7 @@ public class ControllerLogin {
     @FXML private Label loginerror;
     @FXML private Label serverstatus;
 
-    Client cl;
+    private SoapClient scl;
 
     public void loginClicked() throws IOException {
         String name = unameinput.getText();
@@ -40,19 +38,21 @@ public class ControllerLogin {
 
             if (available(9000)) {
 
-                cl = new Client();
+                SoapClient si = SoapClient.getInstance();
 
-                Boolean x = cl.pruefeLogin(name, pass);
+                client.soap.AlleServicesSEI as = si.getClient();
+
+                boolean x = as.pruefeLogin(name,pass);
 
                 if (x) {
-                    //System.out.println("Login Sucess: " + name);
 
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
                     Parent root = fxmlLoader.load();
 
+
                     ControllerHome ch = fxmlLoader.<ControllerHome>getController();
                     ch.setUsername(name);
-                    ch.setCl(cl);
+                    //ch.setCl(sc);
 
                     Scene scene = new Scene(root);
                     Stage homeStage = (Stage) loginbtn.getScene().getWindow();
@@ -65,15 +65,16 @@ public class ControllerLogin {
                     loginerror.setText("Login failed");
                     loginerror.setTextFill(Color.web("#BF0000"));
                 }
+
             } else {
-                System.out.println("System: Offline");
-                serverstatus.setText("System: Offline");
-                serverstatus.setTextFill(Color.web("#BF0000"));
+                //System.out.println("login failed");
+                loginerror.setText("Login failed");
+                loginerror.setTextFill(Color.web("#BF0000"));
             }
-
         }
-
     }
+
+    
 
     public static boolean available(int port) {
         try (Socket ignored = new Socket("localhost", port)) {
@@ -81,6 +82,7 @@ public class ControllerLogin {
         } catch (IOException ignored) {
             return false;
         }
+
     }
 
     public void registerClicked() throws IOException {
@@ -93,15 +95,16 @@ public class ControllerLogin {
         regiStage.show();
     }
 
-    public void checkClicked(){
+    public boolean checkClicked(){
         if (available(9000)){
-            System.out.println("System:  SOAP");
-            serverstatus.setText("System:  SOAP");
+            System.out.println("System: Online SOAP");
+            serverstatus.setText("System: Online SOAP");
             serverstatus.setTextFill(Color.web("#168500"));
         } else {
-            System.out.println("System:  SOAP");
-            serverstatus.setText("System:  SOAP");
+            System.out.println("System: Offline SOAP");
+            serverstatus.setText("System: Offline SOAP");
             serverstatus.setTextFill(Color.web("#BF0000"));
         }
+        return false;
     }
 }
