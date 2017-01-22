@@ -23,8 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import freemarker.template.Configuration;
-import freemarker.template.TemplateExceptionHandler;
+
 import management.Auktionsverwaltung;
 import management.Benutzerverwaltung;
 import management.Produktgruppeverwaltung;
@@ -49,32 +48,6 @@ public class UserServiceHTML {
 	private static final String freemarkerTemplateDestination = "./";
 	
 	public UserServiceHTML() {
-		try {
-			
-			
-			// Create your Configuration instance, and specify if up to what FreeMarker
-			// version (here 2.3.25) do you want to apply the fixes that are not 100%
-			// backward-compatible. See the Configuration JavaDoc for details.
-			Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
-
-			// Specify the source where the template files come from. Here I set a
-			// plain directory for it, but non-file-system sources are possible too:
-			cfg.setDirectoryForTemplateLoading(new File(freemarkerTemplateDestination));
-
-			// Set the preferred charset template files are stored in. UTF-8 is
-			// a good choice in most applications:
-			cfg.setDefaultEncoding("UTF-8");
-
-			// Sets how errors will appear.
-			// During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
-			cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
-			// Don't log exceptions inside FreeMarker that it will thrown at you anyway:
-			cfg.setLogTemplateExceptions(false);
-		} catch (IOException e) {
-			System.err.println("UserServiceHTML: FEHLER: Freemarker templatefile not found");
-			e.printStackTrace();
-		}
 	}
 	
 	
@@ -94,6 +67,10 @@ public class UserServiceHTML {
 		html.append("<a href='/html/produkte'>Produkte</a><br/>");
 		html.append("<a href='/html/benutzer'>Benutzer</a>");
 		html.append("<form action='http://localhost:9999/html/einfrierenBenutzerHTML' method='post'>  "
+				+ "Username:<br><input type='text' name='name' id='name'>"
+				+ "<br><br> <input type='submit' value='Submit'></form> <br/><br/> "
+				
+				+ "<form action='http://localhost:9999/html/benutzerdelete' method='post'>  "
 				+ "Username:<br><input type='text' name='name' id='name'>"
 				+ "<br><br> <input type='submit' value='Submit'></form> ");
 		
@@ -132,5 +109,20 @@ public class UserServiceHTML {
 			return FAILURE_RESULT ;
 		}
 	}
+	
+	@POST
+	@Path("/benutzerdelete")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String deleteBenutzer(@FormParam("name") String usern){
+	
+			
+		if (ben_ver.benutzerloeschen(usern)) {
+			return SUCCESS_RESULT;
+		}
+		else {
+			return FAILURE_RESULT;
+		}
+	}
+	
 	
 }
