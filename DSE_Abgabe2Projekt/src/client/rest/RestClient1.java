@@ -9,22 +9,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-
 import org.apache.cxf.jaxrs.client.WebClient;
-
-import com.sun.jersey.api.client.ClientResponse;
-
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import java.io.IOException;
-
-import javax.ws.rs.core.UriBuilder;
-import org.apache.http.client.ClientProtocolException;
-
-
-
 import modell.Benutzer;
 import modell.Produkt;
 import modell.Produktgruppe;
@@ -39,6 +24,7 @@ public class RestClient1 implements ClientInterface1 {
 
 
 		public Benutzer getBenutzerByUsername(String name){
+			
 				Benutzer ben = new Benutzer();
 				ben.setUsername(name);
 				WebClient client = WebClient.create(REST_URI);
@@ -63,7 +49,7 @@ public class RestClient1 implements ClientInterface1 {
 			String clientResult=client.target(REST_URI+"/userservice1/login").request(MediaType.APPLICATION_XML)
 								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
-			 if(!SUCCESS_RESULT.equals(clientResult)){
+			 if(SUCCESS_RESULT.equals(clientResult)){
 		         return true;
 		      }else{
 		    	  return false;
@@ -83,7 +69,7 @@ public class RestClient1 implements ClientInterface1 {
 								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
-			  if(!SUCCESS_RESULT.equals(clientResult)){
+			  if(SUCCESS_RESULT.equals(clientResult)){
 			         return true;
 			      }else{
 			    	  return false;
@@ -111,10 +97,10 @@ public class RestClient1 implements ClientInterface1 {
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice1/benutzerAnlegen").request(MediaType.APPLICATION_XML)
-								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
-			  if(!SUCCESS_RESULT.equals(clientResult)){
+			  if(SUCCESS_RESULT.equals(clientResult)){
 			         return true;
 			      }else{
 			    	  return false;
@@ -143,10 +129,10 @@ public class RestClient1 implements ClientInterface1 {
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice1/benutzerAnlegen").request(MediaType.APPLICATION_XML)
-								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
-			  if(!SUCCESS_RESULT.equals(clientResult)){
+			  if(SUCCESS_RESULT.equals(clientResult)){
 			         return true;
 			      }else{
 			    	  return false;
@@ -173,7 +159,7 @@ public class RestClient1 implements ClientInterface1 {
 			         .request(MediaType.APPLICATION_XML)
 			         .delete(String.class);
 			
-			if(!SUCCESS_RESULT.equals(clientResult)){
+			if(SUCCESS_RESULT.equals(clientResult)){
 				return true;
 			}else
 			{
@@ -185,36 +171,109 @@ public class RestClient1 implements ClientInterface1 {
 		}
 		@Override
 		public boolean einfrierenBenutzer(String uname) {
+			Client client = ClientBuilder.newClient();
 			 Form form = new Form();
-		     form.param("name", "naresh");
+		     form.param("name", uname);
 		    
-		      String callResult = client
-		         .target(REST_SERVICE_URL)
+		      String clientResult = client
+		         .target(REST_URI+"/userservice1/einfrierenBenutzer")
 		         .request(MediaType.APPLICATION_XML)
-		         .put(Entity.entity(form,
+		         .post(Entity.entity(form,
 		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
 		            String.class);
+		      
+		      if(SUCCESS_RESULT.equals(clientResult)){
+					return true;
+				}else
+				{
+					return false;
+				}
 		}
 		@Override
 		public boolean einaufhebenBenutzer(String uname) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			 Form form = new Form();
+		     form.param("name", uname);
+		    
+		      String clientResult = client
+		         .target(REST_URI+"/userservice1/einaufhebenBenutzer")
+		         .request(MediaType.APPLICATION_XML)
+		         .post(Entity.entity(form,
+		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+		            String.class);
+		      
+		      if(SUCCESS_RESULT.equals(clientResult)){
+					return true;
+				}else
+				{
+					return false;
+				}
 		}
 		@Override
 		public boolean passwortAendern(String uname, String pname) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			 Form form = new Form();
+		     form.param("name", uname);
+		     form.param("passwort",pname);
+		    
+		      String clientResult = client
+		         .target(REST_URI+"/userservice1/passwortAendern")
+		         .request(MediaType.APPLICATION_XML)
+		         .post(Entity.entity(form,
+		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+		            String.class);
+		      
+		      if(SUCCESS_RESULT.equals(clientResult)){
+					return true;
+				}else
+				{
+					return false;
+				}
 		}
 		@Override
 		public boolean adressAendern(String usern, int plz, String str, String ort, int nummer) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			 Form form = new Form();
+		     form.param("name", usern);
+		     String plz1 = String.valueOf(plz);
+		     form.param("plz",plz1);
+		     form.param("strasse", str);
+		     form.param("wohnort", ort);
+		 	String hausnummer1 = String.valueOf(nummer);
+		     form.param("hausnummer", hausnummer1);
+		    
+		      String clientResult = client
+		         .target(REST_URI+"/userservice1/adressAendern")
+		         .request(MediaType.APPLICATION_XML)
+		         .post(Entity.entity(form,
+		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+		            String.class);
+		      
+		      if(SUCCESS_RESULT.equals(clientResult)){
+					return true;
+				}else
+				{
+					return false;
+				}
 		}
+		
+		
+		
 		@Override
 		public List<Produkt> getGebotshistorieVonBenutzer(String uname) {
-			// TODO Auto-generated method stub
-			return null;
+			Client client = ClientBuilder.newClient();
+			GenericType<List<Produkt>> list = new GenericType<List<Produkt>>() {};
+			
+			
+		      List<Produkt> produkte = client.target(REST_URI+"/userservice1/getGebotHistorie").path(uname)
+		    		  		.request(MediaType.APPLICATION_XML)
+		    		  		.get(list);
+		      return produkte;
 		}
+		
+		
+		
+		
 		@Override
 		public List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String uname) {
 			// TODO Auto-generated method stub
@@ -237,9 +296,14 @@ public class RestClient1 implements ClientInterface1 {
 		}
 		@Override
 		public List<Produkt> sucheProdukt() {
-			// TODO Auto-generated method stub
-			return null;
+			Client client = ClientBuilder.newClient();
+			GenericType<List<Produkt>> list = new GenericType<List<Produkt>>() {};
+		      List<Produkt> produkt = client.target(REST_URI+"/userservice1//getProdukte")
+		    		  		.request(MediaType.APPLICATION_XML)
+		    		  		.get(list);
+		      return produkt;
 		}
+		
 		@Override
 		public Produkt getProduktByID(String id) {
 			// TODO Auto-generated method stub

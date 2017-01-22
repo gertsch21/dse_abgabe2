@@ -10,9 +10,9 @@ public class ServerStartUp {
 				
 				
 				JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
-				sf.setResourceClasses(UserService.class);
-				sf.setResourceProvider(UserService.class,
-				new SingletonResourceProvider(new UserService()));
+				sf.setResourceClasses(UserService1.class);
+				sf.setResourceProvider(UserService1.class,
+				new SingletonResourceProvider(new UserService1()));
 				sf.setAddress("http://localhost:9999/");
 				sf.create();
 			

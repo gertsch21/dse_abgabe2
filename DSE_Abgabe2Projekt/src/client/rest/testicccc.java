@@ -3,10 +3,10 @@ package client.rest;
 public class testicccc {
 
 	public static void main(String[] args) {
-		ClientInterface hhhh = new RestClient();
+		ClientInterface1 test = new RestClient1();
 		
-		System.out.println(hhhh.pruefeLoginXml("gertsch", "hallo"));
-		hhhh.pruefeLoginPlain("gertsch", "hallo");
+		//System.out.println(test.getBenutzerByUsername("gertsch"));
+		System.out.println(test.getGebotshistorieVonBenutzer("josi"));
 
 	}
 

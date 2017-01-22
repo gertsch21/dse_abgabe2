@@ -43,7 +43,7 @@ public class UserService1 {
 	
 		//Benutzerverwaltung
 	
-		@POST
+		@PUT
 		@Path("/benutzerReg")
 		@Consumes({"application/x-www-form-urlencoded","multipart/form-data"})
 		@Produces(MediaType.TEXT_HTML)
@@ -66,7 +66,7 @@ public class UserService1 {
 		    return  FAILURE_RESULT;
 		}
 		
-		@POST
+		@PUT
 		@Path("/benutzerAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
 		public String benutzerAnlegen(@PathParam("vorn") String vorn,
@@ -87,7 +87,7 @@ public class UserService1 {
 		    return  FAILURE_RESULT;
 		}
 		
-		@POST
+		@PUT
 		@Path("/adminAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
 		public String adminAnlegen(@PathParam("vorn") String vorn,
@@ -110,7 +110,7 @@ public class UserService1 {
 		}
 		
 		
-	/*	@POST
+		@POST
 	    @Path("/login")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -123,7 +123,7 @@ public class UserService1 {
 			}
 			    return  Response.status(Status.NOT_FOUND).build();
 			}
-	*/
+	
 		
 
 	
@@ -182,8 +182,8 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
-		@Path("/einfrierenBenutzer/{name}")
+		@POST
+		@Path("/einfrierenBenutzerHTML/{name}")
 		@Produces(MediaType.APPLICATION_XML)
 		public Response einfrierenBenutzerHTML(@PathParam("name") String usern) {
 			boolean einfri = ben_ver.benutzerEinfrieren(usern);
@@ -196,9 +196,10 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
-		@Path("/einfrierenBenutzer/{name}")
+		@POST
+		@Path("/einfrierenBenutzer")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String einfrierenBenutzer(@PathParam("name") String usern) {
 			boolean einfri = ben_ver.benutzerEinfrieren(usern);
 			
@@ -209,9 +210,10 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
-		@Path("/einaufhebenBenutzer/{name}")
+		@POST
+		@Path("/einaufhebenBenutzer")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String einaufhebenBenutzer(@PathParam("name") String usern) {
 			boolean einfri = ben_ver.benutzerEinfAufheben(usern);
 			
@@ -222,9 +224,10 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
-		@Path("/passwortaendern/{name}/{passwort}")
+		@POST
+		@Path("/passwortaendern")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String passwortAendern(@PathParam("name") String usern, @PathParam("passwort") String pwd){
 			boolean pass = ben_ver.passwortAendern(usern, pwd);
 			
@@ -235,9 +238,10 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
-		@Path("/addressaendern/{name}/{plz}/{strasse}/{wohnort}/{hausnummer}")
+		@POST
+		@Path("/addressaendern")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String adressAendern(@PathParam("name") String usern,
 									@PathParam("plz") int plz,
 									@PathParam("strasse") String str,
@@ -265,10 +269,11 @@ public class UserService1 {
 			}
 		}
 
-	//pogledaj ovde ime metode	
+		
 		@PUT
 		@Path("/gebotAbgeben/{name}/{gebot}/{produktID}")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String gebotAbgeben(@PathParam("name") String usern,
 								   @PathParam("gebot") double gebot,
 								   @PathParam("produktID") String produktID){
@@ -285,6 +290,7 @@ public class UserService1 {
 		@GET
 	    @Path("/getProdukt/{id}")
 	    @Produces(MediaType.APPLICATION_XML)
+	
 	    public Produkt getProduktById(@PathParam("id") String id) {
 	        Produkt pro = new Produkt();
 	        pro = (Produkt) pr_ver.getProduktByID(id);
@@ -293,7 +299,7 @@ public class UserService1 {
 		
 		
 		
-		@POST
+		@PUT
 		@Path("/produktAnlegen/{name}/{startpreis}/{uname}/{kategorie}/{dauer}/{beschreibung}")
 		@Consumes({"application/x-www-form-urlencoded","multipart/form-data"})
 		@Produces(MediaType.TEXT_HTML)
@@ -323,9 +329,10 @@ public class UserService1 {
 			}
 		}
 		
-		@PUT
+		@POST
 		@Path("/produktverschieben/{uuid}/{kategorie}")
 		@Produces(MediaType.APPLICATION_XML)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String produktVerschieben(@PathParam("uuid") UUID usern,
 								   @PathParam("kategorie") String kate){
 			boolean gebotres = pr_ver.produktVerschieben(usern, kate);
@@ -370,7 +377,7 @@ public class UserService1 {
 			
 		}	
 		
-		@PUT
+		@POST
 		@Path("/produktAendern/{id}/{name}/{startpreis}/{uname}/{kategorie}/{dauer}/{beschreibung}")
 		@Produces(MediaType.APPLICATION_XML)
 		public String produktAendern(@PathParam("id") UUID id,
@@ -389,7 +396,7 @@ public class UserService1 {
 			}
 		}
 		//Produktgruppe
-		@POST
+		@PUT
 		@Path("/produktgruppeAnlegen/{name}")
 		@Produces(MediaType.APPLICATION_XML)
 		public String produktgruppeAnlegen(@PathParam("name") String name){
@@ -422,7 +429,7 @@ public class UserService1 {
 			
 		}
 		
-		@PUT
+		@POST
 		@Path("/produktgruppeAendern/{oldname}/{newname}")
 		@Produces(MediaType.APPLICATION_XML)
 		public String produktgruppeAendern(@PathParam("oldname") String oldname,
@@ -444,6 +451,19 @@ public class UserService1 {
 			return mylist;
 			
 		}
+		
+		
+		@GET
+	    @Path("/getHTML")
+	    @Produces(MediaType.TEXT_HTML)
+	    public String getHTML() {
+	      
+	        return "<h1>Hallo</h1>";
+	    }
+		
+		
+		
+		
 		
 		
 		
