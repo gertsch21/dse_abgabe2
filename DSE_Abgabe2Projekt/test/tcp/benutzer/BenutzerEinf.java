@@ -9,15 +9,17 @@ import management.Benutzerverwaltung;
 public class BenutzerEinf {
 	
 	Benutzerverwaltung benVer = Benutzerverwaltung.getInstance();
+
 	@Test
 	public void benutzerEinf() {
-		boolean ein = benVer.benutzerEinfrieren("miki");
+		boolean ein = test.benutzerEinfrieren("miki");
 		assertEquals(false,ein);
+		
 		
 	}
 	@Test
 	public void benutzerEinfF() {
-		boolean ein = benVer.benutzerEinfrieren("eki");
+		boolean ein = test.benutzerEinfrieren("eki");
 		assertEquals(true,ein);
 		
 	}
