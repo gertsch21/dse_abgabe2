@@ -3,6 +3,12 @@ package webservice.soap;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import client.soap.*;
 
+/**
+ * Dabei handelt es sich um eine Klasse, mithilfe dessen man auf den Soapserver zugreifen kann
+ * Es wird der gesamte Verbindungsaufbau hier gehandhabt, und eine client Variable zur Verfügung gestellt,
+ * damit man auf die Services zugreifen kann.
+ *
+ */
 public class SoapClient {
 	
 	private JaxWsProxyFactoryBean factory;
@@ -10,11 +16,19 @@ public class SoapClient {
 	
 	private static SoapClient instance;
 	
+	/**
+	 * Da Singleton
+	 * @return Eine Instanz der Klasse
+	 */
 	public static SoapClient getInstance(){
 		if(instance == null) instance = new SoapClient();
 		return instance;
 	}
 	
+	/**
+	 * Da Singleton
+	 * hier werden die gesamten Instanzvariablen initialisiert
+	 */
 	private SoapClient(){
 		this.factory = new JaxWsProxyFactoryBean();
 		this.factory.setServiceClass(AlleServicesSEI.class);
@@ -22,37 +36,9 @@ public class SoapClient {
 		
 		this.client = (AlleServicesSEI) factory.create();
 	}
-	
-	public static void main(String args[]) throws Exception {
-		 
-		SoapClient sc = SoapClient.getInstance();
-		
-		AlleServicesSEI client = sc.getClient();
-		
-		
-		
-		
-//		
-//		System.out.println("Login mit nein/nein: " + client.pruefeLogin("nein", "nein"));
-//		System.out.println("Login mit gertsch/hallo: " + client.pruefeLogin("gertsch", "hallo"));
-//
-//		for(Benutzer b : client.getBenutzerliste())
-//			System.out.println(b.getUsername());
-//		for(Produkt p : client.getProduktListe())
-//			System.out.println("Produkt: " + p.getName()+", "+p.getOwnerUsername());
-//		
-//		client.produktLoeschen("38910565-720f-463e-9cf9-cfb30e9053ce");
-//		client.benutzerloeschen("king");
-//		System.out.println(client.getProduktgruppeByName("Rollstuhl"));
-//		
-		System.exit(0);
-	}
+
 
 	public AlleServicesSEI getClient() {
 		return client;
-	}
-
-	public void setClient(AlleServicesSEI client) {
-		this.client = client;
 	}
 }

@@ -7,6 +7,10 @@ import org.apache.cxf.service.Service;
 import soap.services.*;
 
 public class SoapServer {
+	/**
+	 * Dieser Konstruktor macht es moeglich, dass man auf eine URI die Services abrufen kann
+	 * @throws Exception wird nur geworfen, wenn ein grober Fehler entstanden ist, Gruende darfuer koennen mannigfach sein
+	 */
 	protected SoapServer() throws Exception {
 		System.out.println("Starting Server");
 		AlleServicesSEI serviceImpl = new AlleServices();
@@ -16,15 +20,21 @@ public class SoapServer {
 		svrFactory.setServiceBean(serviceImpl);
 		Server server =  svrFactory.create();
 		Service service = server.getEndpoint().getService();
-		
-		System.out.println("SoapServer: verfügbare Services: " + service.toString());
 	 }
 
-	public static void main(String args[]) throws Exception {
-		new SoapServer();
-		System.out.println("Server ready...");
-		Thread.sleep(200 * 60 * 1000); //20 min online
-		System.out.println("Server exiting");
-		System.exit(0);
+	
+	/**
+	 * Diese Methode startet den Server, indem es eine Instanz von dieser Klasse anlegt
+	 * @param args nicht benoetigt hier
+	 * @throws Exception 
+	 */
+	public static void main(String args[]) {
+		try{
+			new SoapServer();
+			System.out.println("Server wurde erfolgreich gestartet...");
+		}catch(Exception e){
+			System.err.println("Server konnte nicht gestartet werden: "+e.getMessage());
+			System.exit(0);
+		}
 	}
 }

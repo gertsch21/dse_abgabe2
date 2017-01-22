@@ -11,8 +11,8 @@ import modell.Person;
 
 public class SerializedPersonenDAOHibernate implements PersonDAO{
 
-	SessionFactory sessionFactory;
-	Session session;
+	private SessionFactory sessionFactory;
+	private Session session;
 	
 	public SerializedPersonenDAOHibernate() {
 		this.sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -32,7 +32,6 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 	public List<Benutzer> getBenutzerList() {
 		this.session = sessionFactory.openSession();
 		List<Benutzer> retour = (List<Benutzer>) session.createQuery( "from Benutzer" ).list();
-		session.close();
 		this.session.close();
 		return retour;
 	}
@@ -160,10 +159,8 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 
 	@Override
 	public boolean passwortAendern(String username, String neuesPasswort) {
-		this.session = sessionFactory.openSession();
 		Person p = this.getPersonByUsername(username);
 		if(p == null) {
-			this.session.close();
 			return false; //person nicht in db
 		}
 		
@@ -174,6 +171,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		
 		p.setPassword(neuesPasswort);
 		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(p);
 		session.getTransaction().commit();
@@ -184,10 +182,8 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 
 	@Override
 	public boolean adressdatenAendern(String username, int plz, String strasse, String wohnort, int hausnummer) {
-		this.session = sessionFactory.openSession();
 		Person p = this.getPersonByUsername(username);
 		if(p == null){
-			this.session.close();
 			return false; //person nicht in db
 		}
 		
@@ -196,6 +192,7 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 		p.setWohnort(wohnort);
 		p.setHausnummer(hausnummer);
 		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(p);
 		session.getTransaction().commit();

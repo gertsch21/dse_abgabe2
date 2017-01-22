@@ -5,7 +5,6 @@
 
 package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -23,12 +22,11 @@ import modell.Produktgruppe;
 
 
 public class SerializedProduktDAOHibernate implements ProduktDAO {
-	SessionFactory sessionFactory;
-	Session session;
+	private SessionFactory sessionFactory;
+	private Session session;
 	
 	public SerializedProduktDAOHibernate() {
 		this.sessionFactory = new Configuration().configure().buildSessionFactory();
-		this.session = sessionFactory.openSession();
 	}
 	
  
@@ -75,9 +73,8 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 			return false;
 		}
 		
-		this.session = sessionFactory.openSession();
 		try{
-			
+			this.session = sessionFactory.openSession();
 			session.beginTransaction();
 			session.save(newProdukt);
 			session.getTransaction().commit();
@@ -106,12 +103,10 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 				break;
 			}
 		}
-		System.out.println("Es wird gelöscht: "+deleteID + ", " + zuLoeschen);
 		if(zuLoeschen == null){
 			this.session.close();
 			return false;//keine Person
 		}
-		System.out.println("Es wird gelöscht: "+deleteID);
 		session.beginTransaction();
 		session.delete(zuLoeschen);
 		session.getTransaction().commit();
@@ -123,18 +118,15 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 	
 	@Override
 	public boolean produktVerschieben(UUID id,String kategorie){
-		this.session = sessionFactory.openSession();
 		Produkt produktZuVerschieben = this.getProduktByID(id.toString());
 		Produktgruppe neuePG = new SerializedProduktgruppeDAOHibernate().getProduktgruppeByName(kategorie);
 		
 		if(produktZuVerschieben==null){
 			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Das Produkt mit der id('"+id+") existiert nicht!");
-			this.session.close();
 			return false;
 		}
 		if(neuePG==null){
 			System.err.println("SerializedProduktDAOHibernate:ProduktVerschieben: Die Produktgruppe mit dem Namen '"+kategorie+"' existiert nicht!");
-			this.session.close();
 			return false;
 		}
 		
@@ -151,13 +143,14 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		
 		produktZuVerschieben.setProduktgruppe(neuePG);
 		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(produktZuVerschieben);
 		session.update(altePG);
 		session.update(neuePG);
 		session.getTransaction().commit();
-		
 		this.session.close();
+		
 		return true;
 	}
 	
@@ -168,7 +161,6 @@ public class SerializedProduktDAOHibernate implements ProduktDAO {
 		
 		Produkt p = this.getProduktByID(produktID);
 		if(p == null){
-			this.session.close();
 			return false; //person nicht in db
 		}
 		

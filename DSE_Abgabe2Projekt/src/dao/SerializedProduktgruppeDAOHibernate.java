@@ -23,8 +23,9 @@ import modell.Produktgruppe;
  */
 public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 
-	SessionFactory sessionFactory;
-	
+	private SessionFactory sessionFactory;
+	private Session session;
+
 	public SerializedProduktgruppeDAOHibernate() {
 		this.sessionFactory = new Configuration().configure().buildSessionFactory();
 	}
@@ -34,7 +35,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<Produktgruppe> getProduktgruppeList() {
-		Session session = sessionFactory.openSession();
+		session = sessionFactory.openSession();
 		List<Produktgruppe> retour = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();
 		session.close();
 		return retour;
@@ -45,7 +46,7 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	public Produktgruppe getProduktgruppeByName(String name) { 
-		Session session = sessionFactory.openSession();
+		session = sessionFactory.openSession();
 		List<Produktgruppe> produktgruppeliste = (List<Produktgruppe>) session.createQuery( "from Produktgruppe" ).list();
 		Produktgruppe retour = null;
 		
@@ -72,8 +73,8 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 			return false;
 		}
 		
-		Session session = sessionFactory.openSession();
 		try{
+			session = sessionFactory.openSession();
 			session.beginTransaction();
 			session.save(newProduktgruppe);
 			session.getTransaction().commit();
@@ -87,15 +88,14 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 
 
 	public boolean produktgruppeLoeschen(String name) { // löschen  mit  ProduktID - Verbesserung ?
-		Session session = this.sessionFactory.openSession();
 		Produktgruppe pg = this.getProduktgruppeByName(name);
 		
+		session = this.sessionFactory.openSession();
 		session.beginTransaction();
-		
 		session.delete(pg);
-		
 		session.getTransaction().commit();
 		session.close();
+		
 		return true;	
 	}
 	
@@ -103,7 +103,6 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 	
 	@Override
 	public boolean produktgruppeAendern(String alterName, String neuerName) {
-		Session session = this.sessionFactory.openSession();
 		Produktgruppe pg = this.getProduktgruppeByName(alterName);
 		if(pg == null){
 			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Produktgruppe mit dem Namen '"+alterName+"' nicht vorhanden!");
@@ -117,12 +116,11 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 			System.err.println("SerializedProduktgruppeDAOHibernate:produktgruppeAendern: Der Name('"+neuerName+"') ist schon vergeben!");
 			return false;
 		}
-		
-		if(!session.isOpen()) session = sessionFactory.openSession();
-		session.beginTransaction();
-		
+
 		Produktgruppe neu = new Produktgruppe(neuerName);
-		
+
+		session = this.sessionFactory.openSession();
+		session.beginTransaction();
 		session.save(neu);
 		
 		Set<Produkt> liste = pg.getListe();
@@ -132,7 +130,6 @@ public class SerializedProduktgruppeDAOHibernate implements ProduktgruppeDAO {
 		}
 		
 		session.delete(pg);
-		
 		session.getTransaction().commit();
 		session.close();
 		return true;
