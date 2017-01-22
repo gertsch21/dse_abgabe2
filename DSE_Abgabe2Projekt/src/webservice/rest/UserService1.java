@@ -55,7 +55,7 @@ public class UserService1 {
 		    return  Response.status(Status.NOT_FOUND).build();
 		}
 		
-		@POST
+		@PUT
 		@Path("/benutzerRegist")
 		@Produces(MediaType.APPLICATION_XML)
 		public String benutzerRegistrieren1(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd) {
@@ -271,7 +271,7 @@ public class UserService1 {
 
 		
 		@PUT
-		@Path("/gebotAbgeben/{name}/{gebot}/{produktID}")
+		@Path("/gebotAbgeben")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String gebotAbgeben(@PathParam("name") String usern,
@@ -290,8 +290,7 @@ public class UserService1 {
 		@GET
 	    @Path("/getProdukt/{id}")
 	    @Produces(MediaType.APPLICATION_XML)
-	
-	    public Produkt getProduktById(@PathParam("id") String id) {
+		public Produkt getProduktById(@PathParam("id") String id) {
 	        Produkt pro = new Produkt();
 	        pro = (Produkt) pr_ver.getProduktByID(id);
 	        return pro;
@@ -300,9 +299,8 @@ public class UserService1 {
 		
 		
 		@PUT
-		@Path("/produktAnlegen/{name}/{startpreis}/{uname}/{kategorie}/{dauer}/{beschreibung}")
-		@Consumes({"application/x-www-form-urlencoded","multipart/form-data"})
-		@Produces(MediaType.TEXT_HTML)
+		@Path("/produktAnlegen")
+		@Produces(MediaType.APPLICATION_XML)
 		public String produktAnlegen(@PathParam("name") String usern,
 				@PathParam("startpreis") double sp,
 				@PathParam("uname") String uname,
@@ -330,7 +328,7 @@ public class UserService1 {
 		}
 		
 		@POST
-		@Path("/produktverschieben/{uuid}/{kategorie}")
+		@Path("/produktverschieben")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		public String produktVerschieben(@PathParam("uuid") UUID usern,
@@ -378,7 +376,7 @@ public class UserService1 {
 		}	
 		
 		@POST
-		@Path("/produktAendern/{id}/{name}/{startpreis}/{uname}/{kategorie}/{dauer}/{beschreibung}")
+		@Path("/produktAendern")
 		@Produces(MediaType.APPLICATION_XML)
 		public String produktAendern(@PathParam("id") UUID id,
 				@PathParam("name") String name,
@@ -397,7 +395,7 @@ public class UserService1 {
 		}
 		//Produktgruppe
 		@PUT
-		@Path("/produktgruppeAnlegen/{name}")
+		@Path("/produktgruppeAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
 		public String produktgruppeAnlegen(@PathParam("name") String name){
 			
@@ -444,7 +442,7 @@ public class UserService1 {
 		}
 		
 		@GET
-		@Path("/produktgruppeListe/{name}")
+		@Path("/getproduktgruppeListe/{name}")
 		@Produces(MediaType.APPLICATION_XML)
 		public List<Produktgruppe> produktgruppeListe(@PathParam("name") String name){
 			List<Produktgruppe> mylist = pr_gr.getProduktgruppeList();

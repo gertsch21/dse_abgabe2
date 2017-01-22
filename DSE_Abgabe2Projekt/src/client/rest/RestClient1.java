@@ -3,6 +3,7 @@ package client.rest;
 import java.util.List;
 import java.util.UUID;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -31,7 +32,7 @@ public class RestClient1 implements ClientInterface1 {
 				  	      client.path("/userservice1/getBenutzer").path(name).accept("application/xml");
 				
 				Benutzer c = client.get(Benutzer.class);
-				System.out.println("Benutzer" + c);
+				
 				return c;
 			}
 		
@@ -66,7 +67,7 @@ public class RestClient1 implements ClientInterface1 {
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice1/benutzerRegist").request(MediaType.APPLICATION_XML)
-								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
@@ -276,83 +277,238 @@ public class RestClient1 implements ClientInterface1 {
 		
 		@Override
 		public List<Produkt> getZumVerkaufStehendeProdukteVonBenutzer(String uname) {
-			// TODO Auto-generated method stub
-			return null;
+			Client client = ClientBuilder.newClient();
+			GenericType<List<Produkt>> list = new GenericType<List<Produkt>>() {};
+			
+			
+		      List<Produkt> produkte = client.target(REST_URI+"/userservice1/produktSortiment").path(uname)
+		    		  		.request(MediaType.APPLICATION_XML)
+		    		  		.get(list);
+		      return produkte;
 		}
 		@Override
 		public List<Produkt> getVerkaufteProdukteVonBenutzer(String username) {
-			// TODO Auto-generated method stub
-			return null;
+			
+			Client client = ClientBuilder.newClient();
+			GenericType<List<Produkt>> list = new GenericType<List<Produkt>>() {};
+			List<Produkt> produkte = client.target(REST_URI+"/userservice1/getVerkaufteProdukteVonBenutzer").path(username)
+		    		  		.request(MediaType.APPLICATION_XML)
+		    		  		.get(list);
+		      return produkte;
 		}
 		@Override
 		public boolean gebotdelete(String ID) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			String clientResult = client.target(REST_URI+"/userservice1/gebotdelete")
+			         .path("/{id}")
+			         .resolveTemplate("id", ID)
+			         .request(MediaType.APPLICATION_XML)
+			         .delete(String.class);
+			
+			if(SUCCESS_RESULT.equals(clientResult)){
+				return true;
+			}else
+			{
+				return false;
+			}
+			
 		}
 		@Override
 		public boolean gebotAbgeben(String usern, double gebot, String produktID) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			Form form = new Form();
+			form.param("name", usern);
+			String gebot1 = String.valueOf(gebot);
+			form.param("gebot", gebot1);
+			form.param("produktID", produktID);
+			
+			
+			String clientResult=client.target(REST_URI+"/userservice1/gebotAbgeben").request(MediaType.APPLICATION_XML)
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+									
+																			
+			  if(SUCCESS_RESULT.equals(clientResult)){
+			         return true;
+			      }else{
+			    	  return false;
+			      }
 		}
 		@Override
 		public List<Produkt> sucheProdukt() {
 			Client client = ClientBuilder.newClient();
 			GenericType<List<Produkt>> list = new GenericType<List<Produkt>>() {};
-		      List<Produkt> produkt = client.target(REST_URI+"/userservice1//getProdukte")
+		      List<Produkt> produkte = client.target(REST_URI+"/userservice1/getProdukte")
 		    		  		.request(MediaType.APPLICATION_XML)
 		    		  		.get(list);
-		      return produkt;
+		      return produkte;
 		}
 		
 		@Override
 		public Produkt getProduktByID(String id) {
-			// TODO Auto-generated method stub
-			return null;
+		
+			WebClient client = WebClient.create(REST_URI);
+			  	      client.path("/userservice1/getProdukt").path(id).accept("application/xml");
+			Produkt c = client.get(Produkt.class);
+			
+			return c;
 		}
 		@Override
 		public boolean produktAnlegen(String usern, double sp, String uname, String kate, int dauer, String be) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			Form form = new Form();
+			form.param("usern", usern);
+			String sp1 = String.valueOf(sp);
+			form.param("startpreis", sp1);
+			form.param("uname", uname);
+			form.param("kategorie", kate);
+			String dauer1 = String.valueOf(dauer);
+			form.param("dauer", dauer1);
+			form.param("beschreibung", be);
+						
+			
+			String clientResult=client.target(REST_URI+"/userservice1/produktAnlegen").request(MediaType.APPLICATION_XML)
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+									
+																			
+			  if(SUCCESS_RESULT.equals(clientResult)){
+			         return true;
+			      }else{
+			    	  return false;
+			      }
+			
 		}
 		@Override
 		public boolean produktDelete(String Id) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			String clientResult = client.target(REST_URI+"/userservice1/produktdelete")
+			         .path("/{id}")
+			         .resolveTemplate("id", Id)
+			         .request(MediaType.APPLICATION_XML)
+			         .delete(String.class);
+			
+			if(SUCCESS_RESULT.equals(clientResult)){
+				return true;
+			}else
+			{
+				return false;
+			}
 		}
 		@Override
 		public boolean produktVerschieben(UUID usern, String kate) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			String pas = String.valueOf(usern);
+			 Form form = new Form();
+			 
+		     form.param("uuid", pas);
+		     form.param("kategorie", kate);
+		    
+		      String clientResult = client
+		         .target(REST_URI+"/userservice1/produktverschieben")
+		         .request(MediaType.APPLICATION_XML)
+		         .post(Entity.entity(form,
+		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+		            String.class);
+		      
+		      if(SUCCESS_RESULT.equals(clientResult)){
+					return true;
+				}else
+				{
+					return false;
+				}
 		}
 		@Override
 		public boolean produktAendern(UUID id, String name, double sp, String uname, String kate, int dauer, String be) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			String pas = String.valueOf(id);
+			Form form = new Form();
+			form.param("name", pas);
+			String sp1 = String.valueOf(sp);
+			form.param("startpreis", sp1);
+			form.param("uname", uname);
+			form.param("kategorie", kate);
+			String dauer1 = String.valueOf(dauer);
+			form.param("dauer", dauer1);
+			form.param("beschreibung", be);
+						
+			
+			String clientResult=client.target(REST_URI+"/userservice1/produktAendern").request(MediaType.APPLICATION_XML)
+								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+									
+																			
+			  if(SUCCESS_RESULT.equals(clientResult)){
+			         return true;
+			      }else{
+			    	  return false;
+			      }
 		}
 		@Override
 		public boolean produktgruppeAnlegen(String name) {
-			// TODO Auto-generated method stub
-			return false;
-		}
+			Client client = ClientBuilder.newClient();
+			
+			Form form = new Form();
+			form.param("name", name);
+			String clientResult=client.target(REST_URI+"/userservice1/produktgruppeAnlegen").request(MediaType.APPLICATION_XML)
+					.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+						
+																
+				if(SUCCESS_RESULT.equals(clientResult)){
+			         return true;
+			      }else{
+			    	  return false;
+			      }
+			}
 		@Override
 		public boolean produktgruppeAendern(String oldname, String newname) {
-			// TODO Auto-generated method stub
-			return false;
-		}
+			Client client = ClientBuilder.newClient();
+			
+			Form form = new Form();
+			form.param("oldname", oldname);
+			form.param("newname", newname);
+			String clientResult=client.target(REST_URI+"/userservice1/produktgruppeAendern").request(MediaType.APPLICATION_XML)
+					.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+						
+																
+				if(SUCCESS_RESULT.equals(clientResult)){
+			         return true;
+			      }else{
+			    	  return false;
+			      }
+			}
+		
 		@Override
 		public boolean produktgruppeLoeschen(String name) {
-			// TODO Auto-generated method stub
-			return false;
+			Client client = ClientBuilder.newClient();
+			String clientResult = client.target(REST_URI+"/userservice1/produktgruppeLoeschen")
+			         .path("/{usern}")
+			         .resolveTemplate("usern", name)
+			         .request(MediaType.APPLICATION_XML)
+			         .delete(String.class);
+			
+			if(SUCCESS_RESULT.equals(clientResult)){
+				return true;
+			}else
+			{
+				return false;
+			}
 		}
 		@Override
 		public Produktgruppe getProduktgruppebyUsername(String name) {
-			// TODO Auto-generated method stub
-			return null;
+				WebClient client = WebClient.create(REST_URI);
+				client.path("/userservice1/produktgruppeSuchen").path(name).accept("application/xml");
+	
+				Produktgruppe c = client.get(Produktgruppe.class);
+	
+				return c;
 		}
+		
 		@Override
 		public List<Produktgruppe> produktgruppeListe(String name) {
-			// TODO Auto-generated method stub
-			return null;
+			Client client = ClientBuilder.newClient();
+			GenericType<List<Produktgruppe>> list = new GenericType<List<Produktgruppe>>() {};
+		      List<Produktgruppe> produktgruppe = client.target(REST_URI+"/userservice1/getproduktgruppeListe")
+		    		  		.request(MediaType.APPLICATION_XML)
+		    		  		.get(list);
+		      return produktgruppe;
 		}
 
 
