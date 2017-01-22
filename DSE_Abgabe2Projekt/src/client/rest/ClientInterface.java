@@ -9,7 +9,7 @@ import modell.Benutzer;
 import modell.Produkt;
 import modell.Produktgruppe;
 
-public interface ClientInterface1 {
+public interface ClientInterface {
 	
 	public boolean pruefeLogin(String uname, String pwd);
 	public boolean benutzerRegistrieren1(String name, String email, String pwd);
