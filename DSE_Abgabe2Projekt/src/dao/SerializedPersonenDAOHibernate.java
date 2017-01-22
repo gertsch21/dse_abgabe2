@@ -119,19 +119,18 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 
 	@Override
 	public boolean einfrierenPerson(String benutzer) {
-		this.session = sessionFactory.openSession();
+		
 		Person p = this.getPersonByUsername(benutzer);
 		if(p == null){
-			this.session.close();
 			return false;//person nicht in db
 		}
 		if(!(p instanceof Benutzer)){
-			this.session.close();
 			return false;
 		}
 		
 		((Benutzer)p).setIstEingefroren(true);
 		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(p);
 		session.getTransaction().commit();
@@ -141,19 +140,16 @@ public class SerializedPersonenDAOHibernate implements PersonDAO{
 
 	@Override
 	public boolean einfrierenAufheben(String benutzer) {
-		this.session = sessionFactory.openSession();
 		Person p = this.getPersonByUsername(benutzer);
 		if(p == null) {
-			this.session.close();
 			return false; //person nicht in db
 		}
 		if(!(p instanceof Benutzer)){
-			this.session.close();
 			return false;
 		}
 		
 		((Benutzer)p).setIstEingefroren(false);
-		
+		this.session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(p);
 		session.getTransaction().commit();
