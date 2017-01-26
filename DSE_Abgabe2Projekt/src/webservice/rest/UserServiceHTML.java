@@ -110,6 +110,7 @@ public class UserServiceHTML {
 	@POST
 	@Path("/produktAnlegen")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String produktAnlegen(@FormParam("name") String produktname, @FormParam("startpreis") double sp,
 			@FormParam("uname") String uname, @FormParam("kategorie") String kate, @FormParam("dauer") int dauer,
 			@FormParam("beschreibung") String be) {
