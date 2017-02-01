@@ -13,7 +13,7 @@ public class BenutzerAnlegen {
 
 	@Test
 	public void test() {
-		test=client.benutzerAnlegen("Enhjfi","Iglesias","eki@hotmail.com", 90210, "E Santa Clara St", "California", 122, "koko2387", "halloooooo");
+		test=client.benutzerAnlegen("Enhjfi","Iglesias","eki@hotmail.com", 90210, "E Santa Clara St", "California", 122, "michael", "hal9loooooo");
 		assertEquals(true,test);
 	}
 	

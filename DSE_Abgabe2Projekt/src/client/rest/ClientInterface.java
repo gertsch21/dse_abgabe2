@@ -43,7 +43,7 @@ public interface ClientInterface {
 	public boolean produktgruppeAendern(String oldname, String newname);
 	public boolean produktgruppeLoeschen(String name);	
 	public Produktgruppe getProduktgruppebyUsername(String name);
-	public List<Produktgruppe> produktgruppeListe(String name);
+	public List<Produktgruppe> produktgruppeListe();
 	
 			  
 			 

@@ -4,7 +4,6 @@ package webservice.rest;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -14,13 +13,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.CacheControl;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
-
 import management.Auktionsverwaltung;
 import management.Benutzerverwaltung;
 import management.Produktgruppeverwaltung;
@@ -33,13 +28,13 @@ import modell.Produktgruppe;
 
 public class UserService {
 	
-	Benutzerverwaltung ben_ver = Benutzerverwaltung.getInstance();
-	Produktverwaltung pr_ver = Produktverwaltung.getinstance();
-	Auktionsverwaltung ak_ver = Auktionsverwaltung.getInstance()  ;
-	Produktgruppeverwaltung pr_gr = Produktgruppeverwaltung.getinstance();
+	private Benutzerverwaltung ben_ver = Benutzerverwaltung.getInstance();
+	private Produktverwaltung pr_ver = Produktverwaltung.getinstance();
+	private Auktionsverwaltung ak_ver = Auktionsverwaltung.getInstance()  ;
+	private Produktgruppeverwaltung pr_gr = Produktgruppeverwaltung.getinstance();
 	
 	private static final String SUCCESS_RESULT="<result>success</result>";
-//	private static final String FAILURE_RESULT="<result>failure</result>";
+
 	
 	
 	
@@ -115,7 +110,7 @@ public class UserService {
 		@GET
 	    @Path("/getBenutzer/{name}")
 	    @Produces(MediaType.APPLICATION_XML)
-	    public Benutzer getBenutzerByUsername(@FormParam("name") String name) {
+	    public Benutzer getBenutzerByUsername(@PathParam("name") String name) {
 	        Benutzer ben = new Benutzer();
 	        ben = (Benutzer) ben_ver.getPersonByUsername(name);
 	        return ben;
@@ -144,7 +139,7 @@ public class UserService {
 		@Path("/benutzerdelete")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public Response deleteBenutzer(@FormParam("usern") String usern){
+		public Response deleteBenutzer(@PathParam("usern") String usern){
 		
 				
 			if (ben_ver.benutzerloeschen(usern)) {
@@ -226,7 +221,7 @@ public class UserService {
 		@DELETE
 		@Path("/gebotdelete/{id}/")
 		@Produces(MediaType.APPLICATION_XML)
-		public Response gebotdelete(@FormParam("id") String produktId){
+		public Response gebotdelete(@PathParam("id") String produktId){
 			if (ak_ver.gebotLoeschen(produktId)) {
 				return Response.ok(SUCCESS_RESULT).build();
 			}
@@ -285,7 +280,7 @@ public class UserService {
 		@DELETE
 		@Path("/produktdelete/{id}/")
 		@Produces(MediaType.APPLICATION_XML)
-		public Response produktDelete(@FormParam("id") String produktId){
+		public Response produktDelete(@PathParam("id") String produktId){
 			if (pr_ver.produktLoeschen(produktId)) {
 
 				return Response.ok(SUCCESS_RESULT).build();
@@ -379,7 +374,7 @@ public class UserService {
 		@DELETE 
 		@Path("/produktgruppeLoeschen/{name}")
 		@Produces(MediaType.APPLICATION_XML)
-		public Response produktgruppeLoeschen(@FormParam("name") String name){
+		public Response produktgruppeLoeschen(@PathParam("name") String name){
 			if(pr_gr.produktgruppeLoeschen(name)){
 				return Response.ok(SUCCESS_RESULT).build();
 			}else{
@@ -412,9 +407,9 @@ public class UserService {
 		}
 		
 		@GET
-		@Path("/getproduktgruppeListe/{name}")
+		@Path("/getproduktgruppeListe")
 		@Produces(MediaType.APPLICATION_XML)
-		public List<Produktgruppe> produktgruppeListe(@FormParam("name") String name){
+		public List<Produktgruppe> produktgruppeListe(){
 			List<Produktgruppe> mylist = pr_gr.getProduktgruppeList();
 			return mylist;
 			

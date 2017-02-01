@@ -1,4 +1,4 @@
-package junit.rest;
+package junit.rest.produktgruppe;
 
 import static org.junit.Assert.*;
 
@@ -7,21 +7,19 @@ import org.junit.Test;
 import client.rest.ClientInterface;
 import client.rest.RestClient;
 
-public class AdminAnlegen {
-
-
-	Boolean test=false;
-	ClientInterface client = new RestClient();
-
+public class GetProduktgruppebyName {
 	
+	ClientInterface client = new RestClient();
+	boolean test = false;
+
 	@Test
 	public void test() {
-		test = client.adminAnlegen("Vin", "Diesel", "vindiesel@gmail.com", 2356, "RodeoDrive3453", "Wien", 125, "vinfast", "vindiesel678", 12999);
+		if(client.getProduktgruppebyUsername("Handy")!=null){
+			
+			test=true;
+		}
+		else test = false;
+		 
 		assertEquals(true,test);
-		
-		
 	}
-
-	
-
 }

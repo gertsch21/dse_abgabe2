@@ -11,13 +11,13 @@ public class BenutzerLoeschen {
 
 	public class BenutzerLöschen {
 
-		Boolean test=false;
+		Boolean test1=false;
 		ClientInterface client = new RestClient();
 		
 		@Test
 		public void test() {
-			test = client.deleteBenutzer("jamesbond1");
-			assertEquals(true,test);
+			test1 = client.deleteBenutzer("vinfast");
+			assertEquals(true,test1);
 		}
 
 	}

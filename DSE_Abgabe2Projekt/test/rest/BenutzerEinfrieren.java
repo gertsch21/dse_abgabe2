@@ -7,20 +7,20 @@ import org.junit.Test;
 import client.rest.ClientInterface;
 import client.rest.RestClient;
 
-public class adressdatenAendern {
+public class BenutzerEinfrieren {
 
+		
+	
+		
 		Boolean test=false;
 		ClientInterface client = new RestClient();
-	
 		
 		@Test
 		public void test() {
-			test = client.adressAendern("vinfast", 67, "RodeoDriv89", "Manhatte9089", 789);
+			test=client.einfrierenBenutzer("vinfast");
+			
 			assertEquals(true,test);
-			
-			
 		}
-
+		
 	}
-
 

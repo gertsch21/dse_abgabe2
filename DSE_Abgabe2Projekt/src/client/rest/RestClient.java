@@ -26,8 +26,7 @@ public class RestClient implements ClientInterface {
 
 		public Benutzer getBenutzerByUsername(String name){
 			
-				Benutzer ben = new Benutzer();
-				ben.setUsername(name);
+				
 				WebClient client = WebClient.create(REST_URI);
 				  	      client.path("/userservice/getBenutzer").path(name).accept("application/xml");
 				
@@ -506,7 +505,7 @@ public class RestClient implements ClientInterface {
 		}
 		
 		@Override
-		public List<Produktgruppe> produktgruppeListe(String name) {
+		public List<Produktgruppe> produktgruppeListe() {
 			Client client = ClientBuilder.newClient();
 			GenericType<List<Produktgruppe>> list = new GenericType<List<Produktgruppe>>() {};
 		      List<Produktgruppe> produktgruppe = client.target(REST_URI+"/userservice/getproduktgruppeListe")
