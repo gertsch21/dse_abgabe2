@@ -49,6 +49,7 @@ public class RestClient implements ClientInterface {
 			
 			String clientResult=client.target(REST_URI+"/userservice/login").request(MediaType.APPLICATION_XML)
 								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+		
 									
 			 if(SUCCESS_RESULT.equals(clientResult)){
 		         return true;
@@ -67,7 +68,7 @@ public class RestClient implements ClientInterface {
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice/benutzerRegist").request(MediaType.APPLICATION_XML)
-								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
@@ -98,12 +99,14 @@ public class RestClient implements ClientInterface {
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice/benutzerAnlegen").request(MediaType.APPLICATION_XML)
-								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
-									
+								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+					
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
+				
 			         return true;
 			      }else{
+			    	 
 			    	  return false;
 			      }
 			
@@ -127,10 +130,12 @@ public class RestClient implements ClientInterface {
 			form.param("hausn", hausnummer1);
 			form.param("username", username);
 			form.param("passwort", password);
+			String gehalt1 = String.valueOf(gehalt);
+			form.param("gehalt", gehalt1);
 			
 			
 			String clientResult=client.target(REST_URI+"/userservice/adminAnlegen").request(MediaType.APPLICATION_XML)
-								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
@@ -179,7 +184,7 @@ public class RestClient implements ClientInterface {
 		      String clientResult = client
 		         .target(REST_URI+"/userservice/einfrierenBenutzer")
 		         .request(MediaType.APPLICATION_XML)
-		         .post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED), String.class);
+		         .put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
 		           
 		      
 		      if(SUCCESS_RESULT.equals(clientResult)){
@@ -198,9 +203,7 @@ public class RestClient implements ClientInterface {
 		      String clientResult = client
 		         .target(REST_URI+"/userservice/einaufhebenBenutzer")
 		         .request(MediaType.APPLICATION_XML)
-		         .post(Entity.entity(form,
-		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
-		            String.class);
+		         .put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 		      
 		      if(SUCCESS_RESULT.equals(clientResult)){
 					return true;
@@ -208,6 +211,9 @@ public class RestClient implements ClientInterface {
 				{
 					return false;
 				}
+				
+		   
+		     
 		}
 		@Override
 		public boolean passwortAendern(String uname, String pname) {
@@ -217,9 +223,9 @@ public class RestClient implements ClientInterface {
 		     form.param("passwort",pname);
 		    
 		      String clientResult = client
-		         .target(REST_URI+"/userservice/passwortAendern")
+		         .target(REST_URI+"/userservice/passwortaendern")
 		         .request(MediaType.APPLICATION_XML)
-		         .post(Entity.entity(form,
+		         .put(Entity.entity(form,
 		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
 		            String.class);
 		      
@@ -245,9 +251,8 @@ public class RestClient implements ClientInterface {
 		      String clientResult = client
 		         .target(REST_URI+"/userservice/addressaendern")
 		         .request(MediaType.APPLICATION_XML)
-		         .post(Entity.entity(form,
-		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
-		            String.class);
+		         .put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+		            
 		      
 		      if(SUCCESS_RESULT.equals(clientResult)){
 					return true;
@@ -355,7 +360,7 @@ public class RestClient implements ClientInterface {
 		public boolean produktAnlegen(String usern, double sp, String uname, String kate, int dauer, String be) {
 			Client client = ClientBuilder.newClient();
 			Form form = new Form();
-			form.param("usern", usern);
+			form.param("name", usern);
 			String sp1 = String.valueOf(sp);
 			form.param("startpreis", sp1);
 			form.param("uname", uname);
@@ -366,7 +371,7 @@ public class RestClient implements ClientInterface {
 						
 			
 			String clientResult=client.target(REST_URI+"/userservice/produktAnlegen").request(MediaType.APPLICATION_XML)
-								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
@@ -404,7 +409,7 @@ public class RestClient implements ClientInterface {
 		      String clientResult = client
 		         .target(REST_URI+"/userservice/produktverschieben")
 		         .request(MediaType.APPLICATION_XML)
-		         .post(Entity.entity(form,
+		         .put(Entity.entity(form,
 		            MediaType.APPLICATION_FORM_URLENCODED_TYPE),
 		            String.class);
 		      
@@ -431,7 +436,7 @@ public class RestClient implements ClientInterface {
 						
 			
 			String clientResult=client.target(REST_URI+"/userservice/produktAendern").request(MediaType.APPLICATION_XML)
-								.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+								.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 									
 																			
 			  if(SUCCESS_RESULT.equals(clientResult)){
@@ -447,7 +452,7 @@ public class RestClient implements ClientInterface {
 			Form form = new Form();
 			form.param("name", name);
 			String clientResult=client.target(REST_URI+"/userservice/produktgruppeAnlegen").request(MediaType.APPLICATION_XML)
-					.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+					.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 						
 																
 				if(SUCCESS_RESULT.equals(clientResult)){
@@ -464,7 +469,7 @@ public class RestClient implements ClientInterface {
 			form.param("oldname", oldname);
 			form.param("newname", newname);
 			String clientResult=client.target(REST_URI+"/userservice/produktgruppeAendern").request(MediaType.APPLICATION_XML)
-					.post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
+					.put(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE),String.class);
 						
 																
 				if(SUCCESS_RESULT.equals(clientResult)){

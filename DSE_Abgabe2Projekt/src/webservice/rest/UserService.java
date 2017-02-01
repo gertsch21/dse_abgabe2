@@ -31,19 +31,7 @@ import modell.Produktgruppe;
 
 @Path("/userservice/")
 
-public class UserService  implements MessageListener{
-	
-	
-	// ActiveMQ Consumer/Producer
-		private ActiveMQConnectionFactory connectionFactory;
-		private Connection connection;
-		private Session session;
-		private Destination subjectQueue;
-		private Destination consumerSubject;
-		private MessageConsumer consumer;
-		private MessageProducer producer;
-		private Broker br = new Broker();
-		// ActiveMQ Consumer/Producer	
+public class UserService {
 	
 	Benutzerverwaltung ben_ver = Benutzerverwaltung.getInstance();
 	Produktverwaltung pr_ver = Produktverwaltung.getinstance();
@@ -51,38 +39,26 @@ public class UserService  implements MessageListener{
 	Produktgruppeverwaltung pr_gr = Produktgruppeverwaltung.getinstance();
 	
 	private static final String SUCCESS_RESULT="<result>success</result>";
-	private static final String FAILURE_RESULT="<result>failure</result>";
+//	private static final String FAILURE_RESULT="<result>failure</result>";
 	
 	
-		//Benutzerverwaltung
 	
-		@PUT
-		@Path("/benutzerReg")
-		@Produces(MediaType.TEXT_HTML)
-		public Response benutzerRegistrieren(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd)throws JMSException  {
-		if(ben_ver.benutzerAnlegen(usern, "Nachname1", email, 1110, "Holbein", "Wien", 7, usern, pwd)){
-			messaging();
-			String page="<html><body><a href=\"/Benutzer erfolgreich registriert!\">back to list</a></body></html>";
-			return Response.ok(page).build();
-		}
-		    return  Response.status(Status.NOT_FOUND).build();
-		}
 		
-		@PUT
+		@POST
 		@Path("/benutzerRegist")
 		@Produces(MediaType.APPLICATION_XML)
-		public String benutzerRegistrieren1(@PathParam("fullname") String usern, @PathParam("email") String email,@PathParam("passwort") String pwd) {
+		public Response benutzerRegistrieren1(@FormParam("fullname") String usern, @FormParam("email") String email,@PathParam("passwort") String pwd) {
 		if(ben_ver.benutzerAnlegen(usern, "Nachname1", email, 1110, "Holbein", "Wien", 7, usern, pwd)){
-			messaging();
-			return SUCCESS_RESULT;
+			
+			return Response.ok(SUCCESS_RESULT).build();
 		}
-		    return  FAILURE_RESULT;
+			return  Response.status(Status.BAD_REQUEST).build();
 		}
 		
-		@PUT
+		@POST
 		@Path("/benutzerAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
-		public String benutzerAnlegen(@FormParam("vorn") String vorn,
+		public Response benutzerAnlegen(@FormParam("vorn") String vorn,
 				@FormParam("nachn") String nachn,
 				@FormParam("email") String email,
 				@FormParam("plz") int plz,
@@ -95,16 +71,15 @@ public class UserService  implements MessageListener{
 		boolean benutzerAn = false;
 		benutzerAn = ben_ver.benutzerAnlegen(vorn, nachn, email, plz, strasse, wohnort, hausn, usern, pwd);
 		if(benutzerAn==true){
-			messaging();
-			return SUCCESS_RESULT;
+			return Response.ok(SUCCESS_RESULT).build();
 		}
-		    return  FAILURE_RESULT;
+			return  Response.status(Status.BAD_REQUEST).build();
 		}
 		
-		@PUT
+		@POST
 		@Path("/adminAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
-		public String adminAnlegen(@FormParam("vorn") String vorn,
+		public Response adminAnlegen(@FormParam("vorn") String vorn,
 				@FormParam("nachn") String nachn,
 				@FormParam("email") String email,
 				@FormParam("plz") int plz,
@@ -113,30 +88,25 @@ public class UserService  implements MessageListener{
 				@FormParam("hausn") int hausn,
 				@FormParam("username") String usern,
 				@FormParam("passwort") String pwd,
-				@FormParam("passwort") double gehalt) {
+				@FormParam("gehalt") double gehalt) {
 			
-		boolean adminAn = false;
-		adminAn = ben_ver.adminAnlegen(vorn, nachn, email, plz, strasse, wohnort, hausn, usern, pwd,gehalt);
-		if(adminAn==true){
-			messaging();
-			return SUCCESS_RESULT;
+	
+		if(ben_ver.adminAnlegen(vorn, nachn, email, plz, strasse, wohnort, hausn, usern, pwd,gehalt)){
+			return Response.ok(SUCCESS_RESULT).build();
 		}
-		    return  FAILURE_RESULT;
+		    return  Response.status(Status.BAD_REQUEST).build();
 		}
 		
 		
 		@POST
 	    @Path("/login")
 		@Produces(MediaType.APPLICATION_XML)
-		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	    public Response pruefeLogin(@PathParam("username") String usern,
-	    							@PathParam("password") String pwd,
-	    							@Context HttpServletResponse servletResponse) {
+	    public Response pruefeLogin(@FormParam("username") String usern,
+	    							@FormParam("password") String pwd) {
 			if(ben_ver.pruefeLogin(usern, pwd)){
-				String page="<html><body><a href=\"/Benutzer erfolgreich registriert!\">back to list</a></body></html>";
-				return Response.ok().build();
+				return Response.ok(SUCCESS_RESULT).build();
 			}
-			    return  Response.status(Status.NOT_FOUND).build();
+			    return  Response.status(Status.BAD_REQUEST).build();
 			}
 	
 		
@@ -171,107 +141,97 @@ public class UserService  implements MessageListener{
 	
 	
 		@DELETE
-		@Path("/benutzerdelete/{usern}/")
+		@Path("/benutzerdelete")
 		@Produces(MediaType.APPLICATION_XML)
-		public Response deleteBenutzerHTML(@PathParam("usern") String usern){
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		public Response deleteBenutzer(@FormParam("usern") String usern){
 		
 				
 			if (ben_ver.benutzerloeschen(usern)) {
-				return Response.ok().build();
+				return Response.ok(SUCCESS_RESULT).build();
 			}
 			else {
-				return Response.status(Status.NOT_FOUND).build();
-			}
-		}
-		@DELETE
-		@Path("/benutzerdelete/{usern}")
-		@Produces(MediaType.APPLICATION_XML)
-		public String deleteBenutzer(@PathParam("usern") String usern){
-		
-				
-			if (ben_ver.benutzerloeschen(usern)) {
-				messaging();
-				return SUCCESS_RESULT;
-			}
-			else {
-				return FAILURE_RESULT;
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
 	
 		
-		@POST
+		@PUT
 		@Path("/einfrierenBenutzer")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String einfrierenBenutzer(@FormParam("name") String usern) {
-			boolean einfri = ben_ver.benutzerEinfrieren(usern);
+		public Response einfrierenBenutzer(@FormParam("name") String usern){
+										 
+		
 			
-			if(einfri == true){
-				return SUCCESS_RESULT;
+			if(ben_ver.benutzerEinfrieren(usern)){
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT ;
+				return Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
-		@POST
+		@PUT
 		@Path("/einaufhebenBenutzer")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String einaufhebenBenutzer(@PathParam("name") String usern) {
-			boolean einfri = ben_ver.benutzerEinfAufheben(usern);
+		public Response einaufhebenBenutzer(@FormParam("name") String usern) {
 			
-			if(einfri == true){
-				return SUCCESS_RESULT;
-			}else {
-				return FAILURE_RESULT; 
+			
+			if(ben_ver.benutzerEinfAufheben(usern)){
+				return Response.ok(SUCCESS_RESULT).build();
+		        		
+			}else{
+				 return  Response.status(Status.BAD_REQUEST).build();
 			}
+			   
 		}
 		
-		@POST
+		@PUT
 		@Path("/passwortaendern")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String passwortAendern(@PathParam("name") String usern, @PathParam("passwort") String pwd){
+		public Response passwortAendern(@FormParam("name") String usern, @FormParam("passwort") String pwd){
 			boolean pass = ben_ver.passwortAendern(usern, pwd);
 			
 			if(pass == true){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
-		@POST
+		@PUT
 		@Path("/addressaendern")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String adressAendern(@PathParam("name") String usern,
-									@PathParam("plz") String plz,
-									@PathParam("strasse") String str,
-									@PathParam("wohnort") String ort,
-									@PathParam("hausnummer") String nummer
+		public Response adressAendern(@FormParam("name") String usern,
+									@FormParam("plz") String plz,
+									@FormParam("strasse") String str,
+									@FormParam("wohnort") String ort,
+									@FormParam("hausnummer") String nummer
 									){
 			int plzint = Integer.valueOf(plz);
 			int nummer1 = Integer.valueOf(nummer);
-			boolean pass = ben_ver.adressdatenAendern(usern, plzint, str, ort, nummer1);
 			
-			if(pass == true){
-				return SUCCESS_RESULT;
+			
+			if(ben_ver.adressdatenAendern(usern, plzint, str, ort, nummer1)){
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
 		@DELETE
 		@Path("/gebotdelete/{id}/")
 		@Produces(MediaType.APPLICATION_XML)
-		public String gebotdelete(@PathParam("id") String produktId){
+		public Response gebotdelete(@FormParam("id") String produktId){
 			if (ak_ver.gebotLoeschen(produktId)) {
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}
 			else {
-				return FAILURE_RESULT;
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 
@@ -280,15 +240,15 @@ public class UserService  implements MessageListener{
 		@Path("/gebotAbgeben")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String gebotAbgeben(@PathParam("name") String usern,
-								   @PathParam("gebot") double gebot,
-								   @PathParam("produktID") String produktID){
+		public Response gebotAbgeben(@FormParam("name") String usern,
+								   @FormParam("gebot") double gebot,
+								   @FormParam("produktID") String produktID){
 			boolean gebotres = ak_ver.gebotAbgeben(usern, gebot, produktID);
 			
 			if(gebotres == true){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
@@ -304,47 +264,50 @@ public class UserService  implements MessageListener{
 		
 		
 		
-		@PUT
+		@POST
 		@Path("/produktAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
-		public String produktAnlegen(@PathParam("name") String usern,
-				@PathParam("startpreis") double sp,
-				@PathParam("uname") String uname,
-				@PathParam("kategorie") String kate,
-				@PathParam("dauer") int dauer,
-				@PathParam("beschreibung") String be) {
+		public Response produktAnlegen(@FormParam("name") String usern,
+				@FormParam("startpreis") double sp,
+				@FormParam("uname") String uname,
+				@FormParam("kategorie") String kate,
+				@FormParam("dauer") int dauer,
+				@FormParam("beschreibung") String be) {
 			
 		if(pr_ver.produktAnlegen(usern, sp, uname, kate, dauer, be)){
-			return SUCCESS_RESULT;
+
+			return Response.ok(SUCCESS_RESULT).build();
 		}else{
-			return FAILURE_RESULT; 
+			return  Response.status(Status.BAD_REQUEST).build();
 		}
 		}
 		
 		@DELETE
 		@Path("/produktdelete/{id}/")
 		@Produces(MediaType.APPLICATION_XML)
-		public String produktDelete(@PathParam("id") String produktId){
+		public Response produktDelete(@FormParam("id") String produktId){
 			if (pr_ver.produktLoeschen(produktId)) {
-				return SUCCESS_RESULT;
+
+				return Response.ok(SUCCESS_RESULT).build();
 			}
 			else {
-				return FAILURE_RESULT;
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
-		@POST
+		@PUT
 		@Path("/produktverschieben")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String produktVerschieben(@PathParam("uuid") UUID usern,
-								   @PathParam("kategorie") String kate){
+		public Response produktVerschieben(@FormParam("uuid") UUID usern,
+								   @FormParam("kategorie") String kate){
 			boolean gebotres = pr_ver.produktVerschieben(usern, kate);
 			
 			if(gebotres == true){
-				return SUCCESS_RESULT;
+
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
@@ -381,46 +344,46 @@ public class UserService  implements MessageListener{
 			
 		}	
 		
-		@POST
+		@PUT
 		@Path("/produktAendern")
 		@Produces(MediaType.APPLICATION_XML)
-		public String produktAendern(@PathParam("id") UUID id,
-				@PathParam("name") String name,
-				@PathParam("startpreis") double sp,
-				@PathParam("uname") String uname,
-				@PathParam("kategorie") String kate,
-				@PathParam("dauer") int dauer,
-				@PathParam("beschreibung") String be){
+		public Response produktAendern(@FormParam("id") UUID id,
+				@FormParam("name") String name,
+				@FormParam("startpreis") double sp,
+				@FormParam("uname") String uname,
+				@FormParam("kategorie") String kate,
+				@FormParam("dauer") int dauer,
+				@FormParam("beschreibung") String be){
 			boolean por_Aend = pr_ver.produktAendern(id, name, sp, uname, kate, dauer, be);
 				
 			if(por_Aend == true){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		//Produktgruppe
-		@PUT
+		@POST
 		@Path("/produktgruppeAnlegen")
 		@Produces(MediaType.APPLICATION_XML)
-		public String produktgruppeAnlegen(@PathParam("name") String name){
+		public Response produktgruppeAnlegen(@FormParam("name") String name){
 			
 			
 			if(pr_gr.produktgruppeAnlegen(name)){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else{
-				return FAILURE_RESULT;
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
 		@DELETE 
 		@Path("/produktgruppeLoeschen/{name}")
 		@Produces(MediaType.APPLICATION_XML)
-		public String produktgruppeLoeschen(@PathParam("name") String name){
+		public Response produktgruppeLoeschen(@FormParam("name") String name){
 			if(pr_gr.produktgruppeLoeschen(name)){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else{
-				return FAILURE_RESULT;
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
@@ -433,104 +396,30 @@ public class UserService  implements MessageListener{
 			
 		}
 		
-		@POST
+		@PUT
 		@Path("/produktgruppeAendern")
 		@Produces(MediaType.APPLICATION_XML)
 		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		public String produktgruppeAendern(@PathParam("oldname") String oldname,
-								   @PathParam("newname") String newname){
+		public Response produktgruppeAendern(@FormParam("oldname") String oldname,
+								   @FormParam("newname") String newname){
 		
 			
 			if(	pr_gr.produktgruppeAendern(oldname, newname)){
-				return SUCCESS_RESULT;
+				return Response.ok(SUCCESS_RESULT).build();
 			}else {
-				return FAILURE_RESULT; 
+				return  Response.status(Status.BAD_REQUEST).build();
 			}
 		}
 		
 		@GET
 		@Path("/getproduktgruppeListe/{name}")
 		@Produces(MediaType.APPLICATION_XML)
-		public List<Produktgruppe> produktgruppeListe(@PathParam("name") String name){
+		public List<Produktgruppe> produktgruppeListe(@FormParam("name") String name){
 			List<Produktgruppe> mylist = pr_gr.getProduktgruppeList();
 			return mylist;
 			
 		}
 		
-		
-		@GET
-	    @Path("/getHTML")
-	    @Produces(MediaType.TEXT_HTML)
-	    public String getHTML() {
-	      
-	        return "<h1>Hallo</h1>";
-	    }
-		
-		public void messaging()throws JMSException{
-			
-			try{	
-				// Create the connection
-		        connectionFactory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_BROKER_URL);
-		        connection = connectionFactory.createConnection();
-		        connection.start();
-		        
-		     // Create the session
-		        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		        consumerSubject = session.createQueue("tcpTasksQueue");
-		        
-		        // Create the Consumer
-		        consumer = session.createConsumer(consumerSubject);
-		        consumer.setMessageListener(this);
-		        
-		        subjectQueue = session.createQueue("ServerQueue");
-		        producer = session.createProducer(subjectQueue);
-		        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-		        //Message sending
-		        TextMessage message = session.createTextMessage("Hallo Bitte Listen aktuallisieren");
-		        System.out.println("[ Sending Message "+ message.getText());
-		        producer.send(message);
-		        
-			} catch (Exception e) {
-					System.out.println("[ Caught: " + e);
-					e.printStackTrace();
-				} finally {
-					try {
-						connection.close();
-					} catch (Throwable ignore) {
-				}
-			}
-		       
-		}
-
-		@Override
-		public void onMessage(Message incomingMsg) {
-			System.out.println("Bin im Incoming Message");
-			if(incomingMsg instanceof TextMessage) {
-				TextMessage txtMsg =(TextMessage) incomingMsg;
-				try {
-					System.out.println("[ Received: '“" + txtMsg.getText() + "");
-				} catch (JMSException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(update()){
-					System.out.println("Alles Upgedates TCP bin fertig");
-				}
-				
-				}
-			}
-
-			
-				public boolean update(){
-					Produktverwaltung prodver = Produktverwaltung.getinstance();
-					Benutzerverwaltung benver = Benutzerverwaltung.getInstance();
-					benver.getBenutzerListe();
-					benver.getPersonenListe();
-					prodver.getProduktListe();
-									
-					return true;
-				}
-			
 		
 		
 		

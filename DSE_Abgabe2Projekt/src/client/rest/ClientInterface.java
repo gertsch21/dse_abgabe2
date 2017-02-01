@@ -32,7 +32,7 @@ public interface ClientInterface {
 	
 	public List<Produkt> sucheProdukt();
 	public Produkt getProduktByID(String id);
-	public boolean produktAnlegen(String usern,double sp,String uname, String kate,int dauer,String be);
+	public boolean produktAnlegen(String name,double sp,String uname, String kate,int dauer,String be);
 	public boolean produktDelete(String Id);	
 	public boolean produktVerschieben(UUID usern,String kate);
 	public boolean produktAendern(UUID id, String name,double sp,String uname,String kate,int dauer,String be);
