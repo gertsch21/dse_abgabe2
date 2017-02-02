@@ -15,7 +15,7 @@
             <HBox spacing="10.0">
                <children>
                   <TextField fx:id="unameinput" layoutX="10.0" layoutY="10.0" promptText="username" text="josi" />
-                  <TextField fx:id="pwinput" promptText="password" text="hallo" />
+                  <PasswordField fx:id="pwinput" promptText="password" text="hallo" />
                   <Label fx:id="loginerror" prefHeight="17.0" prefWidth="120.0">
                      <HBox.margin>
                         <Insets top="5.0" />

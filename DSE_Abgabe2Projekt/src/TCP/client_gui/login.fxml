@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TCP.client_gui.ControllerLogin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tcp.client_gui.ControllerLogin">
    <top>
       <VBox prefHeight="53.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <HBox spacing="10.0">
                <children>
                   <TextField fx:id="unameinput" layoutX="10.0" layoutY="10.0" promptText="username" text="josi" />
-                  <TextField fx:id="pwinput" promptText="password" text="hallo" />
+                  <PasswordField fx:id="pwinput" promptText="password" text="hallo" />
                   <Label fx:id="loginerror" prefHeight="17.0" prefWidth="120.0">
                      <HBox.margin>
                         <Insets top="5.0" />

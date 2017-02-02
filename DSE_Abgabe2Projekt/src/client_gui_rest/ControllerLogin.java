@@ -1,5 +1,6 @@
 package client_gui_rest;
 
+
 import client.rest.RestClient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +25,7 @@ public class ControllerLogin {
     @FXML private Label loginerror;
     @FXML private Label serverstatus;
 
-    RestClient cl;
- 
+    private RestClient scl;
 
     public void loginClicked() throws IOException {
         String name = unameinput.getText();
@@ -36,22 +36,19 @@ public class ControllerLogin {
             loginerror.setText("Insert all fields");
         } else {
             System.out.println("Login attempt: " + unameinput.getText() + " , " + pwinput.getText().toString());
-            
-           if (available(9999)){
-                cl = new RestClient();
-              
-                Boolean x = cl.pruefeLoginPlain(name, pass);
-                
+
+            if (available(9999)) {
+
+                RestClient rc = new RestClient();
+                boolean x = rc.pruefeLogin(name, pass);
 
                 if (x) {
-                    
 
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
                     Parent root = fxmlLoader.load();
 
                     ControllerHome ch = fxmlLoader.<ControllerHome>getController();
                     ch.setUsername(name);
-                    ch.setCl(cl);
 
                     Scene scene = new Scene(root);
                     Stage homeStage = (Stage) loginbtn.getScene().getWindow();
@@ -65,14 +62,12 @@ public class ControllerLogin {
                     loginerror.setTextFill(Color.web("#BF0000"));
                 }
 
-           } else {
-               System.out.println("System: Offline");
-               serverstatus.setText("System: Offline");
-               serverstatus.setTextFill(Color.web("#BF0000"));
-           }
-
+            } else {
+                //System.out.println("login failed");
+                loginerror.setText("Login failed");
+                loginerror.setTextFill(Color.web("#BF0000"));
+            }
         }
-
     }
 
     public static boolean available(int port) {
@@ -81,6 +76,7 @@ public class ControllerLogin {
         } catch (IOException ignored) {
             return false;
         }
+
     }
 
     public void registerClicked() throws IOException {
@@ -93,16 +89,16 @@ public class ControllerLogin {
         regiStage.show();
     }
 
-    public void checkClicked(){
-        int port = 9999;
+    public boolean checkClicked(){
         if (available(9999)){
-            System.out.println("System:  OnREST");
-            serverstatus.setText("System:  OnREST");
+            System.out.println("System: Online REST");
+            serverstatus.setText("System: Online REST");
             serverstatus.setTextFill(Color.web("#168500"));
         } else {
-            System.out.println("System:  OffREST");
-            serverstatus.setText("System:  OffREST");
+            System.out.println("System: Offline REST");
+            serverstatus.setText("System: Offline REST");
             serverstatus.setTextFill(Color.web("#BF0000"));
         }
+        return false;
     }
 }

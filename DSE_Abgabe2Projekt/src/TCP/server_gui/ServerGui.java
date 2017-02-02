@@ -40,7 +40,7 @@ public class ServerGui extends Application implements Runnable  {
         window = primaryStage;
 
         Label label1 = new Label("Welcome Admin");
-        window.setTitle("Admin Controller");
+        window.setTitle("TCP Server");
 
 
         b1 = new Button();
